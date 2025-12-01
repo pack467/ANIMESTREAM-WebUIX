@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fate/Stay Night: Unlimited Blade Works - AniStream</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Mulish:wght@300;400;500;600;700;800&family=Oswald:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <link rel="stylesheet" href="../styles/watch.css">
+</head>
+<body>
+    <header class="header" id="mainHeader">
+        <div class="container header-container">
+            <div class="logo">
+                <a href="home.html">ANI<span class="highlight">ME</span>STREAM</a>
+            </div>
+
+            <nav class="navbar" id="navbar">
+                <ul class="menu">
+                    <li class="menu-item"><a href="home.html">Home</a></li>
+                    <li class="menu-item has-dropdown">
+                        <a href="#">Genre <i class="fas fa-chevron-down"></i></a>
+                        <ul class="dropdown">
+                            <li><a href="#">Action</a></li>
+                            <li><a href="#">Adventure</a></li>
+                            <li><a href="#">Fantasy</a></li>
+                            <li><a href="#">Sci-Fi</a></li>
+                        </ul>
+                    </li>
+                    <li class="menu-item"><a href="#">Schedule</a></li>
+                    <li class="menu-item"><a href="#">News</a></li>
+                </ul>
+            </nav>
+
+            <div class="header-actions">
+                <button class="action-btn search-trigger" id="searchTrigger"><i class="fas fa-search"></i></button>
+                
+                <!-- User Profile Button dengan Dropdown Menu -->
+                <div class="user-profile">
+                    <button class="user-btn" id="userBtn">
+                        <i class="fas fa-user"></i>
+                    </button>
+                    <div class="user-dropdown" id="userDropdown">
+                        <div class="user-info">
+                            <div class="user-avatar">
+                                <i class="fas fa-user-circle"></i>
+                            </div>
+                            <div class="user-details">
+                                <span class="user-name">AnimeLover</span>
+                                <span class="user-status">Premium Member</span>
+                            </div>
+                        </div>
+                        <div class="dropdown-divider"></div>
+                        <a href="#" class="dropdown-item">
+                            <i class="fas fa-user"></i>
+                            <span>My Profile</span>
+                        </a>
+                        <a href="#" class="dropdown-item">
+                            <i class="fas fa-cog"></i>
+                            <span>Settings</span>
+                        </a>
+                        <a href="#" class="dropdown-item">
+                            <i class="fas fa-list"></i>
+                            <span>My List</span>
+                        </a>
+                        <a href="#" class="dropdown-item">
+                            <i class="fas fa-history"></i>
+                            <span>Watch History</span>
+                        </a>
+                        <div class="dropdown-divider"></div>
+                        <a href="#" class="dropdown-item logout">
+                            <i class="fas fa-sign-out-alt"></i>
+                            <span>Log Out</span>
+                        </a>
+                    </div>
+                </div>
+
+                <button class="mobile-toggle" id="mobileToggle">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <div class="search-overlay" id="searchOverlay">
+        <div class="search-close" id="searchClose"><i class="fas fa-times"></i></div>
+        <div class="search-box">
+            <input type="text" placeholder="Type to search anime...">
+            <button><i class="fas fa-search"></i></button>
+        </div>
+        <div class="search-tags">
+            <span>Popular:</span>
+            <a href="#">One Piece</a>
+            <a href="#">Naruto</a>
+            <a href="#">Demon Slayer</a>
+            <a href="#">Jujutsu Kaisen</a>
+        </div>
+    </div>
+
+    <div class="watch-container">
+        <div class="container">
+            <div class="watch-layout">
+                <div class="video-section">
+                    <!-- Video Player -->
+                    <div class="video-player-container">
+                        <div class="video-wrapper">
+                            <div class="video-player" id="videoPlayer">
+                                <video id="animeVideo" controls poster="https://images.unsplash.com/photo-1578632767115-351597cf2477?q=80&w=1920&auto=format&fit=crop">
+                                    <source src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4" type="video/mp4">
+                                    Your browser does not support the video tag.
+                                </video>
+                                <div class="player-controls-overlay" id="playerControls">
+                                    <div class="player-controls-top">
+                                        <div class="player-title">
+                                            <h3>Fate/Stay Night: Unlimited Blade Works</h3>
+                                            <span>Episode 1: Winter Days, A Fateful Night</span>
+                                        </div>
+                                        <div class="player-settings">
+                                            <button class="control-btn" id="settingsBtn">
+                                                <i class="fas fa-cog"></i>
+                                            </button>
+                                            <button class="control-btn" id="fullscreenBtn">
+                                                <i class="fas fa-expand"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="player-controls-center">
+                                        <button class="control-btn large" id="playPauseBtn">
+                                            <i class="fas fa-play"></i>
+                                        </button>
+                                    </div>
+                                    <div class="player-controls-bottom">
+                                        <div class="progress-container">
+                                            <div class="progress-bar" id="progressBar">
+                                                <div class="progress" id="progress"></div>
+                                                <div class="buffer" id="buffer"></div>
+                                            </div>
+                                            <div class="time-display">
+                                                <span id="currentTime">00:00</span> / <span id="duration">00:00</span>
+                                            </div>
+                                        </div>
+                                        <div class="control-buttons">
+                                            <button class="control-btn" id="rewindBtn">
+                                                <i class="fas fa-backward"></i>
+                                            </button>
+                                            <button class="control-btn" id="playPauseSmallBtn">
+                                                <i class="fas fa-play"></i>
+                                            </button>
+                                            <button class="control-btn" id="forwardBtn">
+                                                <i class="fas fa-forward"></i>
+                                            </button>
+                                            <div class="volume-control">
+                                                <button class="control-btn" id="volumeBtn">
+                                                    <i class="fas fa-volume-up"></i>
+                                                </button>
+                                                <div class="volume-slider" id="volumeSlider">
+                                                    <div class="volume-level" id="volumeLevel"></div>
+                                                </div>
+                                            </div>
+                                            <button class="control-btn" id="subtitleBtn">
+                                                <i class="fas fa-closed-captioning"></i>
+                                            </button>
+                                            <button class="control-btn" id="qualityBtn">
+                                                <i class="fas fa-hd"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Episode Info -->
+                    <div class="episode-info-section">
+                        <div class="episode-header">
+                            <h2>Episode 1: Winter Days, A Fateful Night</h2>
+                            <div class="episode-meta">
+                                <span class="episode-date">Released: March 15, 2024</span>
+                                <span class="episode-duration">Duration: 24m</span>
+                            </div>
+                        </div>
+                        <div class="episode-description">
+                            <p>Shirou Emiya is a high school student and amateur magus living in Fuyuki City. He is dragged into the Fifth Holy Grail War, a secret magical tournament, where seven mages known as Masters summon Servants, reincarnations of legendary souls, to fight for the Holy Grail.</p>
+                        </div>
+                    </div>
+
+                    <!-- Episode Navigation -->
+                    <div class="episode-navigation">
+                        <div class="nav-header">
+                            <h3>Episodes</h3>
+                            <div class="episode-filter">
+                                <select id="seasonSelect">
+                                    <option value="season1">Season 1 (13 Episodes)</option>
+                                    <option value="season2">Season 2 (13 Episodes)</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="episode-list" id="episodeList">
+                            <!-- Episode list will be populated by JavaScript -->
+                        </div>
+                    </div>
+
+                    <!-- Comments Section -->
+                    <div class="comments-section">
+                        <div class="section-header">
+                            <h3>Comments</h3>
+                            <div class="comments-count">128 Comments</div>
+                        </div>
+                        <div class="comment-form">
+                            <div class="user-avatar">
+                                <i class="fas fa-user-circle"></i>
+                            </div>
+                            <div class="comment-input-container">
+                                <textarea placeholder="Add a comment..." id="commentInput"></textarea>
+                                <div class="comment-actions">
+                                    <button class="btn-secondary">Cancel</button>
+                                    <button class="btn-primary" id="submitComment">Comment</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="comments-list" id="commentsList">
+                            <!-- Comments will be populated by JavaScript -->
+                        </div>
+                    </div>
+                </div>
+
+                <aside class="sidebar-section">
+                    <!-- Anime Details -->
+                    <div class="anime-details-widget">
+                        <div class="anime-poster">
+                            <img src="https://images.unsplash.com/photo-1578632767115-351597cf2477?q=80&w=400&auto=format&fit=crop" alt="Anime Poster">
+                        </div>
+                        <div class="anime-info">
+                            <h2>Fate/Stay Night: Unlimited Blade Works</h2>
+                            <div class="anime-meta">
+                                <div class="meta-item">
+                                    <span class="meta-label">Status:</span>
+                                    <span class="meta-value">Completed</span>
+                                </div>
+                                <div class="meta-item">
+                                    <span class="meta-label">Episodes:</span>
+                                    <span class="meta-value">26</span>
+                                </div>
+                                <div class="meta-item">
+                                    <span class="meta-label">Season:</span>
+                                    <span class="meta-value">Fall 2014</span>
+                                </div>
+                                <div class="meta-item">
+                                    <span class="meta-label">Studio:</span>
+                                    <span class="meta-value">ufotable</span>
+                                </div>
+                                <div class="meta-item">
+                                    <span class="meta-label">Rating:</span>
+                                    <span class="meta-value">
+                                        <i class="fas fa-star"></i> 4.8 (12.4K)
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="anime-actions">
+                                <button class="btn-primary"><i class="fas fa-play"></i> Continue Watching</button>
+                                <button class="btn-secondary"><i class="fas fa-plus"></i> Add to List</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Synopsis -->
+                    <div class="synopsis-widget">
+                        <h3>Synopsis</h3>
+                        <p>Shirou Emiya is a high school student and the adopted son of Kiritsugu Emiya, who saved him from a fire that destroyed his home and killed his family. Kiritsugu, who was a magus, taught Shirou the basics of magic, but Shirou has little talent and can only perform simple spells.</p>
+                        <p>One day, after school, Shirou witnesses a battle between two superhuman beings known as Servants. He is discovered and nearly killed, but is saved by a Servant of his own, Saber. With this, Shirou becomes a Master in the Fifth Holy Grail War, a secret magical tournament where seven mages and their Servants fight to the death for the Holy Grail, a legendary artifact that can grant any wish.</p>
+                    </div>
+
+                    <!-- Characters -->
+                    <div class="characters-widget">
+                        <h3>Characters</h3>
+                        <div class="character-list">
+                            <div class="character-item">
+                                <div class="character-img">
+                                    <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=150&auto=format&fit=crop" alt="Character">
+                                </div>
+                                <div class="character-info">
+                                    <h4>Shirou Emiya</h4>
+                                    <span>CV: Noriaki Sugiyama</span>
+                                </div>
+                            </div>
+                            <div class="character-item">
+                                <div class="character-img">
+                                    <img src="https://images.unsplash.com/photo-1494790108755-2616b612b786?q=80&w=150&auto=format&fit=crop" alt="Character">
+                                </div>
+                                <div class="character-info">
+                                    <h4>Saber</h4>
+                                    <span>CV: Ayako Kawasumi</span>
+                                </div>
+                            </div>
+                            <div class="character-item">
+                                <div class="character-img">
+                                    <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?q=80&w=150&auto=format&fit=crop" alt="Character">
+                                </div>
+                                <div class="character-info">
+                                    <h4>Rin Tohsaka</h4>
+                                    <span>CV: Kana Ueda</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Recommendations -->
+                    <div class="recommendations-widget">
+                        <h3>You Might Also Like</h3>
+                        <div class="recommendation-list">
+                            <div class="recommendation-item">
+                                <div class="rec-poster">
+                                    <img src="https://images.unsplash.com/photo-1541562232579-512a21360020?q=80&w=200&auto=format&fit=crop" alt="Recommendation">
+                                </div>
+                                <div class="rec-info">
+                                    <h4>Demon Slayer</h4>
+                                    <span>Action, Fantasy</span>
+                                </div>
+                            </div>
+                            <div class="recommendation-item">
+                                <div class="rec-poster">
+                                    <img src="https://images.unsplash.com/photo-1612404730960-5c71578fca37?q=80&w=200&auto=format&fit=crop" alt="Recommendation">
+                                </div>
+                                <div class="rec-info">
+                                    <h4>Sword Art Online</h4>
+                                    <span>Action, Sci-Fi</span>
+                                </div>
+                            </div>
+                            <div class="recommendation-item">
+                                <div class="rec-poster">
+                                    <img src="https://images.unsplash.com/photo-1581833971358-2c8b550f87b3?q=80&w=200&auto=format&fit=crop" alt="Recommendation">
+                                </div>
+                                <div class="rec-info">
+                                    <h4>Attack on Titan</h4>
+                                    <span>Action, Drama</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </aside>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="footer-bg-graphics"></div>
+        <div class="container">
+            <div class="footer-top">
+                <div class="footer-col brand-col">
+                     <div class="logo">
+                        <a href="home.html">ANI<span class="highlight">ME</span>STREAM</a>
+                    </div>
+                    <p>The premier destination for high-quality anime streaming. Join our community today.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-discord"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+                <div class="footer-col links-col">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#">Our Blog</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Contacts</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col newsletter-col">
+                    <h4>Newsletter</h4>
+                    <p>Subscribe to get the latest updates.</p>
+                    <form class="newsletter-form">
+                        <input type="email" placeholder="Your Email...">
+                        <button><i class="fas fa-paper-plane"></i></button>
+                    </form>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 ANIMESTREAM Inc. All Rights Reserved</p>
+                <a href="#" id="backToTop" class="back-to-top"><i class="fas fa-arrow-up"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../script/watch.js"></script>
+</body>
+</html>

@@ -1,0 +1,660 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cari Anime - AniStream</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Mulish:wght@300;400;500;600;700;800&family=Oswald:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <link rel="stylesheet" href="../styles/search.css">
+</head>
+<body>
+    <header class="header" id="mainHeader">
+        <div class="container header-container">
+            <div class="logo">
+                <a href="home.html">ANI<span class="highlight">ME</span>STREAM</a>
+            </div>
+
+            <nav class="navbar" id="navbar">
+                <ul class="menu">
+                    <li class="menu-item"><a href="home.html">Home</a></li>
+                    <li class="menu-item has-dropdown">
+                        <a href="#">Genre <i class="fas fa-chevron-down"></i></a>
+                        <ul class="dropdown">
+                            <li><a href="#">Action</a></li>
+                            <li><a href="#">Adventure</a></li>
+                            <li><a href="#">Fantasy</a></li>
+                            <li><a href="#">Sci-Fi</a></li>
+                        </ul>
+                    </li>
+                    <li class="menu-item"><a href="#">Schedule</a></li>
+                    <li class="menu-item"><a href="#">News</a></li>
+                </ul>
+            </nav>
+
+            <div class="header-actions">
+                <!-- Search button dibuat non-fungsional -->
+                <button class="action-btn search-trigger" id="searchTrigger" style="pointer-events: none; opacity: 0.6;"><i class="fas fa-search"></i></button>
+                
+                <!-- User Profile Button dibuat non-fungsional -->
+                <div class="user-profile">
+                    <button class="user-btn" id="userBtn" style="pointer-events: none; opacity: 0.6;">
+                        <i class="fas fa-user"></i>
+                    </button>
+                    <div class="user-dropdown" id="userDropdown">
+                        <div class="user-info">
+                            <div class="user-avatar">
+                                <i class="fas fa-user-circle"></i>
+                            </div>
+                            <div class="user-details">
+                                <span class="user-name">AnimeLover</span>
+                                <span class="user-status">Premium Member</span>
+                            </div>
+                        </div>
+                        <div class="dropdown-divider"></div>
+                        <a href="#" class="dropdown-item">
+                            <i class="fas fa-user"></i>
+                            <span>My Profile</span>
+                        </a>
+                        <a href="#" class="dropdown-item">
+                            <i class="fas fa-cog"></i>
+                            <span>Settings</span>
+                        </a>
+                        <a href="#" class="dropdown-item">
+                            <i class="fas fa-list"></i>
+                            <span>My List</span>
+                        </a>
+                        <a href="#" class="dropdown-item">
+                            <i class="fas fa-history"></i>
+                            <span>Watch History</span>
+                        </a>
+                        <div class="dropdown-divider"></div>
+                        <a href="#" class="dropdown-item logout">
+                            <i class="fas fa-sign-out-alt"></i>
+                            <span>Log Out</span>
+                        </a>
+                    </div>
+                </div>
+
+                <button class="mobile-toggle" id="mobileToggle">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <div class="search-container">
+        <div class="container">
+
+            <!-- Search Header -->
+            <div class="search-header">
+                <h1 class="page-title">Cari Anime Favoritmu</h1>
+                <p class="page-subtitle">Temukan anime terbaik dari koleksi kami yang lengkap</p>
+                
+                <!-- Main Search Bar -->
+                <div class="main-search-bar">
+                    <div class="search-input-container">
+                        <input type="text" id="mainSearchInput" placeholder="Cari judul anime, karakter, atau genre...">
+                        <button class="search-btn" id="mainSearchBtn">
+                            <i class="fas fa-search"></i>
+                        </button>
+                    </div>
+                    <div class="search-suggestions" id="searchSuggestions">
+                        <!-- Suggestions will be populated by JavaScript -->
+                    </div>
+                </div>
+
+                <!-- Quick Search Tags -->
+                <div class="quick-search-tags">
+                    <span>Pencarian Cepat:</span>
+                    <div class="tags-container">
+                        <a href="#" class="tag">Action</a>
+                        <a href="#" class="tag">Romance</a>
+                        <a href="#" class="tag">Fantasy</a>
+                        <a href="#" class="tag">Isekai</a>
+                        <a href="#" class="tag">2024</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="search-content">
+                <aside class="filters-sidebar">
+                    <div class="filter-section">
+                        <h3 class="filter-title">Filter Pencarian</h3>
+                        
+                        <!-- Genre Filter -->
+                        <div class="filter-group">
+                            <div class="filter-header">
+                                <h4>Genre</h4>
+                                <button class="filter-toggle" data-target="genre-list">
+                                    <i class="fas fa-chevron-down"></i>
+                                </button>
+                            </div>
+                            <div class="filter-options" id="genre-list">
+                                <div class="filter-option">
+                                    <input type="checkbox" id="action" name="genre" value="action">
+                                    <label for="action">Action</label>
+                                    <span class="count">128</span>
+                                </div>
+                                <div class="filter-option">
+                                    <input type="checkbox" id="adventure" name="genre" value="adventure">
+                                    <label for="adventure">Adventure</label>
+                                    <span class="count">96</span>
+                                </div>
+                                <div class="filter-option">
+                                    <input type="checkbox" id="comedy" name="genre" value="comedy">
+                                    <label for="comedy">Comedy</label>
+                                    <span class="count">154</span>
+                                </div>
+                                <div class="filter-option">
+                                    <input type="checkbox" id="drama" name="genre" value="drama">
+                                    <label for="drama">Drama</label>
+                                    <span class="count">112</span>
+                                </div>
+                                <div class="filter-option">
+                                    <input type="checkbox" id="fantasy" name="genre" value="fantasy">
+                                    <label for="fantasy">Fantasy</label>
+                                    <span class="count">143</span>
+                                </div>
+                                <div class="filter-option">
+                                    <input type="checkbox" id="romance" name="genre" value="romance">
+                                    <label for="romance">Romance</label>
+                                    <span class="count">98</span>
+                                </div>
+                                <div class="filter-option">
+                                    <input type="checkbox" id="sci-fi" name="genre" value="sci-fi">
+                                    <label for="sci-fi">Sci-Fi</label>
+                                    <span class="count">76</span>
+                                </div>
+                                <div class="filter-option">
+                                    <input type="checkbox" id="slice-of-life" name="genre" value="slice-of-life">
+                                    <label for="slice-of-life">Slice of Life</label>
+                                    <span class="count">67</span>
+                                </div>
+                                <div class="filter-option">
+                                    <input type="checkbox" id="supernatural" name="genre" value="supernatural">
+                                    <label for="supernatural">Supernatural</label>
+                                    <span class="count">89</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Tahun Filter -->
+                        <div class="filter-group">
+                            <div class="filter-header">
+                                <h4>Tahun Rilis</h4>
+                                <button class="filter-toggle" data-target="year-list">
+                                    <i class="fas fa-chevron-down"></i>
+                                </button>
+                            </div>
+                            <div class="filter-options" id="year-list">
+                                <div class="filter-option">
+                                    <input type="checkbox" id="2024" name="year" value="2024">
+                                    <label for="2024">2024</label>
+                                    <span class="count">24</span>
+                                </div>
+                                <div class="filter-option">
+                                    <input type="checkbox" id="2023" name="year" value="2023">
+                                    <label for="2023">2023</label>
+                                    <span class="count">68</span>
+                                </div>
+                                <div class="filter-option">
+                                    <input type="checkbox" id="2022" name="year" value="2022">
+                                    <label for="2022">2022</label>
+                                    <span class="count">54</span>
+                                </div>
+                                <div class="filter-option">
+                                    <input type="checkbox" id="2021" name="year" value="2021">
+                                    <label for="2021">2021</label>
+                                    <span class="count">47</span>
+                                </div>
+                                <div class="filter-option">
+                                    <input type="checkbox" id="2020" name="year" value="2020">
+                                    <label for="2020">2020</label>
+                                    <span class="count">39</span>
+                                </div>
+                                <div class="filter-option">
+                                    <input type="checkbox" id="2019" name="year" value="2019">
+                                    <label for="2019">2019</label>
+                                    <span class="count">42</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Status Filter -->
+                        <div class="filter-group">
+                            <div class="filter-header">
+                                <h4>Status</h4>
+                                <button class="filter-toggle" data-target="status-list">
+                                    <i class="fas fa-chevron-down"></i>
+                                </button>
+                            </div>
+                            <div class="filter-options" id="status-list">
+                                <div class="filter-option">
+                                    <input type="checkbox" id="ongoing" name="status" value="ongoing">
+                                    <label for="ongoing">Sedang Tayang</label>
+                                    <span class="count">32</span>
+                                </div>
+                                <div class="filter-option">
+                                    <input type="checkbox" id="completed" name="status" value="completed">
+                                    <label for="completed">Selesai</label>
+                                    <span class="count">421</span>
+                                </div>
+                                <div class="filter-option">
+                                    <input type="checkbox" id="upcoming" name="status" value="upcoming">
+                                    <label for="upcoming">Akan Datang</label>
+                                    <span class="count">15</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Rating Filter - Diperbaiki menjadi 5 pilihan -->
+                        <div class="filter-group">
+                            <div class="filter-header">
+                                <h4>Rating</h4>
+                                <button class="filter-toggle" data-target="rating-list">
+                                    <i class="fas fa-chevron-down"></i>
+                                </button>
+                            </div>
+                            <div class="filter-options" id="rating-list">
+                                <div class="filter-option">
+                                    <input type="checkbox" id="rating-5" name="rating" value="5">
+                                    <label for="rating-5">
+                                        <span class="stars">
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                        </span>
+                                    </label>
+                                    <span class="count">48</span>
+                                </div>
+                                <div class="filter-option">
+                                    <input type="checkbox" id="rating-4" name="rating" value="4">
+                                    <label for="rating-4">
+                                        <span class="stars">
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="far fa-star"></i>
+                                        </span>
+                                    </label>
+                                    <span class="count">156</span>
+                                </div>
+                                <div class="filter-option">
+                                    <input type="checkbox" id="rating-3" name="rating" value="3">
+                                    <label for="rating-3">
+                                        <span class="stars">
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="far fa-star"></i>
+                                            <i class="far fa-star"></i>
+                                        </span>
+                                    </label>
+                                    <span class="count">203</span>
+                                </div>
+                                <div class="filter-option">
+                                    <input type="checkbox" id="rating-2" name="rating" value="2">
+                                    <label for="rating-2">
+                                        <span class="stars">
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="far fa-star"></i>
+                                            <i class="far fa-star"></i>
+                                            <i class="far fa-star"></i>
+                                        </span>
+                                    </label>
+                                    <span class="count">120</span>
+                                </div>
+                                <div class="filter-option">
+                                    <input type="checkbox" id="rating-1" name="rating" value="1">
+                                    <label for="rating-1">
+                                        <span class="stars">
+                                            <i class="fas fa-star"></i>
+                                            <i class="far fa-star"></i>
+                                            <i class="far fa-star"></i>
+                                            <i class="far fa-star"></i>
+                                            <i class="far fa-star"></i>
+                                        </span>
+                                    </label>
+                                    <span class="count">75</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Tipe Filter -->
+                        <div class="filter-group">
+                            <div class="filter-header">
+                                <h4>Tipe</h4>
+                                <button class="filter-toggle" data-target="type-list">
+                                    <i class="fas fa-chevron-down"></i>
+                                </button>
+                            </div>
+                            <div class="filter-options" id="type-list">
+                                <div class="filter-option">
+                                    <input type="checkbox" id="tv" name="type" value="tv">
+                                    <label for="tv">TV Series</label>
+                                    <span class="count">324</span>
+                                </div>
+                                <div class="filter-option">
+                                    <input type="checkbox" id="movie" name="type" value="movie">
+                                    <label for="movie">Movie</label>
+                                    <span class="count">87</span>
+                                </div>
+                                <div class="filter-option">
+                                    <input type="checkbox" id="ova" name="type" value="ova">
+                                    <label for="ova">OVA</label>
+                                    <span class="count">42</span>
+                                </div>
+                                <div class="filter-option">
+                                    <input type="checkbox" id="ona" name="type" value="ona">
+                                    <label for="ona">ONA</label>
+                                    <span class="count">28</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Sort Options -->
+                        <div class="filter-group">
+                            <div class="filter-header">
+                                <h4>Urutkan Berdasarkan</h4>
+                            </div>
+                            <div class="filter-options">
+                                <div class="filter-option">
+                                    <input type="radio" id="sort-popular" name="sort" value="popular" checked>
+                                    <label for="sort-popular">Populer</label>
+                                </div>
+                                <div class="filter-option">
+                                    <input type="radio" id="sort-newest" name="sort" value="newest">
+                                    <label for="sort-newest">Terbaru</label>
+                                </div>
+                                <div class="filter-option">
+                                    <input type="radio" id="sort-rating" name="sort" value="rating">
+                                    <label for="sort-rating">Rating Tertinggi</label>
+                                </div>
+                                <div class="filter-option">
+                                    <input type="radio" id="sort-title" name="sort" value="title">
+                                    <label for="sort-title">Judul A-Z</label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Action Buttons -->
+                        <div class="filter-actions">
+                            <button class="btn-secondary" id="resetFilters">Reset Filter</button>
+                            <button class="btn-primary" id="applyFilters">Terapkan Filter</button>
+                        </div>
+                    </div>
+                </aside>
+
+                <main class="search-results">
+                    <!-- Results Header -->
+                    <div class="results-header">
+                        <div class="results-info">
+                            <h2 id="hasilPencarianBtn" style="cursor: pointer;">Hasil Pencarian</h2>
+                            <p class="results-count">Menampilkan <span id="resultsCount">24</span> dari <span id="totalResults">420</span> anime</p>
+                        </div>
+                        <div class="view-options">
+                            <button class="view-option active" data-view="grid">
+                                <i class="fas fa-th"></i>
+                            </button>
+                            <button class="view-option" data-view="list">
+                                <i class="fas fa-list"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Active Filters -->
+                    <div class="active-filters" id="activeFilters">
+                        <!-- Active filters will be populated by JavaScript -->
+                    </div>
+
+                    <!-- Results Grid -->
+                    <div class="results-grid" id="resultsGrid">
+                        <!-- Results akan diisi dengan HTML card seperti di home -->
+                        <div class="anime-card">
+                            <a href="watch.html" class="card-link">
+                                <div class="card-poster">
+                                    <img src="https://images.unsplash.com/photo-1578632767115-351597cf2477?q=80&w=400&auto=format&fit=crop" alt="Fate/Stay Night">
+                                    <div class="card-overlay">
+                                        <div class="play-indicator">
+                                            <i class="fas fa-play"></i>
+                                            <span>Watch Now</span>
+                                        </div>
+                                    </div>
+                                    <div class="card-badges">
+                                        <span class="ep-badge">26 EP</span>
+                                    </div>
+                                </div>
+                                <div class="card-detail">
+                                    <h3 class="anime-title">Fate/Stay Night: Unlimited Blade Works</h3>
+                                    <div class="genre-badges-bottom">
+                                        <span class="genre-badge">Action</span>
+                                        <span class="genre-badge">Fantasy</span>
+                                    </div>
+                                    <div class="anime-meta">
+                                        <span><i class="fas fa-star"></i> 4.8</span>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+
+                        <div class="anime-card">
+                            <a href="watch.html" class="card-link">
+                                <div class="card-poster">
+                                    <img src="https://images.unsplash.com/photo-1541562232579-512a21360020?q=80&w=400&auto=format&fit=crop" alt="Demon Slayer">
+                                    <div class="card-overlay">
+                                        <div class="play-indicator">
+                                            <i class="fas fa-play"></i>
+                                            <span>Watch Now</span>
+                                        </div>
+                                    </div>
+                                    <div class="card-badges">
+                                        <span class="ep-badge">26 EP</span>
+                                    </div>
+                                </div>
+                                <div class="card-detail">
+                                    <h3 class="anime-title">Demon Slayer: Kimetsu no Yaiba</h3>
+                                    <div class="genre-badges-bottom">
+                                        <span class="genre-badge">Action</span>
+                                        <span class="genre-badge">Fantasy</span>
+                                    </div>
+                                    <div class="anime-meta">
+                                        <span><i class="fas fa-star"></i> 4.9</span>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+
+                        <div class="anime-card">
+                            <a href="watch.html" class="card-link">
+                                <div class="card-poster">
+                                    <img src="https://images.unsplash.com/photo-1612404730960-5c71578fca37?q=80&w=400&auto=format&fit=crop" alt="Sword Art Online">
+                                    <div class="card-overlay">
+                                        <div class="play-indicator">
+                                            <i class="fas fa-play"></i>
+                                            <span>Watch Now</span>
+                                        </div>
+                                    </div>
+                                    <div class="card-badges">
+                                        <span class="ep-badge">47 EP</span>
+                                    </div>
+                                </div>
+                                <div class="card-detail">
+                                    <h3 class="anime-title">Sword Art Online: Alicization</h3>
+                                    <div class="genre-badges-bottom">
+                                        <span class="genre-badge">Action</span>
+                                        <span class="genre-badge">Sci-Fi</span>
+                                    </div>
+                                    <div class="anime-meta">
+                                        <span><i class="fas fa-star"></i> 4.5</span>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+
+                        <div class="anime-card">
+                            <a href="watch.html" class="card-link">
+                                <div class="card-poster">
+                                    <img src="https://images.unsplash.com/photo-1581833971358-2c8b550f87b3?q=80&w=400&auto=format&fit=crop" alt="Attack on Titan">
+                                    <div class="card-overlay">
+                                        <div class="play-indicator">
+                                            <i class="fas fa-play"></i>
+                                            <span>Watch Now</span>
+                                        </div>
+                                    </div>
+                                    <div class="card-badges">
+                                        <span class="ep-badge">28 EP</span>
+                                    </div>
+                                </div>
+                                <div class="card-detail">
+                                    <h3 class="anime-title">Attack on Titan: The Final Season</h3>
+                                    <div class="genre-badges-bottom">
+                                        <span class="genre-badge">Action</span>
+                                        <span class="genre-badge">Drama</span>
+                                    </div>
+                                    <div class="anime-meta">
+                                        <span><i class="fas fa-star"></i> 4.9</span>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+
+                        <div class="anime-card">
+                            <a href="watch.html" class="card-link">
+                                <div class="card-poster">
+                                    <img src="https://images.unsplash.com/photo-1607604276583-eef5d076aa5f?q=80&w=400&auto=format&fit=crop" alt="Jujutsu Kaisen">
+                                    <div class="card-overlay">
+                                        <div class="play-indicator">
+                                            <i class="fas fa-play"></i>
+                                            <span>Watch Now</span>
+                                        </div>
+                                    </div>
+                                    <div class="card-badges">
+                                        <span class="ep-badge">24 EP</span>
+                                    </div>
+                                </div>
+                                <div class="card-detail">
+                                    <h3 class="anime-title">Jujutsu Kaisen</h3>
+                                    <div class="genre-badges-bottom">
+                                        <span class="genre-badge">Action</span>
+                                        <span class="genre-badge">Supernatural</span>
+                                    </div>
+                                    <div class="anime-meta">
+                                        <span><i class="fas fa-star"></i> 4.7</span>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+
+                        <div class="anime-card">
+                            <a href="watch.html" class="card-link">
+                                <div class="card-poster">
+                                    <img src="https://images.unsplash.com/photo-1626544827763-d516dce335ca?q=80&w=400&auto=format&fit=crop" alt="My Hero Academia">
+                                    <div class="card-overlay">
+                                        <div class="play-indicator">
+                                            <i class="fas fa-play"></i>
+                                            <span>Watch Now</span>
+                                        </div>
+                                    </div>
+                                    <div class="card-badges">
+                                        <span class="ep-badge">25 EP</span>
+                                    </div>
+                                </div>
+                                <div class="card-detail">
+                                    <h3 class="anime-title">My Hero Academia Season 6</h3>
+                                    <div class="genre-badges-bottom">
+                                        <span class="genre-badge">Action</span>
+                                        <span class="genre-badge">Superhero</span>
+                                    </div>
+                                    <div class="anime-meta">
+                                        <span><i class="fas fa-star"></i> 4.6</span>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Pagination -->
+                    <div class="pagination">
+                        <button class="pagination-btn prev" disabled>
+                            <i class="fas fa-chevron-left"></i>
+                        </button>
+                        <div class="pagination-numbers">
+                            <button class="pagination-number active">1</button>
+                            <button class="pagination-number">2</button>
+                            <button class="pagination-number">3</button>
+                            <span class="pagination-ellipsis">...</span>
+                            <button class="pagination-number">12</button>
+                        </div>
+                        <button class="pagination-btn next">
+                            <i class="fas fa-chevron-right"></i>
+                        </button>
+                    </div>
+
+                    <!-- No Results State -->
+                    <div class="no-results" id="noResults" style="display: none;">
+                        <div class="no-results-icon">
+                            <i class="fas fa-search"></i>
+                        </div>
+                        <h3>Tidak ada hasil yang ditemukan</h3>
+                        <p>Coba ubah kata kunci pencarian atau filter yang digunakan</p>
+                        <button class="btn-primary" id="resetSearch">Reset Pencarian</button>
+                    </div>
+                </main>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="footer-bg-graphics"></div>
+        <div class="container">
+            <div class="footer-top">
+                <div class="footer-col brand-col">
+                     <div class="logo">
+                        <a href="home.html">ANI<span class="highlight">ME</span>STREAM</a>
+                    </div>
+                    <p>The premier destination for high-quality anime streaming. Join our community today.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-discord"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+                <div class="footer-col links-col">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#">Our Blog</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Contacts</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col newsletter-col">
+                    <h4>Newsletter</h4>
+                    <p>Subscribe to get the latest updates.</p>
+                    <form class="newsletter-form">
+                        <input type="email" placeholder="Your Email...">
+                        <button><i class="fas fa-paper-plane"></i></button>
+                    </form>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 ANIMESTREAM Inc. All Rights Reserved</p>
+                <a href="#" id="backToTop" class="back-to-top"><i class="fas fa-arrow-up"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../script/search.js"></script>
+</body>
+</html>
