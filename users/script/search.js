@@ -183,12 +183,15 @@ document.addEventListener('DOMContentLoaded', () => {
         });
         
         // Button Hasil Pencarian functionality
-        hasilPencarianBtn.addEventListener('click', () => {
-            alert('Button "Hasil Pencarian" ditekan! Melakukan pencarian...');
-            performSearch();
-        });
+        if (hasilPencarianBtn) {
+            hasilPencarianBtn.addEventListener('click', () => {
+                performSearch();
+            });
+        }
         
-        resetSearch.addEventListener('click', resetAll);
+        if (resetSearch) {
+            resetSearch.addEventListener('click', resetAll);
+        }
         
         // Close suggestions when clicking outside
         document.addEventListener('click', (e) => {
@@ -482,7 +485,10 @@ document.addEventListener('DOMContentLoaded', () => {
         });
         
         // Reset sort to default
-        document.querySelector('input[name="sort"][value="popular"]').checked = true;
+        const defaultSort = document.querySelector('input[name="sort"][value="popular"]');
+        if (defaultSort) {
+            defaultSort.checked = true;
+        }
         currentSort = 'popular';
         
         // Perform search with reset values
@@ -504,66 +510,78 @@ document.addEventListener('DOMContentLoaded', () => {
                 const target = this.getAttribute('data-target');
                 const options = document.getElementById(target);
                 
-                options.classList.toggle('collapsed');
-                this.querySelector('i').classList.toggle('fa-chevron-down');
-                this.querySelector('i').classList.toggle('fa-chevron-up');
+                if (options) {
+                    options.classList.toggle('collapsed');
+                    const icon = this.querySelector('i');
+                    if (icon) {
+                        icon.classList.toggle('fa-chevron-down');
+                        icon.classList.toggle('fa-chevron-up');
+                    }
+                }
             });
         });
         
         // Apply filters
-        applyFilters.addEventListener('click', function() {
-            // Get selected genres
-            currentFilters.genres = Array.from(document.querySelectorAll('input[name="genre"]:checked'))
-                .map(checkbox => checkbox.value);
-            
-            // Get selected years
-            currentFilters.years = Array.from(document.querySelectorAll('input[name="year"]:checked'))
-                .map(checkbox => checkbox.value);
-            
-            // Get selected status
-            currentFilters.status = Array.from(document.querySelectorAll('input[name="status"]:checked'))
-                .map(checkbox => checkbox.value);
-            
-            // Get selected rating
-            currentFilters.rating = Array.from(document.querySelectorAll('input[name="rating"]:checked'))
-                .map(checkbox => checkbox.value);
-            
-            // Get selected type
-            currentFilters.type = Array.from(document.querySelectorAll('input[name="type"]:checked'))
-                .map(checkbox => checkbox.value);
-            
-            // Get selected sort
-            const selectedSort = document.querySelector('input[name="sort"]:checked');
-            if (selectedSort) {
-                currentSort = selectedSort.value;
-            }
-            
-            // Perform search with new filters
-            performSearch();
-        });
+        if (applyFilters) {
+            applyFilters.addEventListener('click', function() {
+                // Get selected genres
+                currentFilters.genres = Array.from(document.querySelectorAll('input[name="genre"]:checked'))
+                    .map(checkbox => checkbox.value);
+                
+                // Get selected years
+                currentFilters.years = Array.from(document.querySelectorAll('input[name="year"]:checked'))
+                    .map(checkbox => checkbox.value);
+                
+                // Get selected status
+                currentFilters.status = Array.from(document.querySelectorAll('input[name="status"]:checked'))
+                    .map(checkbox => checkbox.value);
+                
+                // Get selected rating
+                currentFilters.rating = Array.from(document.querySelectorAll('input[name="rating"]:checked'))
+                    .map(checkbox => checkbox.value);
+                
+                // Get selected type
+                currentFilters.type = Array.from(document.querySelectorAll('input[name="type"]:checked'))
+                    .map(checkbox => checkbox.value);
+                
+                // Get selected sort
+                const selectedSort = document.querySelector('input[name="sort"]:checked');
+                if (selectedSort) {
+                    currentSort = selectedSort.value;
+                }
+                
+                // Perform search with new filters
+                performSearch();
+            });
+        }
         
         // Reset filters
-        resetFilters.addEventListener('click', function() {
-            // Uncheck all filter checkboxes
-            document.querySelectorAll('.filter-options input[type="checkbox"]').forEach(checkbox => {
-                checkbox.checked = false;
+        if (resetFilters) {
+            resetFilters.addEventListener('click', function() {
+                // Uncheck all filter checkboxes
+                document.querySelectorAll('.filter-options input[type="checkbox"]').forEach(checkbox => {
+                    checkbox.checked = false;
+                });
+                
+                // Reset sort to default
+                const defaultSort = document.querySelector('input[name="sort"][value="popular"]');
+                if (defaultSort) {
+                    defaultSort.checked = true;
+                }
+                
+                // Reset current filters
+                currentFilters = {
+                    genres: [],
+                    years: [],
+                    status: [],
+                    rating: [],
+                    type: []
+                };
+                
+                // Update active filters
+                updateActiveFilters();
             });
-            
-            // Reset sort to default
-            document.querySelector('input[name="sort"][value="popular"]').checked = true;
-            
-            // Reset current filters
-            currentFilters = {
-                genres: [],
-                years: [],
-                status: [],
-                rating: [],
-                type: []
-            };
-            
-            // Update active filters
-            updateActiveFilters();
-        });
+        }
         
         // View options
         viewOptions.forEach(option => {
@@ -587,9 +605,8 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     
     /* ==================================================
-       3. HEADER & NAVIGATION FUNCTIONALITY - DIPERBAIKI
-       (Button search dan profile dibuat non-fungsional)
-   ================================================== */
+       3. HEADER & NAVIGATION FUNCTIONALITY (FIXED)
+    ================================================== */
     const header = document.getElementById('mainHeader');
     const backToTop = document.getElementById('backToTop');
     const mobileToggle = document.getElementById('mobileToggle');
@@ -602,68 +619,122 @@ document.addEventListener('DOMContentLoaded', () => {
         // Scroll effects
         window.addEventListener('scroll', () => {
             if (window.scrollY > 100) {
-                header.classList.add('scrolled');
-                backToTop.classList.add('show');
+                if (header) header.classList.add('scrolled');
+                if (backToTop) backToTop.classList.add('show');
             } else {
-                header.classList.remove('scrolled');
-                backToTop.classList.remove('show');
+                if (header) header.classList.remove('scrolled');
+                if (backToTop) backToTop.classList.remove('show');
             }
         });
         
         // Mobile menu
-        mobileToggle.addEventListener('click', () => {
-            navbar.classList.toggle('active');
-            // Simple animation for hamburger icon
-            const spans = mobileToggle.querySelectorAll('span');
-            if (navbar.classList.contains('active')) {
-                spans[0].style.transform = 'rotate(45deg) translate(5px, 5px)';
-                spans[1].style.opacity = '0';
-                spans[2].style.transform = 'rotate(-45deg) translate(5px, -5px)';
-            } else {
-                spans[0].style.transform = 'none';
-                spans[1].style.opacity = '1';
-                spans[2].style.transform = 'none';
-            }
-        });
-        
-        // NONAKTIFKAN: Search trigger di header
-        // searchTrigger.addEventListener('click', () => {
-        //     // Kode untuk membuka search overlay dihapus
-        //     console.log('Search trigger clicked - non-functional in search page');
-        // });
-        
-        // NONAKTIFKAN: User dropdown
-        // userBtn.addEventListener('click', function(e) {
-        //     e.stopPropagation();
-        //     userDropdown.classList.toggle('active');
-        // });
-        
-        // NONAKTIFKAN: Close dropdown when clicking outside
-        // document.addEventListener('click', function(e) {
-        //     if (!userBtn.contains(e.target) && !userDropdown.contains(e.target)) {
-        //         userDropdown.classList.remove('active');
-        //     }
-        // });
-        
-        // NONAKTIFKAN: Close dropdown when pressing Escape key
-        // document.addEventListener('keydown', function(e) {
-        //     if (e.key === 'Escape' && userDropdown.classList.contains('active')) {
-        //         userDropdown.classList.remove('active');
-        //     }
-        // });
-        
-        // Back to top button (tetap berfungsi)
-        backToTop.addEventListener('click', function(e) {
-            e.preventDefault();
-            window.scrollTo({
-                top: 0,
-                behavior: 'smooth'
+        if (mobileToggle && navbar) {
+            mobileToggle.addEventListener('click', () => {
+                navbar.classList.toggle('active');
+                // Simple animation for hamburger icon
+                const spans = mobileToggle.querySelectorAll('span');
+                if (navbar.classList.contains('active')) {
+                    spans[0].style.transform = 'rotate(45deg) translate(5px, 5px)';
+                    spans[1].style.opacity = '0';
+                    spans[2].style.transform = 'rotate(-45deg) translate(5px, -5px)';
+                } else {
+                    spans[0].style.transform = 'none';
+                    spans[1].style.opacity = '1';
+                    spans[2].style.transform = 'none';
+                }
             });
-        });
+        }
         
-        // Nonaktifkan event listener untuk search trigger dan user button
-        searchTrigger.removeEventListener('click', () => {});
-        userBtn.removeEventListener('click', () => {});
+        // FIXED: Search trigger - Instant response
+        if (searchTrigger && mainSearchInput) {
+            searchTrigger.addEventListener('click', (e) => {
+                e.preventDefault();
+                
+                // Immediate focus - no delay
+                mainSearchInput.focus();
+                
+                // Optional: Add visual feedback
+                const searchContainer = document.querySelector('.search-input-container');
+                if (searchContainer) {
+                    searchContainer.style.borderColor = 'var(--primary)';
+                    searchContainer.style.boxShadow = '0 0 0 3px var(--primary-glow)';
+                    
+                    // Remove highlight after blur
+                    mainSearchInput.addEventListener('blur', function removeHighlight() {
+                        searchContainer.style.borderColor = '';
+                        searchContainer.style.boxShadow = '';
+                        mainSearchInput.removeEventListener('blur', removeHighlight);
+                    }, { once: true });
+                }
+                
+                // Smooth scroll to search (non-blocking)
+                requestAnimationFrame(() => {
+                    const searchHeader = document.querySelector('.search-header');
+                    if (searchHeader) {
+                        searchHeader.scrollIntoView({ 
+                            behavior: 'smooth', 
+                            block: 'center' 
+                        });
+                    }
+                });
+            });
+        }
+        
+        // User dropdown functionality
+        if (userBtn && userDropdown) {
+            userBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                userDropdown.classList.toggle('active');
+            });
+            
+            // Close dropdown when clicking outside
+            document.addEventListener('click', function(e) {
+                if (!userBtn.contains(e.target) && !userDropdown.contains(e.target)) {
+                    userDropdown.classList.remove('active');
+                }
+            });
+            
+            // Close dropdown when pressing Escape key
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape' && userDropdown.classList.contains('active')) {
+                    userDropdown.classList.remove('active');
+                }
+            });
+            
+            // Handle dropdown item clicks
+            const dropdownItems = userDropdown.querySelectorAll('.dropdown-item');
+            dropdownItems.forEach(item => {
+                item.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const itemText = this.querySelector('span').textContent;
+                    
+                    // Log action (dalam aplikasi nyata, ini akan melakukan navigasi atau aksi tertentu)
+                    console.log('Dropdown item clicked:', itemText);
+                    
+                    // Close dropdown after click
+                    userDropdown.classList.remove('active');
+                    
+                    // Show notification
+                    if (itemText === 'Log Out') {
+                        alert('Logging out...');
+                    } else {
+                        alert(`Opening ${itemText}...`);
+                    }
+                });
+            });
+        }
+        
+        // Back to top button
+        if (backToTop) {
+            backToTop.addEventListener('click', function(e) {
+                e.preventDefault();
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            });
+        }
     }
     
     /* ==================================================
@@ -682,6 +753,15 @@ document.addEventListener('DOMContentLoaded', () => {
                 
                 // Perform search
                 performSearch();
+                
+                // Scroll to results
+                const resultsSection = document.querySelector('.results-header');
+                if (resultsSection) {
+                    resultsSection.scrollIntoView({ 
+                        behavior: 'smooth', 
+                        block: 'start' 
+                    });
+                }
             });
         });
     }
@@ -696,11 +776,13 @@ document.addEventListener('DOMContentLoaded', () => {
         paginationBtns.forEach(btn => {
             btn.addEventListener('click', function() {
                 if (this.classList.contains('prev')) {
-                    // Previous page logic
                     console.log('Previous page');
+                    // Scroll to top of results
+                    scrollToResults();
                 } else if (this.classList.contains('next')) {
-                    // Next page logic
                     console.log('Next page');
+                    // Scroll to top of results
+                    scrollToResults();
                 }
             });
         });
@@ -713,10 +795,22 @@ document.addEventListener('DOMContentLoaded', () => {
                 // Add active class to clicked number
                 this.classList.add('active');
                 
-                // In a real app, you would load the corresponding page of results
                 console.log(`Go to page ${this.textContent}`);
+                
+                // Scroll to top of results
+                scrollToResults();
             });
         });
+    }
+    
+    function scrollToResults() {
+        const resultsHeader = document.querySelector('.results-header');
+        if (resultsHeader) {
+            resultsHeader.scrollIntoView({ 
+                behavior: 'smooth', 
+                block: 'start' 
+            });
+        }
     }
     
     /* ==================================================
@@ -733,9 +827,10 @@ document.addEventListener('DOMContentLoaded', () => {
         document.querySelectorAll('.filter-options').forEach(options => {
             options.classList.add('collapsed');
         });
+        
+        console.log('Search page initialized successfully!');
     }
     
     // Initialize the application
     init();
 });
-
