@@ -843,6 +843,32 @@ img {
     background: rgba(255, 255, 255, 0.2);
 }
 
+/* Selected Genres Display */
+.selected-genres {
+    background: var(--bg-card);
+    padding: 15px 20px;
+    border-radius: 12px;
+    border: 1px solid var(--glass-border);
+    margin-bottom: 25px;
+    display: block;
+}
+
+.selected-genres p {
+    font-size: 15px;
+    color: var(--text-white);
+    margin: 0;
+}
+
+.selected-genres strong {
+    color: var(--primary);
+    margin-right: 8px;
+}
+
+#genresList {
+    color: var(--text-light);
+    font-weight: 500;
+}
+
 /* Results Grid - CARD STYLING SEPERTI HOME */
 .results-grid {
     display: grid;

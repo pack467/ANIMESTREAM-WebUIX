@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My List - AniStream</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Mulish:wght@300;400;500;600;700;800&family=Oswald:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <link rel="stylesheet" href="../styles/list.css">
+</head>
+<body>
+    <div id="preloader">
+        <div class="loader-container">
+            <div class="loader-logo">ANI<span class="me">ME</span>STREAM</div>
+            <div class="progress-bar-wrap">
+                <div class="progress-bar" id="loader-progress"></div>
+            </div>
+            <div class="loading-text">Loading Your Anime Collection...</div>
+        </div>
+    </div>
+
+    <div class="search-overlay" id="searchOverlay">
+        <div class="search-close" id="searchClose"><i class="fas fa-times"></i></div>
+        <div class="search-box">
+            <input type="text" placeholder="Type to search anime...">
+            <button><i class="fas fa-search"></i></button>
+        </div>
+        <div class="search-tags">
+            <span>Popular:</span>
+            <a href="#">One Piece</a>
+            <a href="#">Naruto</a>
+            <a href="#">Demon Slayer</a>
+            <a href="#">Jujutsu Kaisen</a>
+        </div>
+    </div>
+
+    <header class="header" id="mainHeader">
+        <div class="container header-container">
+            <div class="logo">
+                <a href="home.html">ANI<span class="highlight">ME</span>STREAM</a>
+            </div>
+
+            <nav class="navbar" id="navbar">
+                <ul class="menu">
+                    <li class="menu-item"><a href="home.html">Home</a></li>
+                    <li class="menu-item has-dropdown">
+                        <a href="#">Genre <i class="fas fa-chevron-down"></i></a>
+                        <ul class="dropdown">
+                            <li><a href="#">Action</a></li>
+                            <li><a href="#">Adventure</a></li>
+                            <li><a href="#">Fantasy</a></li>
+                            <li><a href="#">Sci-Fi</a></li>
+                        </ul>
+                    </li>
+                    <li class="menu-item"><a href="#">Schedule</a></li>
+                    <li class="menu-item"><a href="#">News</a></li>
+                </ul>
+            </nav>
+
+            <div class="header-actions">
+                <button class="action-btn search-trigger" id="searchTrigger"><i class="fas fa-search"></i></button>
+                
+                <!-- User Profile Button dengan Dropdown Menu -->
+                <div class="user-profile">
+                    <button class="user-btn" id="userBtn">
+                        <i class="fas fa-user"></i>
+                    </button>
+                    <div class="user-dropdown" id="userDropdown">
+                        <div class="user-info">
+                            <div class="user-avatar">
+                                <i class="fas fa-user-circle"></i>
+                            </div>
+                            <div class="user-details">
+                                <span class="user-name">AnimeLover</span>
+                                <span class="user-status">Premium Member</span>
+                            </div>
+                        </div>
+                        <div class="dropdown-divider"></div>
+                        <a href="#" class="dropdown-item">
+                            <i class="fas fa-user"></i>
+                            <span>My Profile</span>
+                        </a>
+                        <a href="#" class="dropdown-item">
+                            <i class="fas fa-cog"></i>
+                            <span>Settings</span>
+                        </a>
+                        <a href="list.html" class="dropdown-item active">
+                            <i class="fas fa-list"></i>
+                            <span>My List</span>
+                        </a>
+                        <a href="history.html" class="dropdown-item">
+                            <i class="fas fa-history"></i>
+                            <span>Watch History</span>
+                        </a>
+                        <div class="dropdown-divider"></div>
+                        <a href="#" class="dropdown-item logout">
+                            <i class="fas fa-sign-out-alt"></i>
+                            <span>Log Out</span>
+                        </a>
+                    </div>
+                </div>
+
+                <button class="mobile-toggle" id="mobileToggle">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <div class="list-hero">
+        <div class="container">
+            <div class="list-hero-content">
+                <h1 class="list-title">My Anime List</h1>
+                <p class="list-subtitle">Your personal anime collection, organized just for you</p>
+                <div class="list-stats">
+                    <div class="stat-card">
+                        <i class="fas fa-bookmark"></i>
+                        <div class="stat-info">
+                            <span class="stat-number" id="totalAnime">24</span>
+                            <span class="stat-label">Total Anime</span>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <i class="fas fa-clock"></i>
+                        <div class="stat-info">
+                            <span class="stat-number" id="watchingCount">12</span>
+                            <span class="stat-label">Watching</span>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <i class="fas fa-check-circle"></i>
+                        <div class="stat-info">
+                            <span class="stat-number" id="completedCount">8</span>
+                            <span class="stat-label">Completed</span>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <i class="fas fa-pause-circle"></i>
+                        <div class="stat-info">
+                            <span class="stat-number" id="plannedCount">4</span>
+                            <span class="stat-label">Planned</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="list-container">
+        <div class="container">
+            <div class="list-header">
+                <div class="list-tabs" id="listTabs">
+                    <button class="tab-btn active" data-tab="all">
+                        <i class="fas fa-th-large"></i>
+                        <span>All Anime</span>
+                    </button>
+                    <button class="tab-btn" data-tab="watching">
+                        <i class="fas fa-play-circle"></i>
+                        <span>Watching</span>
+                    </button>
+                    <button class="tab-btn" data-tab="completed">
+                        <i class="fas fa-check-circle"></i>
+                        <span>Completed</span>
+                    </button>
+                    <button class="tab-btn" data-tab="planned">
+                        <i class="fas fa-clock"></i>
+                        <span>Planned</span>
+                    </button>
+                    <button class="tab-btn" data-tab="favorites">
+                        <i class="fas fa-heart"></i>
+                        <span>Favorites</span>
+                    </button>
+                    <button class="tab-btn" data-tab="custom">
+                        <i class="fas fa-folder"></i>
+                        <span>Custom Lists</span>
+                    </button>
+                </div>
+                <div class="list-controls">
+                    <div class="list-sort">
+                        <select id="sortBy">
+                            <option value="recent">Recently Added</option>
+                            <option value="title">Title A-Z</option>
+                            <option value="rating">Highest Rating</option>
+                            <option value="episodes">Most Episodes</option>
+                            <option value="progress">Watch Progress</option>
+                        </select>
+                    </div>
+                    <div class="list-view-toggle">
+                        <button class="view-btn active" id="gridViewBtn">
+                            <i class="fas fa-th-large"></i>
+                        </button>
+                        <button class="view-btn" id="listViewBtn">
+                            <i class="fas fa-list"></i>
+                        </button>
+                    </div>
+                    <button class="create-list-btn" id="createListBtn">
+                        <i class="fas fa-plus-circle"></i>
+                        Create New List
+                    </button>
+                </div>
+            </div>
+
+            <!-- Custom Lists Section (Only shown when custom tab is active) -->
+            <div class="custom-lists-section" id="customListsSection">
+                <div class="custom-lists-grid" id="customListsGrid">
+                    <!-- Custom lists will be added here dynamically -->
+                </div>
+            </div>
+
+            <!-- Anime Grid/List View -->
+            <div class="anime-view-section">
+                <div class="view-header" id="viewHeader">
+                    <h3 id="viewTitle">All Anime</h3>
+                    <div class="view-actions">
+                        <button class="action-btn select-all-btn" id="selectAllBtn">
+                            <i class="far fa-square"></i>
+                            Select All
+                        </button>
+                        <button class="action-btn bulk-edit-btn" id="bulkEditBtn">
+                            <i class="fas fa-edit"></i>
+                            Bulk Edit
+                        </button>
+                        <button class="action-btn export-btn" id="exportBtn">
+                            <i class="fas fa-download"></i>
+                            Export List
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Grid View -->
+                <div class="anime-grid-view active" id="animeGridView">
+                    <div class="anime-grid" id="animeGrid">
+                        <!-- Anime cards will be loaded here dynamically -->
+                    </div>
+                </div>
+                
+                <!-- List View -->
+                <div class="anime-list-view" id="animeListView">
+                    <div class="anime-list" id="animeList">
+                        <!-- Anime list items will be loaded here dynamically -->
+                    </div>
+                </div>
+
+                <div class="empty-list" id="emptyList" style="display: none;">
+                    <div class="empty-icon">
+                        <i class="fas fa-bookmark"></i>
+                    </div>
+                    <h3>Your List is Empty</h3>
+                    <p>Start adding anime to build your personal collection</p>
+                    <a href="home.html" class="btn-primary">Browse Anime</a>
+                </div>
+
+                <div class="pagination" id="pagination">
+                    <!-- Pagination will be added here dynamically -->
+                </div>
+            </div>
+
+            <!-- Quick Add Section -->
+            <div class="quick-add-section">
+                <div class="section-header">
+                    <h3><i class="fas fa-bolt"></i> Quick Add Anime</h3>
+                    <div class="search-box-small">
+                        <input type="text" id="quickSearch" placeholder="Search anime to add...">
+                        <button id="quickSearchBtn"><i class="fas fa-search"></i></button>
+                    </div>
+                </div>
+                <div class="quick-results" id="quickResults">
+                    <!-- Quick search results will appear here -->
+                </div>
+            </div>
+
+            <!-- Recommendations Section -->
+            <div class="recommendations-section">
+                <div class="section-header">
+                    <h3>Based On Your List</h3>
+                    <a href="#" class="view-all-btn">View All <i class="fas fa-arrow-right"></i></a>
+                </div>
+                <div class="recommendations-grid" id="recommendationsGrid">
+                    <!-- Recommendations will be added here dynamically -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="footer-bg-graphics"></div>
+        <div class="container">
+            <div class="footer-top">
+                <div class="footer-col brand-col">
+                     <div class="logo">
+                        <a href="home.html">ANI<span class="highlight">ME</span>STREAM</a>
+                    </div>
+                    <p>The premier destination for high-quality anime streaming. Join our community today.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-discord"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+                <div class="footer-col links-col">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#">Our Blog</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Contacts</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col newsletter-col">
+                    <h4>Newsletter</h4>
+                    <p>Subscribe to get the latest updates.</p>
+                    <form class="newsletter-form">
+                        <input type="email" placeholder="Your Email...">
+                        <button><i class="fas fa-paper-plane"></i></button>
+                    </form>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 ANIMESTREAM Inc. All Rights Reserved</p>
+                <a href="#" id="backToTop" class="back-to-top"><i class="fas fa-arrow-up"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Create List Modal -->
+    <div class="modal" id="createListModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Create New List</h3>
+                <button class="modal-close" id="createListModalClose"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="modal-body">
+                <form id="createListForm">
+                    <div class="form-group">
+                        <label for="listName">List Name</label>
+                        <input type="text" id="listName" placeholder="Enter list name..." required>
+                    </div>
+                    <div class="form-group">
+                        <label for="listDescription">Description (Optional)</label>
+                        <textarea id="listDescription" placeholder="Describe your list..." rows="3"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="listPrivacy">Privacy</label>
+                        <select id="listPrivacy">
+                            <option value="private">Private</option>
+                            <option value="public">Public</option>
+                            <option value="friends">Friends Only</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="listColor">Color Theme</label>
+                        <div class="color-options" id="colorOptions">
+                            <div class="color-option active" data-color="#ff6b6b"></div>
+                            <div class="color-option" data-color="#6c5ce7"></div>
+                            <div class="color-option" data-color="#00b894"></div>
+                            <div class="color-option" data-color="#fdcb6e"></div>
+                            <div class="color-option" data-color="#0984e3"></div>
+                            <div class="color-option" data-color="#a29bfe"></div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-secondary" id="createListCancel">Cancel</button>
+                <button class="btn-primary" id="createListConfirm">Create List</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Edit Anime Modal -->
+    <div class="modal" id="editAnimeModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Edit Anime Details</h3>
+                <button class="modal-close" id="editAnimeModalClose"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="modal-body">
+                <form id="editAnimeForm">
+                    <div class="form-group">
+                        <label for="editStatus">Status</label>
+                        <select id="editStatus">
+                            <option value="watching">Watching</option>
+                            <option value="completed">Completed</option>
+                            <option value="planned">Planned</option>
+                            <option value="dropped">Dropped</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="editProgress">Progress</label>
+                        <div class="progress-input">
+                            <input type="range" id="editProgress" min="0" max="100" value="0">
+                            <span id="progressValue">0%</span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="editRating">Your Rating</label>
+                        <div class="rating-input">
+                            <div class="star-rating" id="starRating">
+                                <i class="far fa-star" data-rating="1"></i>
+                                <i class="far fa-star" data-rating="2"></i>
+                                <i class="far fa-star" data-rating="3"></i>
+                                <i class="far fa-star" data-rating="4"></i>
+                                <i class="far fa-star" data-rating="5"></i>
+                            </div>
+                            <span id="ratingValue">0/5</span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="editNotes">Notes</label>
+                        <textarea id="editNotes" placeholder="Add personal notes..." rows="4"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>Tags</label>
+                        <div class="tags-input">
+                            <div class="tags-container" id="tagsContainer">
+                                <!-- Tags will be added here -->
+                            </div>
+                            <input type="text" id="tagInput" placeholder="Add a tag...">
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-secondary" id="editAnimeCancel">Cancel</button>
+                <button class="btn-primary" id="editAnimeSave">Save Changes</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bulk Edit Modal -->
+    <div class="modal" id="bulkEditModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Bulk Edit Selected Items</h3>
+                <button class="modal-close" id="bulkEditModalClose"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="modal-body">
+                <p><span id="selectedCount">0</span> anime selected</p>
+                <div class="form-group">
+                    <label for="bulkStatus">Change Status</label>
+                    <select id="bulkStatus">
+                        <option value="">Don't Change</option>
+                        <option value="watching">Watching</option>
+                        <option value="completed">Completed</option>
+                        <option value="planned">Planned</option>
+                        <option value="dropped">Dropped</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="bulkList">Move to List</label>
+                    <select id="bulkList">
+                        <option value="">Don't Move</option>
+                        <option value="favorites">Favorites</option>
+                        <!-- Custom lists will be added dynamically -->
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="bulkTags">Add Tags</label>
+                    <input type="text" id="bulkTags" placeholder="Separate tags with commas...">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-secondary" id="bulkEditCancel">Cancel</button>
+                <button class="btn-primary" id="bulkEditApply">Apply Changes</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="../script/list.js"></script>
+</body>
+</html>
