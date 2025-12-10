@@ -12,31 +12,6 @@
     <link rel="stylesheet" href="../styles/history.css">
 </head>
 <body>
-    <div id="preloader">
-        <div class="loader-container">
-            <div class="loader-logo">ANI<span class="me">ME</span>STREAM</div>
-            <div class="progress-bar-wrap">
-                <div class="progress-bar" id="loader-progress"></div>
-            </div>
-            <div class="loading-text">Loading Watch History...</div>
-        </div>
-    </div>
-
-    <div class="search-overlay" id="searchOverlay">
-        <div class="search-close" id="searchClose"><i class="fas fa-times"></i></div>
-        <div class="search-box">
-            <input type="text" placeholder="Type to search anime...">
-            <button><i class="fas fa-search"></i></button>
-        </div>
-        <div class="search-tags">
-            <span>Popular:</span>
-            <a href="#">One Piece</a>
-            <a href="#">Naruto</a>
-            <a href="#">Demon Slayer</a>
-            <a href="#">Jujutsu Kaisen</a>
-        </div>
-    </div>
-
     <header class="header" id="mainHeader">
         <div class="container header-container">
             <div class="logo">
@@ -63,7 +38,6 @@
             <div class="header-actions">
                 <button class="action-btn search-trigger" id="searchTrigger"><i class="fas fa-search"></i></button>
                 
-                <!-- User Profile Button dengan Dropdown Menu -->
                 <div class="user-profile">
                     <button class="user-btn" id="userBtn">
                         <i class="fas fa-user"></i>
@@ -91,7 +65,7 @@
                             <i class="fas fa-list"></i>
                             <span>My List</span>
                         </a>
-                        <a href="history.html" class="dropdown-item active">
+                        <a href="#" class="dropdown-item active">
                             <i class="fas fa-history"></i>
                             <span>Watch History</span>
                         </a>
@@ -112,90 +86,134 @@
         </div>
     </header>
 
-    <div class="history-hero">
-        <div class="container">
-            <div class="history-hero-content">
-                <h1 class="history-title">Watch History</h1>
-                <p class="history-subtitle">Your anime journey, beautifully organized</p>
-                <div class="history-stats">
-                    <div class="stat-card">
-                        <i class="fas fa-play-circle"></i>
-                        <div class="stat-info">
-                            <span class="stat-number">247</span>
-                            <span class="stat-label">Episodes Watched</span>
-                        </div>
-                    </div>
-                    <div class="stat-card">
-                        <i class="fas fa-clock"></i>
-                        <div class="stat-info">
-                            <span class="stat-number">124h</span>
-                            <span class="stat-label">Total Watch Time</span>
-                        </div>
-                    </div>
-                    <div class="stat-card">
-                        <i class="fas fa-tv"></i>
-                        <div class="stat-info">
-                            <span class="stat-number">42</span>
-                            <span class="stat-label">Different Series</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
+    <div class="search-overlay" id="searchOverlay">
+        <div class="search-close" id="searchClose"><i class="fas fa-times"></i></div>
+        <div class="search-box">
+            <input type="text" placeholder="Type to search anime...">
+            <button><i class="fas fa-search"></i></button>
+        </div>
+        <div class="search-tags">
+            <span>Popular:</span>
+            <a href="#">One Piece</a>
+            <a href="#">Naruto</a>
+            <a href="#">Demon Slayer</a>
+            <a href="#">Jujutsu Kaisen</a>
         </div>
     </div>
 
     <div class="history-container">
         <div class="container">
-            <div class="history-header">
-                <div class="history-filters">
-                    <button class="filter-btn active" data-filter="all">All</button>
-                    <button class="filter-btn" data-filter="today">Today</button>
-                    <button class="filter-btn" data-filter="week">This Week</button>
-                    <button class="filter-btn" data-filter="month">This Month</button>
-                    <button class="filter-btn" data-filter="series">Series</button>
-                    <button class="filter-btn" data-filter="movies">Movies</button>
+            <div class="page-header">
+                <div class="header-content">
+                    <h1 class="page-title">
+                        <i class="fas fa-history"></i>
+                        Watch History
+                    </h1>
+                    <p class="page-subtitle">Keep track of all the anime you've watched</p>
                 </div>
-                <div class="history-sort">
-                    <select id="sortBy">
-                        <option value="recent">Most Recent</option>
-                        <option value="oldest">Oldest First</option>
-                        <option value="progress">Watch Progress</option>
-                        <option value="title">Title A-Z</option>
-                    </select>
-                    <button class="clear-history-btn" id="clearHistoryBtn">
-                        <i class="fas fa-trash-alt"></i>
+                <div class="header-actions">
+                    <button class="btn-secondary" id="clearAllBtn">
+                        <i class="fas fa-trash"></i>
                         Clear All History
                     </button>
                 </div>
             </div>
 
-            <div class="history-grid" id="historyGrid">
-                <!-- History items will be loaded here dynamically -->
+            <div class="history-controls">
+                <div class="filter-section">
+                    <div class="filter-group">
+                        <label>Filter by:</label>
+                        <select id="filterSelect">
+                            <option value="all">All Time</option>
+                            <option value="today">Today</option>
+                            <option value="week">This Week</option>
+                            <option value="month">This Month</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label>Sort by:</label>
+                        <select id="sortSelect">
+                            <option value="recent">Most Recent</option>
+                            <option value="oldest">Oldest First</option>
+                            <option value="title">Title A-Z</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="search-section">
+                    <div class="search-input-wrapper">
+                        <i class="fas fa-search"></i>
+                        <input type="text" id="historySearch" placeholder="Search in history...">
+                    </div>
+                </div>
             </div>
 
-            <div class="empty-history" id="emptyHistory" style="display: none;">
-                <div class="empty-icon">
-                    <i class="fas fa-history"></i>
+            <div class="history-stats">
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-play-circle"></i>
+                    </div>
+                    <div class="stat-info">
+                        <div class="stat-value" id="totalWatched">0</div>
+                        <div class="stat-label">Episodes Watched</div>
+                    </div>
                 </div>
-                <h3>No Watch History Yet</h3>
-                <p>Start watching anime and your history will appear here</p>
-                <a href="home.html" class="btn-primary">Browse Anime</a>
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <div class="stat-info">
+                        <div class="stat-value" id="totalHours">0h</div>
+                        <div class="stat-label">Total Watch Time</div>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-film"></i>
+                    </div>
+                    <div class="stat-info">
+                        <div class="stat-value" id="totalAnime">0</div>
+                        <div class="stat-label">Different Anime</div>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-calendar-day"></i>
+                    </div>
+                    <div class="stat-info">
+                        <div class="stat-value" id="recentDays">0</div>
+                        <div class="stat-label">Days Active</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="history-content">
+                <div class="history-timeline" id="historyTimeline">
+                    <!-- History items will be populated by JavaScript -->
+                </div>
+
+                <div class="empty-state" id="emptyState" style="display: none;">
+                    <div class="empty-icon">
+                        <i class="fas fa-history"></i>
+                    </div>
+                    <h3>No Watch History Yet</h3>
+                    <p>Start watching anime to build your history</p>
+                    <a href="home.html" class="btn-primary">
+                        <i class="fas fa-home"></i>
+                        Browse Anime
+                    </a>
+                </div>
             </div>
 
             <div class="pagination" id="pagination">
-                <!-- Pagination will be added here dynamically -->
-            </div>
-        </div>
-    </div>
-
-    <div class="recently-deleted" id="recentlyDeleted">
-        <div class="container">
-            <div class="deleted-header">
-                <h3><i class="fas fa-trash-restore"></i> Recently Deleted</h3>
-                <button class="restore-all-btn" id="restoreAllBtn">Restore All</button>
-            </div>
-            <div class="deleted-list" id="deletedList">
-                <!-- Recently deleted items will appear here -->
+                <button class="page-btn prev" id="prevPage">
+                    <i class="fas fa-chevron-left"></i>
+                    Previous
+                </button>
+                <div class="page-numbers" id="pageNumbers"></div>
+                <button class="page-btn next" id="nextPage">
+                    Next
+                    <i class="fas fa-chevron-right"></i>
+                </button>
             </div>
         </div>
     </div>
@@ -241,19 +259,17 @@
         </div>
     </footer>
 
-    <!-- Confirmation Modal -->
-    <div class="modal" id="confirmationModal">
+    <div class="confirm-modal" id="confirmModal">
+        <div class="modal-overlay"></div>
         <div class="modal-content">
-            <div class="modal-header">
-                <h3>Confirm Action</h3>
-                <button class="modal-close" id="modalClose"><i class="fas fa-times"></i></button>
+            <div class="modal-icon">
+                <i class="fas fa-exclamation-triangle"></i>
             </div>
-            <div class="modal-body">
-                <p id="modalMessage">Are you sure you want to clear all watch history? This action cannot be undone.</p>
-            </div>
-            <div class="modal-footer">
-                <button class="btn-secondary" id="modalCancel">Cancel</button>
-                <button class="btn-primary" id="modalConfirm">Confirm</button>
+            <h3>Clear Watch History?</h3>
+            <p>This action cannot be undone. All your watch history will be permanently deleted.</p>
+            <div class="modal-actions">
+                <button class="btn-secondary" id="cancelBtn">Cancel</button>
+                <button class="btn-danger" id="confirmClearBtn">Clear History</button>
             </div>
         </div>
     </div>

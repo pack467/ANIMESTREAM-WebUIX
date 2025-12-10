@@ -1,31 +1,538 @@
 document.addEventListener('DOMContentLoaded', () => {
     
     /* ==================================================
-       1. PRELOADER
+       1. SAMPLE HISTORY DATA
     ================================================== */
-    const preloader = document.getElementById('preloader');
-    const progressBar = document.getElementById('loader-progress');
-    
-    // Simulate loading progress
-    let progress = 0;
-    const interval = setInterval(() => {
-        progress += Math.random() * 15;
-        if (progress > 100) progress = 100;
-        progressBar.style.width = `${progress}%`;
-        
-        if (progress === 100) {
-            clearInterval(interval);
-            setTimeout(() => {
-                preloader.style.opacity = '0';
-                setTimeout(() => {
-                    preloader.style.display = 'none';
-                }, 800);
-            }, 500);
+    const historyData = [
+        {
+            id: 1,
+            animeTitle: "Fate/Stay Night: Unlimited Blade Works",
+            episodeNumber: 1,
+            episodeTitle: "Winter Days, A Fateful Night",
+            thumbnail: "https://images.unsplash.com/photo-1578632767115-351597cf2477?q=80&w=300&auto=format&fit=crop",
+            duration: "24:10",
+            watchedDuration: "24:10",
+            progress: 100,
+            genre: "Action, Fantasy",
+            watchDate: new Date("2025-12-07T14:30:00"),
+            continueWatching: false
+        },
+        {
+            id: 2,
+            animeTitle: "Demon Slayer: Kimetsu no Yaiba",
+            episodeNumber: 7,
+            episodeTitle: "Deadly Duel",
+            thumbnail: "https://images.unsplash.com/photo-1541562232579-512a21360020?q=80&w=300&auto=format&fit=crop",
+            duration: "24:05",
+            watchedDuration: "18:30",
+            progress: 77,
+            genre: "Action, Demon",
+            watchDate: new Date("2025-12-07T10:15:00"),
+            continueWatching: true
+        },
+        {
+            id: 3,
+            animeTitle: "Sword Art Online: Alicization",
+            episodeNumber: 12,
+            episodeTitle: "The Final Decision",
+            thumbnail: "https://images.unsplash.com/photo-1612404730960-5c71578fca37?q=80&w=300&auto=format&fit=crop",
+            duration: "24:15",
+            watchedDuration: "24:15",
+            progress: 100,
+            genre: "Sci-Fi, Adventure",
+            watchDate: new Date("2025-12-06T20:45:00"),
+            continueWatching: false
+        },
+        {
+            id: 4,
+            animeTitle: "Attack on Titan Season 3",
+            episodeNumber: 15,
+            episodeTitle: "Descent",
+            thumbnail: "https://images.unsplash.com/photo-1581833971358-2c8b550f87b3?q=80&w=300&auto=format&fit=crop",
+            duration: "23:50",
+            watchedDuration: "12:20",
+            progress: 52,
+            genre: "Action, Drama",
+            watchDate: new Date("2025-12-06T18:30:00"),
+            continueWatching: true
+        },
+        {
+            id: 5,
+            animeTitle: "Jujutsu Kaisen",
+            episodeNumber: 8,
+            episodeTitle: "Boredom",
+            thumbnail: "https://images.unsplash.com/photo-1607604276583-eef5d076aa5f?q=80&w=300&auto=format&fit=crop",
+            duration: "24:20",
+            watchedDuration: "24:20",
+            progress: 100,
+            genre: "Action, Fantasy",
+            watchDate: new Date("2025-12-06T16:00:00"),
+            continueWatching: false
+        },
+        {
+            id: 6,
+            animeTitle: "Your Name",
+            episodeNumber: 0,
+            episodeTitle: "Movie",
+            thumbnail: "https://images.unsplash.com/photo-1626544827763-d516dce335ca?q=80&w=300&auto=format&fit=crop",
+            duration: "106:00",
+            watchedDuration: "106:00",
+            progress: 100,
+            genre: "Romance, Drama",
+            watchDate: new Date("2025-12-05T21:00:00"),
+            continueWatching: false
+        },
+        {
+            id: 7,
+            animeTitle: "Tokyo Ghoul",
+            episodeNumber: 3,
+            episodeTitle: "Dove",
+            thumbnail: "https://images.unsplash.com/photo-1578632748624-fbd20d345187?q=80&w=300&auto=format&fit=crop",
+            duration: "24:00",
+            watchedDuration: "24:00",
+            progress: 100,
+            genre: "Action, Horror",
+            watchDate: new Date("2025-12-05T19:30:00"),
+            continueWatching: false
+        },
+        {
+            id: 8,
+            animeTitle: "Made in Abyss",
+            episodeNumber: 5,
+            episodeTitle: "Incinerator",
+            thumbnail: "https://images.unsplash.com/photo-1560972550-aba3456b5564?q=80&w=300&auto=format&fit=crop",
+            duration: "25:10",
+            watchedDuration: "25:10",
+            progress: 100,
+            genre: "Adventure, Mystery",
+            watchDate: new Date("2025-12-04T20:00:00"),
+            continueWatching: false
+        },
+        {
+            id: 9,
+            animeTitle: "Gintama: The Final",
+            episodeNumber: 0,
+            episodeTitle: "Movie",
+            thumbnail: "https://images.unsplash.com/photo-1590955559144-a82332cf2c08?q=80&w=300&auto=format&fit=crop",
+            duration: "104:00",
+            watchedDuration: "56:30",
+            progress: 54,
+            genre: "Action, Comedy",
+            watchDate: new Date("2025-12-04T15:30:00"),
+            continueWatching: true
+        },
+        {
+            id: 10,
+            animeTitle: "Boruto: Next Generation",
+            episodeNumber: 1,
+            episodeTitle: "Uzumaki Boruto",
+            thumbnail: "https://images.unsplash.com/photo-1542256844-d3d05538a5b8?q=80&w=300&auto=format&fit=crop",
+            duration: "23:45",
+            watchedDuration: "23:45",
+            progress: 100,
+            genre: "Action, Adventure",
+            watchDate: new Date("2025-12-03T22:00:00"),
+            continueWatching: false
         }
-    }, 150);
+    ];
+
+    /* ==================================================
+       2. STATE MANAGEMENT
+    ================================================== */
+    let currentFilter = 'all';
+    let currentSort = 'recent';
+    let currentPage = 1;
+    const itemsPerPage = 5;
+    let filteredData = [...historyData];
     
     /* ==================================================
-       2. HEADER & NAVIGATION FUNCTIONALITY
+       3. DOM ELEMENTS
+    ================================================== */
+    const historyTimeline = document.getElementById('historyTimeline');
+    const emptyState = document.getElementById('emptyState');
+    const filterSelect = document.getElementById('filterSelect');
+    const sortSelect = document.getElementById('sortSelect');
+    const historySearch = document.getElementById('historySearch');
+    const clearAllBtn = document.getElementById('clearAllBtn');
+    const confirmModal = document.getElementById('confirmModal');
+    const cancelBtn = document.getElementById('cancelBtn');
+    const confirmClearBtn = document.getElementById('confirmClearBtn');
+    const prevPageBtn = document.getElementById('prevPage');
+    const nextPageBtn = document.getElementById('nextPage');
+    const pageNumbers = document.getElementById('pageNumbers');
+    
+    // Stats elements
+    const totalWatchedEl = document.getElementById('totalWatched');
+    const totalHoursEl = document.getElementById('totalHours');
+    const totalAnimeEl = document.getElementById('totalAnime');
+    const recentDaysEl = document.getElementById('recentDays');
+
+    /* ==================================================
+       4. UTILITY FUNCTIONS
+    ================================================== */
+    function formatDate(date) {
+        const now = new Date();
+        const diff = now - date;
+        const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+        
+        if (days === 0) {
+            const hours = Math.floor(diff / (1000 * 60 * 60));
+            if (hours === 0) {
+                const minutes = Math.floor(diff / (1000 * 60));
+                return `${minutes} minute${minutes !== 1 ? 's' : ''} ago`;
+            }
+            return `${hours} hour${hours !== 1 ? 's' : ''} ago`;
+        } else if (days === 1) {
+            return 'Yesterday';
+        } else if (days < 7) {
+            return `${days} days ago`;
+        } else {
+            return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+        }
+    }
+    
+    function getDateGroup(date) {
+        const now = new Date();
+        const diff = now - date;
+        const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+        
+        if (days === 0) return 'Today';
+        if (days === 1) return 'Yesterday';
+        if (days < 7) return 'This Week';
+        if (days < 30) return 'This Month';
+        return 'Older';
+    }
+    
+    function parseDuration(duration) {
+        const parts = duration.split(':');
+        if (parts.length === 2) {
+            return parseInt(parts[0]) * 60 + parseInt(parts[1]);
+        }
+        return 0;
+    }
+    
+    function formatDuration(seconds) {
+        const hours = Math.floor(seconds / 3600);
+        const minutes = Math.floor((seconds % 3600) / 60);
+        
+        if (hours > 0) {
+            return `${hours}h ${minutes}m`;
+        }
+        return `${minutes}m`;
+    }
+
+    /* ==================================================
+       5. FILTER & SORT FUNCTIONS
+    ================================================== */
+    function filterData() {
+        const searchTerm = historySearch.value.toLowerCase();
+        
+        filteredData = historyData.filter(item => {
+            // Search filter
+            const matchesSearch = item.animeTitle.toLowerCase().includes(searchTerm) ||
+                                 item.episodeTitle.toLowerCase().includes(searchTerm);
+            
+            // Date filter
+            const now = new Date();
+            const diff = now - item.watchDate;
+            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+            
+            let matchesDate = true;
+            switch(currentFilter) {
+                case 'today':
+                    matchesDate = days === 0;
+                    break;
+                case 'week':
+                    matchesDate = days < 7;
+                    break;
+                case 'month':
+                    matchesDate = days < 30;
+                    break;
+            }
+            
+            return matchesSearch && matchesDate;
+        });
+        
+        sortData();
+    }
+    
+    function sortData() {
+        switch(currentSort) {
+            case 'recent':
+                filteredData.sort((a, b) => b.watchDate - a.watchDate);
+                break;
+            case 'oldest':
+                filteredData.sort((a, b) => a.watchDate - b.watchDate);
+                break;
+            case 'title':
+                filteredData.sort((a, b) => a.animeTitle.localeCompare(b.animeTitle));
+                break;
+        }
+        
+        currentPage = 1;
+        renderHistory();
+        renderPagination();
+    }
+
+    /* ==================================================
+       6. RENDER FUNCTIONS
+    ================================================== */
+    function renderHistory() {
+        historyTimeline.innerHTML = '';
+        
+        if (filteredData.length === 0) {
+            emptyState.style.display = 'block';
+            document.getElementById('pagination').style.display = 'none';
+            return;
+        }
+        
+        emptyState.style.display = 'none';
+        document.getElementById('pagination').style.display = 'flex';
+        
+        // Group by date
+        const grouped = {};
+        const startIndex = (currentPage - 1) * itemsPerPage;
+        const endIndex = startIndex + itemsPerPage;
+        const pageData = filteredData.slice(startIndex, endIndex);
+        
+        pageData.forEach(item => {
+            const group = getDateGroup(item.watchDate);
+            if (!grouped[group]) {
+                grouped[group] = [];
+            }
+            grouped[group].push(item);
+        });
+        
+        // Render groups
+        Object.keys(grouped).forEach(group => {
+            const groupEl = document.createElement('div');
+            groupEl.className = 'timeline-group';
+            
+            const dateEl = document.createElement('div');
+            dateEl.className = 'timeline-date';
+            dateEl.textContent = group;
+            groupEl.appendChild(dateEl);
+            
+            const itemsEl = document.createElement('div');
+            itemsEl.className = 'timeline-items';
+            
+            grouped[group].forEach(item => {
+                const itemEl = createHistoryItem(item);
+                itemsEl.appendChild(itemEl);
+            });
+            
+            groupEl.appendChild(itemsEl);
+            historyTimeline.appendChild(groupEl);
+        });
+    }
+    
+    function createHistoryItem(item) {
+        const itemEl = document.createElement('div');
+        itemEl.className = 'history-item';
+        
+        itemEl.innerHTML = `
+            <div class="history-thumbnail">
+                <img src="${item.thumbnail}" alt="${item.animeTitle}">
+                <div class="play-overlay">
+                    <div class="play-icon">
+                        <i class="fas fa-play"></i>
+                    </div>
+                </div>
+                <div class="progress-indicator">
+                    <div class="progress-bar" style="width: ${item.progress}%"></div>
+                </div>
+            </div>
+            <div class="history-info">
+                <div class="history-header">
+                    <h3 class="anime-title">${item.animeTitle}</h3>
+                    <div class="episode-info">
+                        ${item.episodeNumber > 0 ? `Episode ${item.episodeNumber}: ${item.episodeTitle}` : item.episodeTitle}
+                    </div>
+                </div>
+                <div class="history-meta">
+                    <div class="meta-item">
+                        <i class="fas fa-clock"></i>
+                        <span>${item.watchedDuration} / ${item.duration}</span>
+                    </div>
+                    <div class="meta-item">
+                        <i class="fas fa-tag"></i>
+                        <span>${item.genre}</span>
+                    </div>
+                    <div class="meta-item">
+                        <i class="fas fa-calendar"></i>
+                        <span>${formatDate(item.watchDate)}</span>
+                    </div>
+                    ${item.continueWatching ? `
+                        <div class="meta-item">
+                            <i class="fas fa-pause-circle"></i>
+                            <span>Continue Watching</span>
+                        </div>
+                    ` : ''}
+                </div>
+                <div class="history-footer">
+                    <div class="action-buttons">
+                        <button class="action-btn-small btn-watch" data-id="${item.id}">
+                            <i class="fas fa-play"></i>
+                            ${item.continueWatching ? 'Continue' : 'Watch Again'}
+                        </button>
+                        <button class="action-btn-small btn-remove" data-id="${item.id}">
+                            <i class="fas fa-trash"></i>
+                            Remove
+                        </button>
+                    </div>
+                    <div class="watch-time">
+                        Watched ${formatDate(item.watchDate)}
+                    </div>
+                </div>
+            </div>
+        `;
+        
+        // Add event listeners
+        const watchBtn = itemEl.querySelector('.btn-watch');
+        const removeBtn = itemEl.querySelector('.btn-remove');
+        
+        watchBtn.addEventListener('click', () => {
+            // In a real app, navigate to watch page
+            alert(`Continue watching ${item.animeTitle}`);
+        });
+        
+        removeBtn.addEventListener('click', () => {
+            removeHistoryItem(item.id);
+        });
+        
+        return itemEl;
+    }
+    
+    function renderPagination() {
+        const totalPages = Math.ceil(filteredData.length / itemsPerPage);
+        
+        // Update buttons
+        prevPageBtn.disabled = currentPage === 1;
+        nextPageBtn.disabled = currentPage === totalPages;
+        
+        // Render page numbers
+        pageNumbers.innerHTML = '';
+        
+        for (let i = 1; i <= totalPages; i++) {
+            // Show first, last, current, and adjacent pages
+            if (i === 1 || i === totalPages || (i >= currentPage - 1 && i <= currentPage + 1)) {
+                const pageBtn = document.createElement('div');
+                pageBtn.className = `page-number ${i === currentPage ? 'active' : ''}`;
+                pageBtn.textContent = i;
+                pageBtn.addEventListener('click', () => {
+                    currentPage = i;
+                    renderHistory();
+                    renderPagination();
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                });
+                pageNumbers.appendChild(pageBtn);
+            } else if (i === currentPage - 2 || i === currentPage + 2) {
+                // Show ellipsis
+                const ellipsis = document.createElement('div');
+                ellipsis.className = 'page-number';
+                ellipsis.textContent = '...';
+                ellipsis.style.cursor = 'default';
+                pageNumbers.appendChild(ellipsis);
+            }
+        }
+    }
+    
+    function updateStats() {
+        // Total episodes watched
+        const totalEpisodes = historyData.filter(item => item.progress === 100).length;
+        totalWatchedEl.textContent = totalEpisodes;
+        
+        // Total watch time
+        let totalSeconds = 0;
+        historyData.forEach(item => {
+            totalSeconds += parseDuration(item.watchedDuration);
+        });
+        const totalHours = Math.floor(totalSeconds / 3600);
+        totalHoursEl.textContent = `${totalHours}h`;
+        
+        // Total different anime
+        const uniqueAnime = new Set(historyData.map(item => item.animeTitle));
+        totalAnimeEl.textContent = uniqueAnime.size;
+        
+        // Recent days active
+        const dates = historyData.map(item => {
+            const d = new Date(item.watchDate);
+            return `${d.getFullYear()}-${d.getMonth()}-${d.getDate()}`;
+        });
+        const uniqueDates = new Set(dates);
+        recentDaysEl.textContent = uniqueDates.size;
+    }
+
+    /* ==================================================
+       7. EVENT HANDLERS
+    ================================================== */
+    filterSelect.addEventListener('change', (e) => {
+        currentFilter = e.target.value;
+        filterData();
+    });
+    
+    sortSelect.addEventListener('change', (e) => {
+        currentSort = e.target.value;
+        sortData();
+    });
+    
+    historySearch.addEventListener('input', () => {
+        filterData();
+    });
+    
+    clearAllBtn.addEventListener('click', () => {
+        confirmModal.classList.add('active');
+    });
+    
+    cancelBtn.addEventListener('click', () => {
+        confirmModal.classList.remove('active');
+    });
+    
+    confirmClearBtn.addEventListener('click', () => {
+        // Clear all history
+        historyData.length = 0;
+        filteredData.length = 0;
+        confirmModal.classList.remove('active');
+        renderHistory();
+        updateStats();
+    });
+    
+    // Close modal on overlay click
+    confirmModal.querySelector('.modal-overlay').addEventListener('click', () => {
+        confirmModal.classList.remove('active');
+    });
+    
+    function removeHistoryItem(id) {
+        const index = historyData.findIndex(item => item.id === id);
+        if (index !== -1) {
+            historyData.splice(index, 1);
+            filterData();
+            updateStats();
+        }
+    }
+    
+    // Pagination
+    prevPageBtn.addEventListener('click', () => {
+        if (currentPage > 1) {
+            currentPage--;
+            renderHistory();
+            renderPagination();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+    });
+    
+    nextPageBtn.addEventListener('click', () => {
+        const totalPages = Math.ceil(filteredData.length / itemsPerPage);
+        if (currentPage < totalPages) {
+            currentPage++;
+            renderHistory();
+            renderPagination();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+    });
+
+    /* ==================================================
+       8. HEADER & NAVIGATION FUNCTIONALITY
     ================================================== */
     const header = document.getElementById('mainHeader');
     const backToTop = document.getElementById('backToTop');
@@ -59,15 +566,19 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // Close search on ESC key
     document.addEventListener('keydown', (e) => {
-        if(e.key === "Escape" && searchOverlay.classList.contains('active')) {
-            searchOverlay.classList.remove('active');
+        if(e.key === "Escape") {
+            if(searchOverlay.classList.contains('active')) {
+                searchOverlay.classList.remove('active');
+            }
+            if(confirmModal.classList.contains('active')) {
+                confirmModal.classList.remove('active');
+            }
         }
     });
     
     // Mobile menu
     mobileToggle.addEventListener('click', () => {
         navbar.classList.toggle('active');
-        // Simple animation for hamburger icon
         const spans = mobileToggle.querySelectorAll('span');
         if (navbar.classList.contains('active')) {
             spans[0].style.transform = 'rotate(45deg) translate(5px, 5px)';
@@ -93,13 +604,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
     
-    // Close dropdown when pressing Escape key
-    document.addEventListener('keydown', function(e) {
-        if (e.key === 'Escape' && userDropdown.classList.contains('active')) {
-            userDropdown.classList.remove('active');
-        }
-    });
-    
     // Back to top button
     backToTop.addEventListener('click', function(e) {
         e.preventDefault();
@@ -108,806 +612,15 @@ document.addEventListener('DOMContentLoaded', () => {
             behavior: 'smooth'
         });
     });
-    
+
     /* ==================================================
-       3. HISTORY DATA
+       9. INITIALIZATION
     ================================================== */
-    const historyData = [
-        {
-            id: 1,
-            title: "Fate/Stay Night: Unlimited Blade Works",
-            episode: "Episode 12",
-            thumbnail: "https://images.unsplash.com/photo-1578632767115-351597cf2477?q=80&w=600&auto=format&fit=crop",
-            progress: 85,
-            status: "watching",
-            genres: ["Action", "Fantasy"],
-            lastWatched: "2 hours ago",
-            duration: "24m",
-            rating: 4.8,
-            totalEpisodes: 26,
-            watchedEpisodes: 12
-        },
-        {
-            id: 2,
-            title: "Demon Slayer: Kimetsu no Yaiba",
-            episode: "Episode 24",
-            thumbnail: "https://images.unsplash.com/photo-1541562232579-512a21360020?q=80&w=600&auto=format&fit=crop",
-            progress: 100,
-            status: "completed",
-            genres: ["Action", "Supernatural"],
-            lastWatched: "1 day ago",
-            duration: "23m",
-            rating: 4.9,
-            totalEpisodes: 26,
-            watchedEpisodes: 26
-        },
-        {
-            id: 3,
-            title: "Sword Art Online: Alicization",
-            episode: "Episode 8",
-            thumbnail: "https://images.unsplash.com/photo-1612404730960-5c71578fca37?q=80&w=600&auto=format&fit=crop",
-            progress: 45,
-            status: "watching",
-            genres: ["Action", "Sci-Fi"],
-            lastWatched: "3 days ago",
-            duration: "24m",
-            rating: 4.5,
-            totalEpisodes: 24,
-            watchedEpisodes: 8
-        },
-        {
-            id: 4,
-            title: "Attack on Titan: The Final Season",
-            episode: "Episode 16",
-            thumbnail: "https://images.unsplash.com/photo-1581833971358-2c8b550f87b3?q=80&w=600&auto=format&fit=crop",
-            progress: 65,
-            status: "watching",
-            genres: ["Action", "Drama"],
-            lastWatched: "1 week ago",
-            duration: "23m",
-            rating: 4.9,
-            totalEpisodes: 28,
-            watchedEpisodes: 16
-        },
-        {
-            id: 5,
-            title: "Jujutsu Kaisen",
-            episode: "Movie: Jujutsu Kaisen 0",
-            thumbnail: "https://images.unsplash.com/photo-1607604276583-eef5d076aa5f?q=80&w=600&auto=format&fit=crop",
-            progress: 100,
-            status: "completed",
-            genres: ["Action", "Supernatural"],
-            lastWatched: "1 week ago",
-            duration: "1h 45m",
-            rating: 4.8,
-            totalEpisodes: 1,
-            watchedEpisodes: 1
-        },
-        {
-            id: 6,
-            title: "My Hero Academia",
-            episode: "Episode 42",
-            thumbnail: "https://images.unsplash.com/photo-1626544827763-d516dce335ca?q=80&w=600&auto=format&fit=crop",
-            progress: 30,
-            status: "paused",
-            genres: ["Action", "Superhero"],
-            lastWatched: "2 weeks ago",
-            duration: "23m",
-            rating: 4.7,
-            totalEpisodes: 138,
-            watchedEpisodes: 42
-        },
-        {
-            id: 7,
-            title: "Made in Abyss",
-            episode: "Episode 13",
-            thumbnail: "https://images.unsplash.com/photo-1560972550-aba3456b5564?q=80&w=600&auto=format&fit=crop",
-            progress: 100,
-            status: "completed",
-            genres: ["Adventure", "Fantasy"],
-            lastWatched: "3 weeks ago",
-            duration: "24m",
-            rating: 4.8,
-            totalEpisodes: 13,
-            watchedEpisodes: 13
-        },
-        {
-            id: 8,
-            title: "Tokyo Ghoul: Re",
-            episode: "Episode 5",
-            thumbnail: "https://images.unsplash.com/photo-1578632748624-fbd20d345187?q=80&w=600&auto=format&fit=crop",
-            progress: 25,
-            status: "watching",
-            genres: ["Action", "Horror"],
-            lastWatched: "1 month ago",
-            duration: "24m",
-            rating: 4.6,
-            totalEpisodes: 12,
-            watchedEpisodes: 5
-        }
-    ];
-    
-    let recentlyDeleted = [];
-    let currentFilter = 'all';
-    let currentSort = 'recent';
-    let currentPage = 1;
-    const itemsPerPage = 6;
-    
-    /* ==================================================
-       4. RENDER HISTORY GRID
-    ================================================== */
-    const historyGrid = document.getElementById('historyGrid');
-    const emptyHistory = document.getElementById('emptyHistory');
-    const pagination = document.getElementById('pagination');
-    
-    function renderHistoryGrid() {
-        // Filter data
-        let filteredData = filterHistoryData(historyData);
-        
-        // Sort data
-        filteredData = sortHistoryData(filteredData);
-        
-        // Paginate data
-        const totalPages = Math.ceil(filteredData.length / itemsPerPage);
-        const startIndex = (currentPage - 1) * itemsPerPage;
-        const endIndex = startIndex + itemsPerPage;
-        const paginatedData = filteredData.slice(startIndex, endIndex);
-        
-        // Clear grid
-        historyGrid.innerHTML = '';
-        
-        if (paginatedData.length === 0) {
-            emptyHistory.style.display = 'block';
-            pagination.style.display = 'none';
-        } else {
-            emptyHistory.style.display = 'none';
-            pagination.style.display = 'flex';
-            
-            // Render cards
-            paginatedData.forEach(item => {
-                const card = createHistoryCard(item);
-                historyGrid.appendChild(card);
-            });
-            
-            // Render pagination
-            renderPagination(totalPages);
-        }
+    function init() {
+        updateStats();
+        filterData();
+        renderPagination();
     }
     
-    function filterHistoryData(data) {
-        switch(currentFilter) {
-            case 'today':
-                return data.filter(item => item.lastWatched.includes('hour') || item.lastWatched.includes('day') && parseInt(item.lastWatched) <= 1);
-            case 'week':
-                return data.filter(item => item.lastWatched.includes('week') || (item.lastWatched.includes('day') && parseInt(item.lastWatched) <= 7));
-            case 'month':
-                return data.filter(item => item.lastWatched.includes('month') || item.lastWatched.includes('week'));
-            case 'series':
-                return data.filter(item => item.totalEpisodes > 1);
-            case 'movies':
-                return data.filter(item => item.totalEpisodes === 1);
-            default:
-                return data;
-        }
-    }
-    
-    function sortHistoryData(data) {
-        switch(currentSort) {
-            case 'recent':
-                return [...data].sort((a, b) => {
-                    // Simple sorting based on time string
-                    return getTimeValue(a.lastWatched) - getTimeValue(b.lastWatched);
-                });
-            case 'oldest':
-                return [...data].sort((a, b) => {
-                    return getTimeValue(b.lastWatched) - getTimeValue(a.lastWatched);
-                });
-            case 'progress':
-                return [...data].sort((a, b) => b.progress - a.progress);
-            case 'title':
-                return [...data].sort((a, b) => a.title.localeCompare(b.title));
-            default:
-                return data;
-        }
-    }
-    
-    function getTimeValue(timeString) {
-        if (timeString.includes('hour')) return parseInt(timeString);
-        if (timeString.includes('day')) return parseInt(timeString) * 24;
-        if (timeString.includes('week')) return parseInt(timeString) * 168;
-        if (timeString.includes('month')) return parseInt(timeString) * 720;
-        return 0;
-    }
-    
-    function createHistoryCard(item) {
-        const card = document.createElement('div');
-        card.className = `history-card ${item.status}`;
-        card.setAttribute('data-id', item.id);
-        
-        // Determine badge class
-        let badgeClass = '';
-        switch(item.status) {
-            case 'watching': badgeClass = 'badge-watching'; break;
-            case 'completed': badgeClass = 'badge-completed'; break;
-            case 'paused': badgeClass = 'badge-paused'; break;
-        }
-        
-        card.innerHTML = `
-            <div class="history-card-thumb">
-                <img src="${item.thumbnail}" alt="${item.title}">
-                <div class="history-overlay">
-                    <div class="history-progress">
-                        <div class="progress-info">
-                            <span class="progress-label">Watch Progress</span>
-                            <span class="progress-percent">${item.progress}%</span>
-                        </div>
-                        <div class="progress-bar-container">
-                            <div class="progress-fill" style="width: ${item.progress}%"></div>
-                        </div>
-                    </div>
-                </div>
-                <div class="history-badge ${badgeClass}">${item.status}</div>
-            </div>
-            <div class="history-card-content">
-                <div class="history-card-header">
-                    <div class="history-card-title">
-                        <h3>${item.title}</h3>
-                        <div class="history-card-episode">${item.episode}</div>
-                    </div>
-                    <div class="history-card-actions">
-                        <button class="history-action-btn delete-btn" title="Remove from history">
-                            <i class="fas fa-trash-alt"></i>
-                        </button>
-                        <button class="history-action-btn" title="Add to list">
-                            <i class="fas fa-plus"></i>
-                        </button>
-                    </div>
-                </div>
-                <div class="history-card-meta">
-                    <div class="history-meta-item">
-                        <i class="fas fa-star"></i>
-                        <span>${item.rating}</span>
-                    </div>
-                    <div class="history-meta-item">
-                        <i class="fas fa-clock"></i>
-                        <span>${item.duration}</span>
-                    </div>
-                    <div class="history-meta-item">
-                        <i class="fas fa-play-circle"></i>
-                        <span>${item.watchedEpisodes}/${item.totalEpisodes}</span>
-                    </div>
-                </div>
-                <div class="history-card-time">
-                    <i class="fas fa-history"></i>
-                    <span>Watched ${item.lastWatched}</span>
-                </div>
-                <div class="history-card-footer">
-                    <div class="history-genres">
-                        ${item.genres.map(genre => `<span class="history-genre">${genre}</span>`).join('')}
-                    </div>
-                    <button class="history-continue-btn">
-                        <i class="fas fa-play"></i>
-                        Continue
-                    </button>
-                </div>
-            </div>
-        `;
-        
-        // Add event listeners
-        const deleteBtn = card.querySelector('.delete-btn');
-        deleteBtn.addEventListener('click', (e) => {
-            e.stopPropagation();
-            deleteHistoryItem(item.id, card);
-        });
-        
-        const continueBtn = card.querySelector('.history-continue-btn');
-        continueBtn.addEventListener('click', (e) => {
-            e.stopPropagation();
-            continueWatching(item);
-        });
-        
-        card.addEventListener('click', () => {
-            viewAnimeDetails(item);
-        });
-        
-        return card;
-    }
-    
-    function renderPagination(totalPages) {
-        pagination.innerHTML = '';
-        
-        if (totalPages <= 1) return;
-        
-        // Previous button
-        const prevBtn = document.createElement('button');
-        prevBtn.className = `page-btn ${currentPage === 1 ? 'disabled' : ''}`;
-        prevBtn.innerHTML = '<i class="fas fa-chevron-left"></i>';
-        prevBtn.addEventListener('click', () => {
-            if (currentPage > 1) {
-                currentPage--;
-                renderHistoryGrid();
-                scrollToTop();
-            }
-        });
-        pagination.appendChild(prevBtn);
-        
-        // Page numbers
-        const maxVisiblePages = 5;
-        let startPage = Math.max(1, currentPage - Math.floor(maxVisiblePages / 2));
-        let endPage = Math.min(totalPages, startPage + maxVisiblePages - 1);
-        
-        if (endPage - startPage + 1 < maxVisiblePages) {
-            startPage = Math.max(1, endPage - maxVisiblePages + 1);
-        }
-        
-        if (startPage > 1) {
-            const firstPage = document.createElement('button');
-            firstPage.className = 'page-btn';
-            firstPage.textContent = '1';
-            firstPage.addEventListener('click', () => {
-                currentPage = 1;
-                renderHistoryGrid();
-                scrollToTop();
-            });
-            pagination.appendChild(firstPage);
-            
-            if (startPage > 2) {
-                const dots = document.createElement('span');
-                dots.className = 'page-dots';
-                dots.textContent = '...';
-                pagination.appendChild(dots);
-            }
-        }
-        
-        for (let i = startPage; i <= endPage; i++) {
-            const pageBtn = document.createElement('button');
-            pageBtn.className = `page-btn ${currentPage === i ? 'active' : ''}`;
-            pageBtn.textContent = i;
-            pageBtn.addEventListener('click', () => {
-                currentPage = i;
-                renderHistoryGrid();
-                scrollToTop();
-            });
-            pagination.appendChild(pageBtn);
-        }
-        
-        if (endPage < totalPages) {
-            if (endPage < totalPages - 1) {
-                const dots = document.createElement('span');
-                dots.className = 'page-dots';
-                dots.textContent = '...';
-                pagination.appendChild(dots);
-            }
-            
-            const lastPage = document.createElement('button');
-            lastPage.className = 'page-btn';
-            lastPage.textContent = totalPages;
-            lastPage.addEventListener('click', () => {
-                currentPage = totalPages;
-                renderHistoryGrid();
-                scrollToTop();
-            });
-            pagination.appendChild(lastPage);
-        }
-        
-        // Next button
-        const nextBtn = document.createElement('button');
-        nextBtn.className = `page-btn ${currentPage === totalPages ? 'disabled' : ''}`;
-        nextBtn.innerHTML = '<i class="fas fa-chevron-right"></i>';
-        nextBtn.addEventListener('click', () => {
-            if (currentPage < totalPages) {
-                currentPage++;
-                renderHistoryGrid();
-                scrollToTop();
-            }
-        });
-        pagination.appendChild(nextBtn);
-    }
-    
-    function scrollToTop() {
-        window.scrollTo({
-            top: document.querySelector('.history-container').offsetTop - 100,
-            behavior: 'smooth'
-        });
-    }
-    
-    /* ==================================================
-       5. FILTERS AND SORTING
-    ================================================== */
-    const filterBtns = document.querySelectorAll('.filter-btn');
-    const sortSelect = document.getElementById('sortBy');
-    
-    filterBtns.forEach(btn => {
-        btn.addEventListener('click', () => {
-            // Remove active class from all buttons
-            filterBtns.forEach(b => b.classList.remove('active'));
-            
-            // Add active class to clicked button
-            btn.classList.add('active');
-            
-            // Update current filter
-            currentFilter = btn.getAttribute('data-filter');
-            currentPage = 1;
-            
-            // Re-render grid
-            renderHistoryGrid();
-        });
-    });
-    
-    sortSelect.addEventListener('change', () => {
-        currentSort = sortSelect.value;
-        currentPage = 1;
-        renderHistoryGrid();
-    });
-    
-    /* ==================================================
-       6. DELETE HISTORY FUNCTIONALITY
-    ================================================== */
-    const clearHistoryBtn = document.getElementById('clearHistoryBtn');
-    const modal = document.getElementById('confirmationModal');
-    const modalClose = document.getElementById('modalClose');
-    const modalCancel = document.getElementById('modalCancel');
-    const modalConfirm = document.getElementById('modalConfirm');
-    const modalMessage = document.getElementById('modalMessage');
-    
-    let deleteAction = null;
-    let itemToDelete = null;
-    
-    function deleteHistoryItem(id, element) {
-        itemToDelete = id;
-        deleteAction = 'single';
-        modalMessage.textContent = 'Are you sure you want to remove this item from your watch history?';
-        modal.classList.add('active');
-    }
-    
-    clearHistoryBtn.addEventListener('click', () => {
-        deleteAction = 'all';
-        modalMessage.textContent = 'Are you sure you want to clear all watch history? This action cannot be undone.';
-        modal.classList.add('active');
-    });
-    
-    modalClose.addEventListener('click', () => {
-        modal.classList.remove('active');
-    });
-    
-    modalCancel.addEventListener('click', () => {
-        modal.classList.remove('active');
-        deleteAction = null;
-        itemToDelete = null;
-    });
-    
-    modalConfirm.addEventListener('click', () => {
-        if (deleteAction === 'single') {
-            // Find and remove item
-            const itemIndex = historyData.findIndex(item => item.id === itemToDelete);
-            if (itemIndex !== -1) {
-                const deletedItem = historyData.splice(itemIndex, 1)[0];
-                recentlyDeleted.push({...deletedItem, deletedAt: new Date()});
-                
-                // Show recently deleted section
-                showRecentlyDeleted();
-                
-                // Re-render grid
-                renderHistoryGrid();
-                
-                // Show notification
-                showNotification(`${deletedItem.title} removed from history`, 'info');
-            }
-        } else if (deleteAction === 'all') {
-            // Move all items to recently deleted
-            historyData.forEach(item => {
-                recentlyDeleted.push({...item, deletedAt: new Date()});
-            });
-            
-            // Clear history data
-            historyData.length = 0;
-            
-            // Show recently deleted section
-            showRecentlyDeleted();
-            
-            // Re-render grid
-            renderHistoryGrid();
-            
-            // Show notification
-            showNotification('All watch history cleared', 'warning');
-        }
-        
-        modal.classList.remove('active');
-        deleteAction = null;
-        itemToDelete = null;
-    });
-    
-    /* ==================================================
-       7. RECENTLY DELETED FUNCTIONALITY
-    ================================================== */
-    const recentlyDeletedSection = document.getElementById('recentlyDeleted');
-    const deletedList = document.getElementById('deletedList');
-    const restoreAllBtn = document.getElementById('restoreAllBtn');
-    
-    function showRecentlyDeleted() {
-        if (recentlyDeleted.length > 0) {
-            recentlyDeletedSection.classList.add('show');
-            renderDeletedList();
-        } else {
-            recentlyDeletedSection.classList.remove('show');
-        }
-    }
-    
-    function renderDeletedList() {
-        deletedList.innerHTML = '';
-        
-        recentlyDeleted.forEach((item, index) => {
-            const deletedItem = document.createElement('div');
-            deletedItem.className = 'deleted-item';
-            deletedItem.innerHTML = `
-                <div class="deleted-info">
-                    <div class="deleted-thumb">
-                        <img src="${item.thumbnail}" alt="${item.title}">
-                    </div>
-                    <div class="deleted-details">
-                        <h4>${item.title}</h4>
-                        <span>${item.episode} • Deleted ${formatTimeSince(item.deletedAt)}</span>
-                    </div>
-                </div>
-                <div class="deleted-actions">
-                    <button class="deleted-restore-btn" data-index="${index}">Restore</button>
-                    <button class="deleted-permanent-btn" data-index="${index}">Delete Permanently</button>
-                </div>
-            `;
-            
-            deletedList.appendChild(deletedItem);
-        });
-        
-        // Add event listeners
-        document.querySelectorAll('.deleted-restore-btn').forEach(btn => {
-            btn.addEventListener('click', (e) => {
-                const index = parseInt(e.target.getAttribute('data-index'));
-                restoreDeletedItem(index);
-            });
-        });
-        
-        document.querySelectorAll('.deleted-permanent-btn').forEach(btn => {
-            btn.addEventListener('click', (e) => {
-                const index = parseInt(e.target.getAttribute('data-index'));
-                deletePermanently(index);
-            });
-        });
-    }
-    
-    restoreAllBtn.addEventListener('click', () => {
-        // Restore all items
-        recentlyDeleted.forEach(item => {
-            historyData.push(item);
-        });
-        
-        // Clear recently deleted
-        recentlyDeleted.length = 0;
-        
-        // Hide section
-        recentlyDeletedSection.classList.remove('show');
-        
-        // Re-render grid
-        renderHistoryGrid();
-        
-        // Show notification
-        showNotification('All items restored from trash', 'success');
-    });
-    
-    function restoreDeletedItem(index) {
-        const item = recentlyDeleted[index];
-        historyData.push(item);
-        recentlyDeleted.splice(index, 1);
-        
-        if (recentlyDeleted.length === 0) {
-            recentlyDeletedSection.classList.remove('show');
-        } else {
-            renderDeletedList();
-        }
-        
-        renderHistoryGrid();
-        showNotification(`${item.title} restored to history`, 'success');
-    }
-    
-    function deletePermanently(index) {
-        const item = recentlyDeleted[index];
-        recentlyDeleted.splice(index, 1);
-        
-        if (recentlyDeleted.length === 0) {
-            recentlyDeletedSection.classList.remove('show');
-        } else {
-            renderDeletedList();
-        }
-        
-        showNotification(`${item.title} permanently deleted`, 'warning');
-    }
-    
-    function formatTimeSince(date) {
-        const now = new Date();
-        const diffMs = now - date;
-        const diffMins = Math.floor(diffMs / 60000);
-        const diffHours = Math.floor(diffMs / 3600000);
-        const diffDays = Math.floor(diffMs / 86400000);
-        
-        if (diffMins < 60) {
-            return `${diffMins} minute${diffMins !== 1 ? 's' : ''} ago`;
-        } else if (diffHours < 24) {
-            return `${diffHours} hour${diffHours !== 1 ? 's' : ''} ago`;
-        } else {
-            return `${diffDays} day${diffDays !== 1 ? 's' : ''} ago`;
-        }
-    }
-    
-    /* ==================================================
-       8. UTILITY FUNCTIONS
-    ================================================== */
-    function continueWatching(item) {
-        showNotification(`Continuing ${item.title} - ${item.episode}`, 'info');
-        // In a real app, this would redirect to the watch page
-        // window.location.href = `watch.html?anime=${item.id}&episode=${item.watchedEpisodes + 1}`;
-    }
-    
-    function viewAnimeDetails(item) {
-        showNotification(`Viewing details for ${item.title}`, 'info');
-        // In a real app, this would redirect to the anime details page
-        // window.location.href = `anime.html?id=${item.id}`;
-    }
-    
-    function showNotification(message, type = 'info') {
-        // Create notification element
-        const notification = document.createElement('div');
-        notification.className = `notification notification-${type}`;
-        notification.innerHTML = `
-            <div class="notification-content">
-                <i class="fas fa-${type === 'success' ? 'check-circle' : type === 'warning' ? 'exclamation-triangle' : 'info-circle'}"></i>
-                <span>${message}</span>
-            </div>
-            <button class="notification-close"><i class="fas fa-times"></i></button>
-        `;
-        
-        // Add styles
-        notification.style.cssText = `
-            position: fixed;
-            top: 100px;
-            right: 20px;
-            background: var(--bg-card);
-            border: 1px solid var(--glass-border);
-            border-left: 4px solid ${type === 'success' ? 'var(--accent)' : type === 'warning' ? '#ff4757' : 'var(--primary)'};
-            border-radius: 8px;
-            padding: 15px 20px;
-            min-width: 300px;
-            max-width: 400px;
-            box-shadow: 0 10px 30px var(--shadow-heavy);
-            z-index: 10000;
-            animation: slideInRight 0.3s ease, fadeOut 0.3s ease 2.7s forwards;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        `;
-        
-        const notificationContent = notification.querySelector('.notification-content');
-        notificationContent.style.cssText = `
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            color: var(--text-white);
-        `;
-        
-        const closeBtn = notification.querySelector('.notification-close');
-        closeBtn.style.cssText = `
-            background: none;
-            border: none;
-            color: var(--text-gray);
-            cursor: pointer;
-            padding: 5px;
-        `;
-        
-        closeBtn.addEventListener('click', () => {
-            notification.remove();
-        });
-        
-        // Add to body
-        document.body.appendChild(notification);
-        
-        // Auto remove after 3 seconds
-        setTimeout(() => {
-            if (notification.parentNode) {
-                notification.remove();
-            }
-        }, 3000);
-        
-        // Add CSS animations
-        const style = document.createElement('style');
-        style.textContent = `
-            @keyframes slideInRight {
-                from {
-                    transform: translateX(100%);
-                    opacity: 0;
-                }
-                to {
-                    transform: translateX(0);
-                    opacity: 1;
-                }
-            }
-            
-            @keyframes fadeOut {
-                to {
-                    opacity: 0;
-                    transform: translateX(100%);
-                }
-            }
-        `;
-        document.head.appendChild(style);
-    }
-    
-    /* ==================================================
-       9. INITIALIZE PAGE
-    ================================================== */
-    function initializePage() {
-        renderHistoryGrid();
-        showRecentlyDeleted();
-        
-        // Add some sample recently deleted items
-        if (recentlyDeleted.length === 0) {
-            recentlyDeleted.push({
-                id: 9,
-                title: "One Piece",
-                episode: "Episode 1054",
-                thumbnail: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=600&auto=format&fit=crop",
-                progress: 10,
-                status: "watching",
-                genres: ["Adventure", "Action"],
-                lastWatched: "2 months ago",
-                duration: "23m",
-                rating: 4.9,
-                totalEpisodes: 1074,
-                watchedEpisodes: 1054,
-                deletedAt: new Date(Date.now() - 3600000) // 1 hour ago
-            });
-            
-            showRecentlyDeleted();
-        }
-    }
-    
-    // Initialize when DOM is loaded
-    initializePage();
-    
-    /* ==================================================
-       10. KEYBOARD SHORTCUTS
-    ================================================== */
-    document.addEventListener('keydown', (e) => {
-        // Don't trigger if user is typing in an input field
-        if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA' || e.target.tagName === 'SELECT') return;
-        
-        switch(e.key) {
-            case 'Escape':
-                // Close any open modals or dropdowns
-                if (modal.classList.contains('active')) {
-                    modal.classList.remove('active');
-                }
-                if (searchOverlay.classList.contains('active')) {
-                    searchOverlay.classList.remove('active');
-                }
-                if (userDropdown.classList.contains('active')) {
-                    userDropdown.classList.remove('active');
-                }
-                break;
-            case 'r':
-                if (e.ctrlKey) {
-                    e.preventDefault();
-                    // Quick refresh (simulate)
-                    showNotification('Refreshing history...', 'info');
-                    setTimeout(() => {
-                        renderHistoryGrid();
-                        showNotification('History refreshed', 'success');
-                    }, 500);
-                }
-                break;
-            case 'Delete':
-                if (e.ctrlKey && e.shiftKey) {
-                    e.preventDefault();
-                    clearHistoryBtn.click();
-                }
-                break;
-        }
-    });
+    init();
 });

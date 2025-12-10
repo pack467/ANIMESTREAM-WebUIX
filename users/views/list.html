@@ -12,16 +12,6 @@
     <link rel="stylesheet" href="../styles/list.css">
 </head>
 <body>
-    <div id="preloader">
-        <div class="loader-container">
-            <div class="loader-logo">ANI<span class="me">ME</span>STREAM</div>
-            <div class="progress-bar-wrap">
-                <div class="progress-bar" id="loader-progress"></div>
-            </div>
-            <div class="loading-text">Loading Your Anime Collection...</div>
-        </div>
-    </div>
-
     <div class="search-overlay" id="searchOverlay">
         <div class="search-close" id="searchClose"><i class="fas fa-times"></i></div>
         <div class="search-box">
@@ -34,6 +24,20 @@
             <a href="#">Naruto</a>
             <a href="#">Demon Slayer</a>
             <a href="#">Jujutsu Kaisen</a>
+        </div>
+    </div>
+
+    <!-- Delete Confirmation Modal -->
+    <div class="modal-overlay" id="deleteModal">
+        <div class="modal-container">
+            <div class="modal-icon">
+                <i class="fas fa-exclamation-triangle"></i>
+            </div>
+            <h3 class="modal-title">Are you sure you want to delete your anime history?</h3>
+            <div class="modal-actions">
+                <button class="modal-btn btn-cancel" id="cancelBtn">Batal</button>
+                <button class="modal-btn btn-confirm" id="confirmBtn">Ya</button>
+            </div>
         </div>
     </div>
 
@@ -63,7 +67,6 @@
             <div class="header-actions">
                 <button class="action-btn search-trigger" id="searchTrigger"><i class="fas fa-search"></i></button>
                 
-                <!-- User Profile Button dengan Dropdown Menu -->
                 <div class="user-profile">
                     <button class="user-btn" id="userBtn">
                         <i class="fas fa-user"></i>
@@ -87,11 +90,11 @@
                             <i class="fas fa-cog"></i>
                             <span>Settings</span>
                         </a>
-                        <a href="list.html" class="dropdown-item active">
+                        <a href="#" class="dropdown-item active">
                             <i class="fas fa-list"></i>
                             <span>My List</span>
                         </a>
-                        <a href="history.html" class="dropdown-item">
+                        <a href="#" class="dropdown-item">
                             <i class="fas fa-history"></i>
                             <span>Watch History</span>
                         </a>
@@ -116,33 +119,33 @@
         <div class="container">
             <div class="list-hero-content">
                 <h1 class="list-title">My Anime List</h1>
-                <p class="list-subtitle">Your personal anime collection, organized just for you</p>
+                <p class="list-subtitle">Your personal anime collection</p>
                 <div class="list-stats">
                     <div class="stat-card">
                         <i class="fas fa-bookmark"></i>
                         <div class="stat-info">
-                            <span class="stat-number" id="totalAnime">24</span>
-                            <span class="stat-label">Total Anime</span>
+                            <span class="stat-number" id="totalAnime">0</span>
+                            <span class="stat-label">Total</span>
                         </div>
                     </div>
                     <div class="stat-card">
-                        <i class="fas fa-clock"></i>
+                        <i class="fas fa-play-circle"></i>
                         <div class="stat-info">
-                            <span class="stat-number" id="watchingCount">12</span>
+                            <span class="stat-number" id="watchingCount">0</span>
                             <span class="stat-label">Watching</span>
                         </div>
                     </div>
                     <div class="stat-card">
                         <i class="fas fa-check-circle"></i>
                         <div class="stat-info">
-                            <span class="stat-number" id="completedCount">8</span>
+                            <span class="stat-number" id="completedCount">0</span>
                             <span class="stat-label">Completed</span>
                         </div>
                     </div>
                     <div class="stat-card">
-                        <i class="fas fa-pause-circle"></i>
+                        <i class="fas fa-clock"></i>
                         <div class="stat-info">
-                            <span class="stat-number" id="plannedCount">4</span>
+                            <span class="stat-number" id="plannedCount">0</span>
                             <span class="stat-label">Planned</span>
                         </div>
                     </div>
@@ -157,7 +160,7 @@
                 <div class="list-tabs" id="listTabs">
                     <button class="tab-btn active" data-tab="all">
                         <i class="fas fa-th-large"></i>
-                        <span>All Anime</span>
+                        <span>All</span>
                     </button>
                     <button class="tab-btn" data-tab="watching">
                         <i class="fas fa-play-circle"></i>
@@ -171,79 +174,320 @@
                         <i class="fas fa-clock"></i>
                         <span>Planned</span>
                     </button>
-                    <button class="tab-btn" data-tab="favorites">
-                        <i class="fas fa-heart"></i>
-                        <span>Favorites</span>
-                    </button>
-                    <button class="tab-btn" data-tab="custom">
-                        <i class="fas fa-folder"></i>
-                        <span>Custom Lists</span>
-                    </button>
                 </div>
+                
                 <div class="list-controls">
                     <div class="list-sort">
                         <select id="sortBy">
                             <option value="recent">Recently Added</option>
                             <option value="title">Title A-Z</option>
                             <option value="rating">Highest Rating</option>
-                            <option value="episodes">Most Episodes</option>
-                            <option value="progress">Watch Progress</option>
+                            <option value="progress">Progress</option>
                         </select>
                     </div>
-                    <div class="list-view-toggle">
-                        <button class="view-btn active" id="gridViewBtn">
-                            <i class="fas fa-th-large"></i>
-                        </button>
-                        <button class="view-btn" id="listViewBtn">
-                            <i class="fas fa-list"></i>
-                        </button>
-                    </div>
-                    <button class="create-list-btn" id="createListBtn">
-                        <i class="fas fa-plus-circle"></i>
-                        Create New List
+                    <button class="btn-primary" id="addAnimeBtn">
+                        <i class="fas fa-plus"></i>
+                        Add Anime
                     </button>
                 </div>
             </div>
 
-            <!-- Custom Lists Section (Only shown when custom tab is active) -->
-            <div class="custom-lists-section" id="customListsSection">
-                <div class="custom-lists-grid" id="customListsGrid">
-                    <!-- Custom lists will be added here dynamically -->
-                </div>
-            </div>
-
-            <!-- Anime Grid/List View -->
             <div class="anime-view-section">
-                <div class="view-header" id="viewHeader">
+                <div class="view-header">
                     <h3 id="viewTitle">All Anime</h3>
-                    <div class="view-actions">
-                        <button class="action-btn select-all-btn" id="selectAllBtn">
-                            <i class="far fa-square"></i>
-                            Select All
-                        </button>
-                        <button class="action-btn bulk-edit-btn" id="bulkEditBtn">
-                            <i class="fas fa-edit"></i>
-                            Bulk Edit
-                        </button>
-                        <button class="action-btn export-btn" id="exportBtn">
-                            <i class="fas fa-download"></i>
-                            Export List
-                        </button>
-                    </div>
                 </div>
                 
-                <!-- Grid View -->
                 <div class="anime-grid-view active" id="animeGridView">
                     <div class="anime-grid" id="animeGrid">
-                        <!-- Anime cards will be loaded here dynamically -->
+                        <!-- Anime Card 1 -->
+                        <div class="anime-card" data-status="watching" data-title="Demon Slayer: Kimetsu no Yaiba" data-rating="4.9" data-progress="69" data-date="2024-02-28">
+                            <div class="anime-card-badge badge-watching">watching</div>
+                            <div class="anime-card-thumb">
+                                <img src="https://images.unsplash.com/photo-1541562232579-512a21360020?q=80&w=600&auto=format&fit=crop" alt="Demon Slayer">
+                            </div>
+                            <div class="anime-card-content">
+                                <div class="anime-card-header">
+                                    <div class="anime-card-title">
+                                        <h3>Demon Slayer: Kimetsu no Yaiba</h3>
+                                        <div class="anime-card-episode">18/26</div>
+                                    </div>
+                                    <div class="anime-card-rating">
+                                        <i class="fas fa-star"></i>
+                                        <span>4.9</span>
+                                    </div>
+                                </div>
+                                <div class="anime-card-meta">
+                                    <div class="anime-meta-item">
+                                        <i class="fas fa-calendar-alt"></i>
+                                        <span>Feb 28</span>
+                                    </div>
+                                    <div class="anime-meta-item">
+                                        <i class="fas fa-tags"></i>
+                                        <span>Action, Supernatural</span>
+                                    </div>
+                                </div>
+                                <div class="anime-card-progress">
+                                    <div class="progress-info">
+                                        <span class="progress-label">Progress</span>
+                                        <span class="progress-percent">69%</span>
+                                    </div>
+                                    <div class="progress-bar-container">
+                                        <div class="progress-fill" style="width: 69%"></div>
+                                    </div>
+                                </div>
+                                <div class="anime-card-footer">
+                                    <div class="anime-card-actions">
+                                        <button class="anime-action-btn delete" title="Remove from list">
+                                            <i class="fas fa-trash-alt"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Anime Card 2 -->
+                        <div class="anime-card" data-status="completed" data-title="Jujutsu Kaisen" data-rating="4.8" data-progress="100" data-date="2024-03-05">
+                            <div class="anime-card-badge badge-completed">completed</div>
+                            <div class="anime-card-thumb">
+                                <img src="https://images.unsplash.com/photo-1607604276583-eef5d076aa5f?q=80&w=600&auto=format&fit=crop" alt="Jujutsu Kaisen">
+                            </div>
+                            <div class="anime-card-content">
+                                <div class="anime-card-header">
+                                    <div class="anime-card-title">
+                                        <h3>Jujutsu Kaisen</h3>
+                                        <div class="anime-card-episode">24/24</div>
+                                    </div>
+                                    <div class="anime-card-rating">
+                                        <i class="fas fa-star"></i>
+                                        <span>4.8</span>
+                                    </div>
+                                </div>
+                                <div class="anime-card-meta">
+                                    <div class="anime-meta-item">
+                                        <i class="fas fa-calendar-alt"></i>
+                                        <span>Mar 5</span>
+                                    </div>
+                                    <div class="anime-meta-item">
+                                        <i class="fas fa-tags"></i>
+                                        <span>Action, Supernatural</span>
+                                    </div>
+                                </div>
+                                <div class="anime-card-progress">
+                                    <div class="progress-info">
+                                        <span class="progress-label">Progress</span>
+                                        <span class="progress-percent">100%</span>
+                                    </div>
+                                    <div class="progress-bar-container">
+                                        <div class="progress-fill" style="width: 100%"></div>
+                                    </div>
+                                </div>
+                                <div class="anime-card-footer">
+                                    <div class="anime-card-actions">
+                                        <button class="anime-action-btn delete" title="Remove from list">
+                                            <i class="fas fa-trash-alt"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Anime Card 3 -->
+                        <div class="anime-card" data-status="watching" data-title="Attack on Titan" data-rating="4.9" data-progress="43" data-date="2024-01-20">
+                            <div class="anime-card-badge badge-watching">watching</div>
+                            <div class="anime-card-thumb">
+                                <img src="https://images.unsplash.com/photo-1581833971358-2c8b550f87b3?q=80&w=600&auto=format&fit=crop" alt="Attack on Titan">
+                            </div>
+                            <div class="anime-card-content">
+                                <div class="anime-card-header">
+                                    <div class="anime-card-title">
+                                        <h3>Attack on Titan</h3>
+                                        <div class="anime-card-episode">12/28</div>
+                                    </div>
+                                    <div class="anime-card-rating">
+                                        <i class="fas fa-star"></i>
+                                        <span>4.9</span>
+                                    </div>
+                                </div>
+                                <div class="anime-card-meta">
+                                    <div class="anime-meta-item">
+                                        <i class="fas fa-calendar-alt"></i>
+                                        <span>Jan 20</span>
+                                    </div>
+                                    <div class="anime-meta-item">
+                                        <i class="fas fa-tags"></i>
+                                        <span>Action, Drama</span>
+                                    </div>
+                                </div>
+                                <div class="anime-card-progress">
+                                    <div class="progress-info">
+                                        <span class="progress-label">Progress</span>
+                                        <span class="progress-percent">43%</span>
+                                    </div>
+                                    <div class="progress-bar-container">
+                                        <div class="progress-fill" style="width: 43%"></div>
+                                    </div>
+                                </div>
+                                <div class="anime-card-footer">
+                                    <div class="anime-card-actions">
+                                        <button class="anime-action-btn delete" title="Remove from list">
+                                            <i class="fas fa-trash-alt"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Anime Card 4 -->
+                        <div class="anime-card" data-status="planned" data-title="My Hero Academia" data-rating="4.7" data-progress="0" data-date="2024-02-15">
+                            <div class="anime-card-badge badge-planned">planned</div>
+                            <div class="anime-card-thumb">
+                                <img src="https://images.unsplash.com/photo-1626544827763-d516dce335ca?q=80&w=600&auto=format&fit=crop" alt="My Hero Academia">
+                            </div>
+                            <div class="anime-card-content">
+                                <div class="anime-card-header">
+                                    <div class="anime-card-title">
+                                        <h3>My Hero Academia</h3>
+                                        <div class="anime-card-episode">0/138</div>
+                                    </div>
+                                    <div class="anime-card-rating">
+                                        <i class="fas fa-star"></i>
+                                        <span>4.7</span>
+                                    </div>
+                                </div>
+                                <div class="anime-card-meta">
+                                    <div class="anime-meta-item">
+                                        <i class="fas fa-calendar-alt"></i>
+                                        <span>Feb 15</span>
+                                    </div>
+                                    <div class="anime-meta-item">
+                                        <i class="fas fa-tags"></i>
+                                        <span>Action, Superhero</span>
+                                    </div>
+                                </div>
+                                <div class="anime-card-progress">
+                                    <div class="progress-info">
+                                        <span class="progress-label">Progress</span>
+                                        <span class="progress-percent">0%</span>
+                                    </div>
+                                    <div class="progress-bar-container">
+                                        <div class="progress-fill" style="width: 0%"></div>
+                                    </div>
+                                </div>
+                                <div class="anime-card-footer">
+                                    <div class="anime-card-actions">
+                                        <button class="anime-action-btn delete" title="Remove from list">
+                                            <i class="fas fa-trash-alt"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Anime Card 5 -->
+                        <div class="anime-card" data-status="on-hold" data-title="One Piece" data-rating="4.9" data-progress="25" data-date="2024-01-10">
+                            <div class="anime-card-badge badge-on-hold">on hold</div>
+                            <div class="anime-card-thumb">
+                                <img src="https://images.unsplash.com/photo-1578632767115-351597cf2477?q=80&w=600&auto=format&fit=crop" alt="One Piece">
+                            </div>
+                            <div class="anime-card-content">
+                                <div class="anime-card-header">
+                                    <div class="anime-card-title">
+                                        <h3>One Piece</h3>
+                                        <div class="anime-card-episode">250/1000+</div>
+                                    </div>
+                                    <div class="anime-card-rating">
+                                        <i class="fas fa-star"></i>
+                                        <span>4.9</span>
+                                    </div>
+                                </div>
+                                <div class="anime-card-meta">
+                                    <div class="anime-meta-item">
+                                        <i class="fas fa-calendar-alt"></i>
+                                        <span>Jan 10</span>
+                                    </div>
+                                    <div class="anime-meta-item">
+                                        <i class="fas fa-tags"></i>
+                                        <span>Adventure, Action</span>
+                                    </div>
+                                </div>
+                                <div class="anime-card-progress">
+                                    <div class="progress-info">
+                                        <span class="progress-label">Progress</span>
+                                        <span class="progress-percent">25%</span>
+                                    </div>
+                                    <div class="progress-bar-container">
+                                        <div class="progress-fill" style="width: 25%"></div>
+                                    </div>
+                                </div>
+                                <div class="anime-card-footer">
+                                    <div class="anime-card-actions">
+                                        <button class="anime-action-btn delete" title="Remove from list">
+                                            <i class="fas fa-trash-alt"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Anime Card 6 -->
+                        <div class="anime-card" data-status="dropped" data-title="Bleach" data-rating="4.5" data-progress="15" data-date="2024-03-01">
+                            <div class="anime-card-badge badge-dropped">dropped</div>
+                            <div class="anime-card-thumb">
+                                <img src="https://images.unsplash.com/photo-1612198188060-c7c2a3b66eae?q=80&w=600&auto=format&fit=crop" alt="Bleach">
+                            </div>
+                            <div class="anime-card-content">
+                                <div class="anime-card-header">
+                                    <div class="anime-card-title">
+                                        <h3>Bleach</h3>
+                                        <div class="anime-card-episode">54/366</div>
+                                    </div>
+                                    <div class="anime-card-rating">
+                                        <i class="fas fa-star"></i>
+                                        <span>4.5</span>
+                                    </div>
+                                </div>
+                                <div class="anime-card-meta">
+                                    <div class="anime-meta-item">
+                                        <i class="fas fa-calendar-alt"></i>
+                                        <span>Mar 1</span>
+                                    </div>
+                                    <div class="anime-meta-item">
+                                        <i class="fas fa-tags"></i>
+                                        <span>Action, Supernatural</span>
+                                    </div>
+                                </div>
+                                <div class="anime-card-progress">
+                                    <div class="progress-info">
+                                        <span class="progress-label">Progress</span>
+                                        <span class="progress-percent">15%</span>
+                                    </div>
+                                    <div class="progress-bar-container">
+                                        <div class="progress-fill" style="width: 15%"></div>
+                                    </div>
+                                </div>
+                                <div class="anime-card-footer">
+                                    <div class="anime-card-actions">
+                                        <button class="anime-action-btn delete" title="Remove from list">
+                                            <i class="fas fa-trash-alt"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                
-                <!-- List View -->
-                <div class="anime-list-view" id="animeListView">
-                    <div class="anime-list" id="animeList">
-                        <!-- Anime list items will be loaded here dynamically -->
+
+                <!-- Pagination -->
+                <div class="pagination" id="pagination">
+                    <button class="pagination-btn" id="prevBtn" disabled>
+                        <i class="fas fa-chevron-left"></i>
+                    </button>
+                    <div class="pagination-numbers" id="paginationNumbers">
+                        <!-- Page numbers will be generated here -->
                     </div>
+                    <button class="pagination-btn" id="nextBtn">
+                        <i class="fas fa-chevron-right"></i>
+                    </button>
                 </div>
 
                 <div class="empty-list" id="emptyList" style="display: none;">
@@ -252,36 +496,6 @@
                     </div>
                     <h3>Your List is Empty</h3>
                     <p>Start adding anime to build your personal collection</p>
-                    <a href="home.html" class="btn-primary">Browse Anime</a>
-                </div>
-
-                <div class="pagination" id="pagination">
-                    <!-- Pagination will be added here dynamically -->
-                </div>
-            </div>
-
-            <!-- Quick Add Section -->
-            <div class="quick-add-section">
-                <div class="section-header">
-                    <h3><i class="fas fa-bolt"></i> Quick Add Anime</h3>
-                    <div class="search-box-small">
-                        <input type="text" id="quickSearch" placeholder="Search anime to add...">
-                        <button id="quickSearchBtn"><i class="fas fa-search"></i></button>
-                    </div>
-                </div>
-                <div class="quick-results" id="quickResults">
-                    <!-- Quick search results will appear here -->
-                </div>
-            </div>
-
-            <!-- Recommendations Section -->
-            <div class="recommendations-section">
-                <div class="section-header">
-                    <h3>Based On Your List</h3>
-                    <a href="#" class="view-all-btn">View All <i class="fas fa-arrow-right"></i></a>
-                </div>
-                <div class="recommendations-grid" id="recommendationsGrid">
-                    <!-- Recommendations will be added here dynamically -->
                 </div>
             </div>
         </div>
@@ -327,150 +541,6 @@
             </div>
         </div>
     </footer>
-
-    <!-- Create List Modal -->
-    <div class="modal" id="createListModal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3>Create New List</h3>
-                <button class="modal-close" id="createListModalClose"><i class="fas fa-times"></i></button>
-            </div>
-            <div class="modal-body">
-                <form id="createListForm">
-                    <div class="form-group">
-                        <label for="listName">List Name</label>
-                        <input type="text" id="listName" placeholder="Enter list name..." required>
-                    </div>
-                    <div class="form-group">
-                        <label for="listDescription">Description (Optional)</label>
-                        <textarea id="listDescription" placeholder="Describe your list..." rows="3"></textarea>
-                    </div>
-                    <div class="form-group">
-                        <label for="listPrivacy">Privacy</label>
-                        <select id="listPrivacy">
-                            <option value="private">Private</option>
-                            <option value="public">Public</option>
-                            <option value="friends">Friends Only</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="listColor">Color Theme</label>
-                        <div class="color-options" id="colorOptions">
-                            <div class="color-option active" data-color="#ff6b6b"></div>
-                            <div class="color-option" data-color="#6c5ce7"></div>
-                            <div class="color-option" data-color="#00b894"></div>
-                            <div class="color-option" data-color="#fdcb6e"></div>
-                            <div class="color-option" data-color="#0984e3"></div>
-                            <div class="color-option" data-color="#a29bfe"></div>
-                        </div>
-                    </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button class="btn-secondary" id="createListCancel">Cancel</button>
-                <button class="btn-primary" id="createListConfirm">Create List</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- Edit Anime Modal -->
-    <div class="modal" id="editAnimeModal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3>Edit Anime Details</h3>
-                <button class="modal-close" id="editAnimeModalClose"><i class="fas fa-times"></i></button>
-            </div>
-            <div class="modal-body">
-                <form id="editAnimeForm">
-                    <div class="form-group">
-                        <label for="editStatus">Status</label>
-                        <select id="editStatus">
-                            <option value="watching">Watching</option>
-                            <option value="completed">Completed</option>
-                            <option value="planned">Planned</option>
-                            <option value="dropped">Dropped</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="editProgress">Progress</label>
-                        <div class="progress-input">
-                            <input type="range" id="editProgress" min="0" max="100" value="0">
-                            <span id="progressValue">0%</span>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="editRating">Your Rating</label>
-                        <div class="rating-input">
-                            <div class="star-rating" id="starRating">
-                                <i class="far fa-star" data-rating="1"></i>
-                                <i class="far fa-star" data-rating="2"></i>
-                                <i class="far fa-star" data-rating="3"></i>
-                                <i class="far fa-star" data-rating="4"></i>
-                                <i class="far fa-star" data-rating="5"></i>
-                            </div>
-                            <span id="ratingValue">0/5</span>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="editNotes">Notes</label>
-                        <textarea id="editNotes" placeholder="Add personal notes..." rows="4"></textarea>
-                    </div>
-                    <div class="form-group">
-                        <label>Tags</label>
-                        <div class="tags-input">
-                            <div class="tags-container" id="tagsContainer">
-                                <!-- Tags will be added here -->
-                            </div>
-                            <input type="text" id="tagInput" placeholder="Add a tag...">
-                        </div>
-                    </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button class="btn-secondary" id="editAnimeCancel">Cancel</button>
-                <button class="btn-primary" id="editAnimeSave">Save Changes</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- Bulk Edit Modal -->
-    <div class="modal" id="bulkEditModal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3>Bulk Edit Selected Items</h3>
-                <button class="modal-close" id="bulkEditModalClose"><i class="fas fa-times"></i></button>
-            </div>
-            <div class="modal-body">
-                <p><span id="selectedCount">0</span> anime selected</p>
-                <div class="form-group">
-                    <label for="bulkStatus">Change Status</label>
-                    <select id="bulkStatus">
-                        <option value="">Don't Change</option>
-                        <option value="watching">Watching</option>
-                        <option value="completed">Completed</option>
-                        <option value="planned">Planned</option>
-                        <option value="dropped">Dropped</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="bulkList">Move to List</label>
-                    <select id="bulkList">
-                        <option value="">Don't Move</option>
-                        <option value="favorites">Favorites</option>
-                        <!-- Custom lists will be added dynamically -->
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="bulkTags">Add Tags</label>
-                    <input type="text" id="bulkTags" placeholder="Separate tags with commas...">
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button class="btn-secondary" id="bulkEditCancel">Cancel</button>
-                <button class="btn-primary" id="bulkEditApply">Apply Changes</button>
-            </div>
-        </div>
-    </div>
 
     <script src="../script/list.js"></script>
 </body>

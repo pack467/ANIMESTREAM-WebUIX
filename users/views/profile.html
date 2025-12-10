@@ -1,0 +1,797 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Profile - AniStream</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Mulish:wght@300;400;500;600;700;800&family=Oswald:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <link rel="stylesheet" href="../styles/profile.css">
+</head>
+<body>
+    <header class="header" id="mainHeader">
+        <div class="container header-container">
+            <div class="logo">
+                <a href="home.html">ANI<span class="highlight">ME</span>STREAM</a>
+            </div>
+
+            <nav class="navbar" id="navbar">
+                <ul class="menu">
+                    <li class="menu-item"><a href="home.html">Home</a></li>
+                    <li class="menu-item has-dropdown">
+                        <a href="#">Genre <i class="fas fa-chevron-down"></i></a>
+                        <ul class="dropdown">
+                            <li><a href="#">Action</a></li>
+                            <li><a href="#">Adventure</a></li>
+                            <li><a href="#">Fantasy</a></li>
+                            <li><a href="#">Sci-Fi</a></li>
+                        </ul>
+                    </li>
+                    <li class="menu-item"><a href="#">Schedule</a></li>
+                    <li class="menu-item"><a href="#">News</a></li>
+                </ul>
+            </nav>
+
+            <div class="header-actions">
+                <button class="action-btn search-trigger" id="searchTrigger"><i class="fas fa-search"></i></button>
+                
+                <div class="user-profile">
+                    <button class="user-btn" id="userBtn">
+                        <i class="fas fa-user"></i>
+                    </button>
+                    <div class="user-dropdown" id="userDropdown">
+                        <div class="user-info">
+                            <div class="user-avatar">
+                                <i class="fas fa-user-circle"></i>
+                            </div>
+                            <div class="user-details">
+                                <span class="user-name">AnimeLover</span>
+                                <span class="user-status">Premium Member</span>
+                            </div>
+                        </div>
+                        <div class="dropdown-divider"></div>
+                        <a href="profile.html" class="dropdown-item active">
+                            <i class="fas fa-user"></i>
+                            <span>My Profile</span>
+                        </a>
+                        <a href="#" class="dropdown-item">
+                            <i class="fas fa-cog"></i>
+                            <span>Settings</span>
+                        </a>
+                        <div class="dropdown-divider"></div>
+                        <a href="#" class="dropdown-item logout">
+                            <i class="fas fa-sign-out-alt"></i>
+                            <span>Log Out</span>
+                        </a>
+                    </div>
+                </div>
+
+                <button class="mobile-toggle" id="mobileToggle">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <div class="search-overlay" id="searchOverlay">
+        <div class="search-close" id="searchClose"><i class="fas fa-times"></i></div>
+        <div class="search-box">
+            <input type="text" placeholder="Type to search anime...">
+            <button><i class="fas fa-search"></i></button>
+        </div>
+        <div class="search-tags">
+            <span>Popular:</span>
+            <a href="#">One Piece</a>
+            <a href="#">Naruto</a>
+            <a href="#">Demon Slayer</a>
+            <a href="#">Jujutsu Kaisen</a>
+        </div>
+    </div>
+
+    <!-- Password Change Modal -->
+    <div class="modal-overlay" id="passwordModal">
+        <div class="modal">
+            <div class="modal-header">
+                <h3>Change Password</h3>
+                <button class="modal-close" id="closePasswordModal">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="changePasswordForm">
+                    <div class="form-group">
+                        <label for="oldPassword">Current Password</label>
+                        <input type="password" id="oldPassword" class="form-input" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="newPassword">New Password</label>
+                        <input type="password" id="newPassword" class="form-input" required minlength="6">
+                    </div>
+                    <div class="form-group">
+                        <label for="confirmPassword">Confirm New Password</label>
+                        <input type="password" id="confirmPassword" class="form-input" required minlength="6">
+                    </div>
+                    <div class="form-group">
+                        <div class="password-requirements">
+                            <p><i class="fas fa-info-circle"></i> Password must be at least 6 characters long</p>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn-primary btn-full">Change Password</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="profile-container">
+        <div class="container">
+            <!-- Profile Header with Banner -->
+            <div class="profile-banner">
+                <div class="banner-image" id="bannerImage">
+                    <div class="banner-overlay"></div>
+                    <button class="change-banner-btn" id="changeBannerBtn">
+                        <i class="fas fa-camera"></i>
+                        <span>Change Banner</span>
+                    </button>
+                </div>
+                
+                <div class="profile-header-content">
+                    <div class="avatar-section">
+                        <div class="avatar-wrapper">
+                            <div class="avatar-image" id="avatarImage">
+                                <i class="fas fa-user"></i>
+                            </div>
+                            <button class="change-avatar-btn" id="changeAvatarBtn">
+                                <i class="fas fa-camera"></i>
+                            </button>
+                            <div class="avatar-status online"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="profile-info">
+                        <div class="profile-name-section">
+                            <h1 class="profile-name">AnimeLover</h1>
+                            <button class="edit-profile-btn" id="editProfileBtn">
+                                <i class="fas fa-pencil-alt"></i>
+                                <span>Edit Profile</span>
+                            </button>
+                        </div>
+                        <div class="profile-meta">
+                            <div class="meta-item">
+                                <i class="fas fa-calendar-alt"></i>
+                                <span>Joined March 2024</span>
+                            </div>
+                            <div class="meta-item">
+                                <i class="fas fa-crown"></i>
+                                <span>Premium Member</span>
+                            </div>
+                            <div class="meta-item">
+                                <i class="fas fa-map-marker-alt"></i>
+                                <span>Tokyo, Japan</span>
+                            </div>
+                        </div>
+                        <div class="profile-bio">
+                            <p>Passionate anime fan who loves action, fantasy, and slice of life genres. Always looking for new recommendations!</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Profile Stats -->
+            <div class="profile-stats">
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-play-circle"></i>
+                    </div>
+                    <div class="stat-info">
+                        <div class="stat-value">284</div>
+                        <div class="stat-label">Episodes Watched</div>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <div class="stat-info">
+                        <div class="stat-value">142h</div>
+                        <div class="stat-label">Watch Time</div>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-heart"></i>
+                    </div>
+                    <div class="stat-info">
+                        <div class="stat-value">9</div>
+                        <div class="stat-label">Favorites</div>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <div class="stat-info">
+                        <div class="stat-value">58</div>
+                        <div class="stat-label">Rated Shows</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Profile Content -->
+            <div class="profile-content">
+                <!-- Tabs Navigation -->
+                <div class="profile-tabs">
+                    <button class="tab-btn active" data-tab="overview">
+                        <i class="fas fa-th-large"></i>
+                        <span>Overview</span>
+                    </button>
+                    <button class="tab-btn" data-tab="favorites">
+                        <i class="fas fa-heart"></i>
+                        <span>Favorites</span>
+                    </button>
+                    <button class="tab-btn" data-tab="settings">
+                        <i class="fas fa-cog"></i>
+                        <span>Settings</span>
+                    </button>
+                </div>
+
+                <!-- Tab Content -->
+                <div class="tab-content-wrapper">
+                    <!-- Overview Tab -->
+                    <div class="tab-content active" id="overview">
+                        <div class="content-grid">
+                            <div class="main-content">
+                                <!-- Continue Watching -->
+                                <section class="section">
+                                    <div class="section-header">
+                                        <h2>Continue Watching</h2>
+                                        <a href="#" class="view-all">View All</a>
+                                    </div>
+                                    <div class="anime-grid">
+                                        <article class="anime-card">
+                                            <div class="anime-poster">
+                                                <img src="https://images.unsplash.com/photo-1578632767115-351597cf2477?q=80&w=400&auto=format&fit=crop" alt="Fate/Stay Night">
+                                            </div>
+                                            <div class="anime-info">
+                                                <h3 class="anime-title">Fate/Stay Night</h3>
+                                                <div class="anime-progress">
+                                                    <div class="progress-bar-container">
+                                                        <div class="progress-fill" style="width: 65%"></div>
+                                                    </div>
+                                                    <span class="progress-text">65%</span>
+                                                </div>
+                                                <div class="anime-meta">
+                                                    <span class="anime-episode">EP 8/13</span>
+                                                    <span class="anime-rating">
+                                                        <i class="fas fa-star"></i> 4.8
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </article>
+                                        <article class="anime-card">
+                                            <div class="anime-poster">
+                                                <img src="https://images.unsplash.com/photo-1541562232579-512a21360020?q=80&w=400&auto=format&fit=crop" alt="Demon Slayer">
+                                            </div>
+                                            <div class="anime-info">
+                                                <h3 class="anime-title">Demon Slayer</h3>
+                                                <div class="anime-progress">
+                                                    <div class="progress-bar-container">
+                                                        <div class="progress-fill" style="width: 40%"></div>
+                                                    </div>
+                                                    <span class="progress-text">40%</span>
+                                                </div>
+                                                <div class="anime-meta">
+                                                    <span class="anime-episode">EP 5/12</span>
+                                                    <span class="anime-rating">
+                                                        <i class="fas fa-star"></i> 4.9
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </article>
+                                        <article class="anime-card">
+                                            <div class="anime-poster">
+                                                <img src="https://images.unsplash.com/photo-1612404730960-5c71578fca37?q=80&w=400&auto=format&fit=crop" alt="Sword Art Online">
+                                            </div>
+                                            <div class="anime-info">
+                                                <h3 class="anime-title">Sword Art Online</h3>
+                                                <div class="anime-progress">
+                                                    <div class="progress-bar-container">
+                                                        <div class="progress-fill" style="width: 85%"></div>
+                                                    </div>
+                                                    <span class="progress-text">85%</span>
+                                                </div>
+                                                <div class="anime-meta">
+                                                    <span class="anime-episode">EP 10/12</span>
+                                                    <span class="anime-rating">
+                                                        <i class="fas fa-star"></i> 4.5
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </article>
+                                        <article class="anime-card">
+                                            <div class="anime-poster">
+                                                <img src="https://images.unsplash.com/photo-1581833971358-2c8b550f87b3?q=80&w=400&auto=format&fit=crop" alt="Attack on Titan">
+                                            </div>
+                                            <div class="anime-info">
+                                                <h3 class="anime-title">Attack on Titan</h3>
+                                                <div class="anime-progress">
+                                                    <div class="progress-bar-container">
+                                                        <div class="progress-fill" style="width: 100%"></div>
+                                                    </div>
+                                                    <span class="progress-text">100%</span>
+                                                </div>
+                                                <div class="anime-meta">
+                                                    <span class="anime-episode">Completed</span>
+                                                    <span class="anime-rating">
+                                                        <i class="fas fa-star"></i> 5.0
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </article>
+                                    </div>
+                                </section>
+
+                                <!-- Recently Added -->
+                                <section class="section">
+                                    <div class="section-header">
+                                        <h2>Recently Added</h2>
+                                        <a href="#" class="view-all">View All</a>
+                                    </div>
+                                    <div class="anime-grid">
+                                        <article class="anime-card">
+                                            <div class="anime-poster">
+                                                <img src="https://images.unsplash.com/photo-1607604276583-eef5d076aa5f?q=80&w=400&auto=format&fit=crop" alt="Jujutsu Kaisen">
+                                            </div>
+                                            <div class="anime-info">
+                                                <h3 class="anime-title">Jujutsu Kaisen</h3>
+                                                <div class="anime-meta">
+                                                    <span class="anime-episode">Plan to Watch</span>
+                                                    <span class="anime-rating">
+                                                        <i class="fas fa-star"></i> 4.8
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </article>
+                                        <article class="anime-card">
+                                            <div class="anime-poster">
+                                                <img src="https://images.unsplash.com/photo-1578632748624-fbd20d345187?q=80&w=400&auto=format&fit=crop" alt="Tokyo Ghoul">
+                                            </div>
+                                            <div class="anime-info">
+                                                <h3 class="anime-title">Tokyo Ghoul</h3>
+                                                <div class="anime-meta">
+                                                    <span class="anime-episode">Watching</span>
+                                                    <span class="anime-rating">
+                                                        <i class="fas fa-star"></i> 4.6
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </article>
+                                        <article class="anime-card">
+                                            <div class="anime-poster">
+                                                <img src="https://images.unsplash.com/photo-1560972550-aba3456b5564?q=80&w=400&auto=format&fit=crop" alt="Made in Abyss">
+                                            </div>
+                                            <div class="anime-info">
+                                                <h3 class="anime-title">Made in Abyss</h3>
+                                                <div class="anime-meta">
+                                                    <span class="anime-episode">Plan to Watch</span>
+                                                    <span class="anime-rating">
+                                                        <i class="fas fa-star"></i> 4.8
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </article>
+                                        <article class="anime-card">
+                                            <div class="anime-poster">
+                                                <img src="https://images.unsplash.com/photo-1626544827763-d516dce335ca?q=80&w=400&auto=format&fit=crop" alt="Gintama">
+                                            </div>
+                                            <div class="anime-info">
+                                                <h3 class="anime-title">Gintama</h3>
+                                                <div class="anime-meta">
+                                                    <span class="anime-episode">On Hold</span>
+                                                    <span class="anime-rating">
+                                                        <i class="fas fa-star"></i> 4.9
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </article>
+                                    </div>
+                                </section>
+                            </div>
+
+                            <div class="sidebar-content">
+                                <!-- Favorite Genres -->
+                                <div class="widget">
+                                    <h3>Favorite Genres</h3>
+                                    <div class="genre-tags">
+                                        <span class="genre-tag">Action</span>
+                                        <span class="genre-tag">Fantasy</span>
+                                        <span class="genre-tag">Sci-Fi</span>
+                                        <span class="genre-tag">Adventure</span>
+                                        <span class="genre-tag">Drama</span>
+                                    </div>
+                                </div>
+
+                                <!-- Activity Timeline -->
+                                <div class="widget">
+                                    <h3>Recent Activity</h3>
+                                    <div class="activity-timeline">
+                                        <div class="activity-item">
+                                            <div class="activity-icon">
+                                                <i class="fas fa-play-circle"></i>
+                                            </div>
+                                            <div class="activity-content">
+                                                <div class="activity-text">Watched <strong>Episode 8</strong> of Fate/Stay Night</div>
+                                                <div class="activity-time">2 hours ago</div>
+                                            </div>
+                                        </div>
+                                        <div class="activity-item">
+                                            <div class="activity-icon">
+                                                <i class="fas fa-plus"></i>
+                                            </div>
+                                            <div class="activity-content">
+                                                <div class="activity-text">Added <strong>Jujutsu Kaisen</strong> to watchlist</div>
+                                                <div class="activity-time">5 hours ago</div>
+                                            </div>
+                                        </div>
+                                        <div class="activity-item">
+                                            <div class="activity-icon">
+                                                <i class="fas fa-star"></i>
+                                            </div>
+                                            <div class="activity-content">
+                                                <div class="activity-text">Rated <strong>Attack on Titan</strong> 5 stars</div>
+                                                <div class="activity-time">1 day ago</div>
+                                            </div>
+                                        </div>
+                                        <div class="activity-item">
+                                            <div class="activity-icon">
+                                                <i class="fas fa-heart"></i>
+                                            </div>
+                                            <div class="activity-content">
+                                                <div class="activity-text">Added <strong>Demon Slayer</strong> to favorites</div>
+                                                <div class="activity-time">2 days ago</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Achievements -->
+                                <div class="widget">
+                                    <h3>Achievements</h3>
+                                    <div class="achievements-grid">
+                                        <div class="achievement-badge">
+                                            <div class="achievement-icon">
+                                                <i class="fas fa-fire"></i>
+                                            </div>
+                                            <div class="achievement-name">100 Episodes</div>
+                                        </div>
+                                        <div class="achievement-badge">
+                                            <div class="achievement-icon">
+                                                <i class="fas fa-trophy"></i>
+                                            </div>
+                                            <div class="achievement-name">Top Reviewer</div>
+                                        </div>
+                                        <div class="achievement-badge">
+                                            <div class="achievement-icon">
+                                                <i class="fas fa-medal"></i>
+                                            </div>
+                                            <div class="achievement-name">Early Adopter</div>
+                                        </div>
+                                        <div class="achievement-badge">
+                                            <div class="achievement-icon">
+                                                <i class="fas fa-clock"></i>
+                                            </div>
+                                            <div class="achievement-name">100h Watch Time</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Favorites Tab -->
+                    <div class="tab-content" id="favorites">
+                        <div class="favorites-container">
+                            <div class="main-favorite">
+                                <div class="main-favorite-poster">
+                                    <img src="https://images.unsplash.com/photo-1581833971358-2c8b550f87b3?q=80&w=600&auto=format&fit=crop" alt="Attack on Titan">
+                                    <div class="main-favorite-overlay">
+                                        <div class="main-favorite-rating">
+                                            <i class="fas fa-star"></i> 5.0
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="main-favorite-info">
+                                    <h2 class="main-favorite-title">Attack on Titan</h2>
+                                    <div class="main-favorite-genres">
+                                        <span class="genre-tag">Action</span>
+                                        <span class="genre-tag">Drama</span>
+                                        <span class="genre-tag">Fantasy</span>
+                                    </div>
+                                    <p class="main-favorite-synopsis">In a world where humanity resides within enormous walled cities to protect themselves from Titans, giant humanoid creatures, Eren Yeager vows to eradicate the Titans after they destroy his hometown.</p>
+                                    <div class="main-favorite-stats">
+                                        <div class="stat-item">
+                                            <i class="fas fa-tv"></i>
+                                            <span>75 Episodes</span>
+                                        </div>
+                                        <div class="stat-item">
+                                            <i class="fas fa-calendar"></i>
+                                            <span>2013-2023</span>
+                                        </div>
+                                        <div class="stat-item">
+                                            <i class="fas fa-heart"></i>
+                                            <span>Top Favorite</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="other-favorites">
+                                <h3>Other Favorites</h3>
+                                <div class="favorite-grid">
+                                    <!-- Row 1 -->
+                                    <article class="favorite-item">
+                                        <div class="favorite-poster">
+                                            <img src="https://images.unsplash.com/photo-1541562232579-512a21360020?q=80&w=300&auto=format&fit=crop" alt="Demon Slayer">
+                                            <div class="favorite-overlay">
+                                                <i class="fas fa-play"></i>
+                                            </div>
+                                        </div>
+                                        <h4 class="favorite-title">Demon Slayer</h4>
+                                        <div class="favorite-rating">
+                                            <i class="fas fa-star"></i> 4.9
+                                        </div>
+                                    </article>
+                                    <article class="favorite-item">
+                                        <div class="favorite-poster">
+                                            <img src="https://images.unsplash.com/photo-1626544827763-d516dce335ca?q=80&w=300&auto=format&fit=crop" alt="Gintama">
+                                            <div class="favorite-overlay">
+                                                <i class="fas fa-play"></i>
+                                            </div>
+                                        </div>
+                                        <h4 class="favorite-title">Gintama</h4>
+                                        <div class="favorite-rating">
+                                            <i class="fas fa-star"></i> 4.9
+                                        </div>
+                                    </article>
+                                    <article class="favorite-item">
+                                        <div class="favorite-poster">
+                                            <img src="https://images.unsplash.com/photo-1578632767115-351597cf2477?q=80&w=300&auto=format&fit=crop" alt="Fate/Stay Night">
+                                            <div class="favorite-overlay">
+                                                <i class="fas fa-play"></i>
+                                            </div>
+                                        </div>
+                                        <h4 class="favorite-title">Fate/Stay Night</h4>
+                                        <div class="favorite-rating">
+                                            <i class="fas fa-star"></i> 4.8
+                                        </div>
+                                    </article>
+                                    <article class="favorite-item">
+                                        <div class="favorite-poster">
+                                            <img src="https://images.unsplash.com/photo-1560972550-aba3456b5564?q=80&w=300&auto=format&fit=crop" alt="Made in Abyss">
+                                            <div class="favorite-overlay">
+                                                <i class="fas fa-play"></i>
+                                            </div>
+                                        </div>
+                                        <h4 class="favorite-title">Made in Abyss</h4>
+                                        <div class="favorite-rating">
+                                            <i class="fas fa-star"></i> 4.8
+                                        </div>
+                                    </article>
+                                    
+                                    <!-- Row 2 -->
+                                    <article class="favorite-item">
+                                        <div class="favorite-poster">
+                                            <img src="https://images.unsplash.com/photo-1607604276583-eef5d076aa5f?q=80&w=300&auto=format&fit=crop" alt="Jujutsu Kaisen">
+                                            <div class="favorite-overlay">
+                                                <i class="fas fa-play"></i>
+                                            </div>
+                                        </div>
+                                        <h4 class="favorite-title">Jujutsu Kaisen</h4>
+                                        <div class="favorite-rating">
+                                            <i class="fas fa-star"></i> 4.8
+                                        </div>
+                                    </article>
+                                    <article class="favorite-item">
+                                        <div class="favorite-poster">
+                                            <img src="https://images.unsplash.com/photo-1578632748624-fbd20d345187?q=80&w=300&auto=format&fit=crop" alt="Tokyo Ghoul">
+                                            <div class="favorite-overlay">
+                                                <i class="fas fa-play"></i>
+                                            </div>
+                                        </div>
+                                        <h4 class="favorite-title">Tokyo Ghoul</h4>
+                                        <div class="favorite-rating">
+                                            <i class="fas fa-star"></i> 4.6
+                                        </div>
+                                    </article>
+                                    <article class="favorite-item">
+                                        <div class="favorite-poster">
+                                            <img src="https://images.unsplash.com/photo-1612404730960-5c71578fca37?q=80&w=300&auto=format&fit=crop" alt="Sword Art Online">
+                                            <div class="favorite-overlay">
+                                                <i class="fas fa-play"></i>
+                                            </div>
+                                        </div>
+                                        <h4 class="favorite-title">Sword Art Online</h4>
+                                        <div class="favorite-rating">
+                                            <i class="fas fa-star"></i> 4.5
+                                        </div>
+                                    </article>
+                                    <article class="favorite-item">
+                                        <div class="favorite-poster">
+                                            <img src="https://images.unsplash.com/photo-1598899134739-24c46f58b8c0?q=80&w=300&auto=format&fit=crop" alt="Naruto Shippuden">
+                                            <div class="favorite-overlay">
+                                                <i class="fas fa-play"></i>
+                                            </div>
+                                        </div>
+                                        <h4 class="favorite-title">Naruto Shippuden</h4>
+                                        <div class="favorite-rating">
+                                            <i class="fas fa-star"></i> 4.7
+                                        </div>
+                                    </article>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Settings Tab -->
+                    <div class="tab-content" id="settings">
+                        <div class="settings-sections">
+                            <!-- Account Settings -->
+                            <div class="settings-section">
+                                <h3>Account Settings</h3>
+                                <div class="settings-form">
+                                    <div class="form-group">
+                                        <label>Username</label>
+                                        <input type="text" value="AnimeLover" class="form-input">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Email</label>
+                                        <input type="email" value="animelover@example.com" class="form-input">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Bio</label>
+                                        <textarea class="form-input" rows="4">Passionate anime fan who loves action, fantasy, and slice of life genres. Always looking for new recommendations!</textarea>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Location</label>
+                                        <input type="text" value="Tokyo, Japan" class="form-input">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Password</label>
+                                        <button type="button" class="btn-secondary" id="changePasswordBtn">
+                                            <i class="fas fa-key"></i>
+                                            <span>Change Password</span>
+                                        </button>
+                                        <p class="form-hint">Click the button above to change your password</p>
+                                    </div>
+                                    <button class="btn-primary">Save Changes</button>
+                                </div>
+                            </div>
+
+                            <!-- Privacy Settings -->
+                            <div class="settings-section">
+                                <h3>Privacy Settings</h3>
+                                <div class="settings-options">
+                                    <div class="option-item">
+                                        <div class="option-info">
+                                            <h4>Public Profile</h4>
+                                            <p>Allow others to view your profile</p>
+                                        </div>
+                                        <label class="toggle-switch">
+                                            <input type="checkbox" checked>
+                                            <span class="toggle-slider"></span>
+                                        </label>
+                                    </div>
+                                    <div class="option-item">
+                                        <div class="option-info">
+                                            <h4>Show Watch History</h4>
+                                            <p>Display your watching activity</p>
+                                        </div>
+                                        <label class="toggle-switch">
+                                            <input type="checkbox" checked>
+                                            <span class="toggle-slider"></span>
+                                        </label>
+                                    </div>
+                                    <div class="option-item">
+                                        <div class="option-info">
+                                            <h4>Show Favorites</h4>
+                                            <p>Make your favorite anime visible to others</p>
+                                        </div>
+                                        <label class="toggle-switch">
+                                            <input type="checkbox" checked>
+                                            <span class="toggle-slider"></span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Notification Settings -->
+                            <div class="settings-section">
+                                <h3>Notifications</h3>
+                                <div class="settings-options">
+                                    <div class="option-item">
+                                        <div class="option-info">
+                                            <h4>New Episodes</h4>
+                                            <p>Get notified when new episodes are released</p>
+                                        </div>
+                                        <label class="toggle-switch">
+                                            <input type="checkbox" checked>
+                                            <span class="toggle-slider"></span>
+                                        </label>
+                                    </div>
+                                    <div class="option-item">
+                                        <div class="option-info">
+                                            <h4>Recommendations</h4>
+                                            <p>Receive personalized anime recommendations</p>
+                                        </div>
+                                        <label class="toggle-switch">
+                                            <input type="checkbox" checked>
+                                            <span class="toggle-slider"></span>
+                                        </label>
+                                    </div>
+                                    <div class="option-item">
+                                        <div class="option-info">
+                                            <h4>Newsletter</h4>
+                                            <p>Subscribe to our weekly newsletter</p>
+                                        </div>
+                                        <label class="toggle-switch">
+                                            <input type="checkbox">
+                                            <span class="toggle-slider"></span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="footer-bg-graphics"></div>
+        <div class="container">
+            <div class="footer-top">
+                <div class="footer-col brand-col">
+                     <div class="logo">
+                        <a href="home.html">ANI<span class="highlight">ME</span>STREAM</a>
+                    </div>
+                    <p>The premier destination for high-quality anime streaming. Join our community today.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-discord"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+                <div class="footer-col links-col">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#">Our Blog</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Contacts</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col newsletter-col">
+                    <h4>Newsletter</h4>
+                    <p>Subscribe to get the latest updates.</p>
+                    <form class="newsletter-form">
+                        <input type="email" placeholder="Your Email...">
+                        <button><i class="fas fa-paper-plane"></i></button>
+                    </form>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 ANIMESTREAM Inc. All Rights Reserved</p>
+                <a href="#" id="backToTop" class="back-to-top"><i class="fas fa-arrow-up"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../script/profile.js"></script>
+</body>
+</html>
