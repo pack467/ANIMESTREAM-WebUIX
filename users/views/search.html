@@ -21,15 +21,7 @@
             <nav class="navbar" id="navbar">
                 <ul class="menu">
                     <li class="menu-item"><a href="home.html">Home</a></li>
-                    <li class="menu-item has-dropdown">
-                        <a href="#">Genre <i class="fas fa-chevron-down"></i></a>
-                        <ul class="dropdown">
-                            <li><a href="#">Action</a></li>
-                            <li><a href="#">Adventure</a></li>
-                            <li><a href="#">Fantasy</a></li>
-                            <li><a href="#">Sci-Fi</a></li>
-                        </ul>
-                    </li>
+                    <li class="menu-item"><a href="#">Genre</a></li>
                     <li class="menu-item"><a href="#">Schedule</a></li>
                     <li class="menu-item"><a href="#">News</a></li>
                 </ul>
@@ -38,7 +30,6 @@
             <div class="header-actions">
                 <button class="action-btn search-trigger" id="searchTrigger"><i class="fas fa-search"></i></button>
                 
-                <!-- User Profile Button dengan Dropdown Menu -->
                 <div class="user-profile">
                     <button class="user-btn" id="userBtn">
                         <i class="fas fa-user"></i>
@@ -136,49 +127,54 @@
                             </div>
                             <div class="filter-options" id="genre-list">
                                 <div class="filter-option">
-                                    <input type="checkbox" id="action" name="genre" value="action">
+                                    <input type="checkbox" id="action" name="genre" value="Action">
                                     <label for="action">Action</label>
                                     <span class="count">128</span>
                                 </div>
                                 <div class="filter-option">
-                                    <input type="checkbox" id="adventure" name="genre" value="adventure">
+                                    <input type="checkbox" id="adventure" name="genre" value="Adventure">
                                     <label for="adventure">Adventure</label>
                                     <span class="count">96</span>
                                 </div>
                                 <div class="filter-option">
-                                    <input type="checkbox" id="comedy" name="genre" value="comedy">
+                                    <input type="checkbox" id="comedy" name="genre" value="Comedy">
                                     <label for="comedy">Comedy</label>
                                     <span class="count">154</span>
                                 </div>
                                 <div class="filter-option">
-                                    <input type="checkbox" id="drama" name="genre" value="drama">
+                                    <input type="checkbox" id="drama" name="genre" value="Drama">
                                     <label for="drama">Drama</label>
                                     <span class="count">112</span>
                                 </div>
                                 <div class="filter-option">
-                                    <input type="checkbox" id="fantasy" name="genre" value="fantasy">
+                                    <input type="checkbox" id="fantasy" name="genre" value="Fantasy">
                                     <label for="fantasy">Fantasy</label>
                                     <span class="count">143</span>
                                 </div>
                                 <div class="filter-option">
-                                    <input type="checkbox" id="romance" name="genre" value="romance">
+                                    <input type="checkbox" id="romance" name="genre" value="Romance">
                                     <label for="romance">Romance</label>
                                     <span class="count">98</span>
                                 </div>
                                 <div class="filter-option">
-                                    <input type="checkbox" id="sci-fi" name="genre" value="sci-fi">
+                                    <input type="checkbox" id="sci-fi" name="genre" value="Sci-Fi">
                                     <label for="sci-fi">Sci-Fi</label>
                                     <span class="count">76</span>
                                 </div>
                                 <div class="filter-option">
-                                    <input type="checkbox" id="slice-of-life" name="genre" value="slice-of-life">
+                                    <input type="checkbox" id="slice-of-life" name="genre" value="Slice of Life">
                                     <label for="slice-of-life">Slice of Life</label>
                                     <span class="count">67</span>
                                 </div>
                                 <div class="filter-option">
-                                    <input type="checkbox" id="supernatural" name="genre" value="supernatural">
+                                    <input type="checkbox" id="supernatural" name="genre" value="Supernatural">
                                     <label for="supernatural">Supernatural</label>
                                     <span class="count">89</span>
+                                </div>
+                                <div class="filter-option">
+                                    <input type="checkbox" id="horror" name="genre" value="Horror">
+                                    <label for="horror">Horror</label>
+                                    <span class="count">45</span>
                                 </div>
                             </div>
                         </div>
@@ -235,96 +231,46 @@
                             </div>
                             <div class="filter-options" id="status-list">
                                 <div class="filter-option">
-                                    <input type="checkbox" id="ongoing" name="status" value="ongoing">
+                                    <input type="checkbox" id="ongoing" name="status" value="Ongoing">
                                     <label for="ongoing">Sedang Tayang</label>
                                     <span class="count">32</span>
                                 </div>
                                 <div class="filter-option">
-                                    <input type="checkbox" id="completed" name="status" value="completed">
+                                    <input type="checkbox" id="completed" name="status" value="Completed">
                                     <label for="completed">Selesai</label>
                                     <span class="count">421</span>
                                 </div>
                                 <div class="filter-option">
-                                    <input type="checkbox" id="upcoming" name="status" value="upcoming">
+                                    <input type="checkbox" id="upcoming" name="status" value="Upcoming">
                                     <label for="upcoming">Akan Datang</label>
                                     <span class="count">15</span>
                                 </div>
                             </div>
                         </div>
 
-                        <!-- Rating Filter -->
+                        <!-- Rating Filter dengan Slider -->
                         <div class="filter-group">
                             <div class="filter-header">
                                 <h4>Rating</h4>
-                                <button class="filter-toggle" data-target="rating-list">
+                                <button class="filter-toggle" data-target="rating-slider">
                                     <i class="fas fa-chevron-down"></i>
                                 </button>
                             </div>
-                            <div class="filter-options" id="rating-list">
-                                <div class="filter-option">
-                                    <input type="checkbox" id="rating-5" name="rating" value="5">
-                                    <label for="rating-5">
-                                        <span class="stars">
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                        </span>
-                                    </label>
-                                    <span class="count">48</span>
-                                </div>
-                                <div class="filter-option">
-                                    <input type="checkbox" id="rating-4" name="rating" value="4">
-                                    <label for="rating-4">
-                                        <span class="stars">
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="far fa-star"></i>
-                                        </span>
-                                    </label>
-                                    <span class="count">156</span>
-                                </div>
-                                <div class="filter-option">
-                                    <input type="checkbox" id="rating-3" name="rating" value="3">
-                                    <label for="rating-3">
-                                        <span class="stars">
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="far fa-star"></i>
-                                            <i class="far fa-star"></i>
-                                        </span>
-                                    </label>
-                                    <span class="count">203</span>
-                                </div>
-                                <div class="filter-option">
-                                    <input type="checkbox" id="rating-2" name="rating" value="2">
-                                    <label for="rating-2">
-                                        <span class="stars">
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="far fa-star"></i>
-                                            <i class="far fa-star"></i>
-                                            <i class="far fa-star"></i>
-                                        </span>
-                                    </label>
-                                    <span class="count">120</span>
-                                </div>
-                                <div class="filter-option">
-                                    <input type="checkbox" id="rating-1" name="rating" value="1">
-                                    <label for="rating-1">
-                                        <span class="stars">
-                                            <i class="fas fa-star"></i>
-                                            <i class="far fa-star"></i>
-                                            <i class="far fa-star"></i>
-                                            <i class="far fa-star"></i>
-                                            <i class="far fa-star"></i>
-                                        </span>
-                                    </label>
-                                    <span class="count">75</span>
+                            <div class="filter-options" id="rating-slider">
+                                <div class="rating-slider-container">
+                                    <div class="rating-display">
+                                        <span class="rating-label">Minimum Rating:</span>
+                                        <span class="rating-value" id="ratingValue">0.0</span>
+                                        <i class="fas fa-star rating-star"></i>
+                                    </div>
+                                    <input type="range" id="ratingSlider" min="0" max="100" value="0" step="1" class="rating-range-slider">
+                                    <div class="rating-scale">
+                                        <span>0.0</span>
+                                        <span>2.5</span>
+                                        <span>5.0</span>
+                                        <span>7.5</span>
+                                        <span>10.0</span>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -339,34 +285,34 @@
                             </div>
                             <div class="filter-options" id="type-list">
                                 <div class="filter-option">
-                                    <input type="checkbox" id="tv" name="type" value="tv">
+                                    <input type="checkbox" id="tv" name="type" value="TV Series">
                                     <label for="tv">TV Series</label>
                                     <span class="count">324</span>
                                 </div>
                                 <div class="filter-option">
-                                    <input type="checkbox" id="movie" name="type" value="movie">
+                                    <input type="checkbox" id="movie" name="type" value="Movie">
                                     <label for="movie">Movie</label>
                                     <span class="count">87</span>
                                 </div>
                                 <div class="filter-option">
-                                    <input type="checkbox" id="ova" name="type" value="ova">
+                                    <input type="checkbox" id="ova" name="type" value="OVA">
                                     <label for="ova">OVA</label>
                                     <span class="count">42</span>
                                 </div>
                                 <div class="filter-option">
-                                    <input type="checkbox" id="ona" name="type" value="ona">
+                                    <input type="checkbox" id="ona" name="type" value="ONA">
                                     <label for="ona">ONA</label>
                                     <span class="count">28</span>
                                 </div>
                             </div>
                         </div>
 
-                        <!-- Sort Options - DENGAN RADIO BUTTON -->
+                        <!-- Sort Options -->
                         <div class="filter-group">
                             <div class="filter-header">
                                 <h4>Urutkan Berdasarkan</h4>
                             </div>
-                            <div class="filter-options">
+                            <div class="filter-options sort-options">
                                 <div class="filter-option">
                                     <input type="radio" id="sort-popular" name="sort" value="popular" checked>
                                     <label for="sort-popular">Populer</label>
@@ -398,14 +344,14 @@
                     <!-- Results Header -->
                     <div class="results-header">
                         <div class="results-info">
-                            <h2 id="hasilPencarianBtn" style="cursor: pointer;">Hasil Pencarian</h2>
+                            <h2 id="hasilPencarianBtn">Hasil Pencarian</h2>
                             <p class="results-count">Menampilkan <span id="resultsCount">10</span> dari <span id="totalResults">10</span> anime</p>
                         </div>
                         <div class="view-options">
-                            <button class="view-option active" data-view="grid">
+                            <button class="view-option active" data-view="grid" title="Grid View">
                                 <i class="fas fa-th"></i>
                             </button>
-                            <button class="view-option" data-view="list">
+                            <button class="view-option" data-view="list" title="List View">
                                 <i class="fas fa-list"></i>
                             </button>
                         </div>
@@ -416,15 +362,10 @@
                         <!-- Active filters will be populated by JavaScript -->
                     </div>
 
-                    <!-- Selected Genres Display -->
-                    <div class="selected-genres" id="selectedGenres" style="display: none;">
-                        <p><strong>Genre:</strong> <span id="genresList"></span></p>
-                    </div>
-
                     <!-- Results Grid -->
                     <div class="results-grid" id="resultsGrid">
-                        <!-- Results akan diisi dengan HTML card seperti di home -->
-                        <div class="anime-card">
+                        <!-- Anime Card 1 -->
+                        <div class="anime-card" data-id="1" data-title="Fate/Stay Night: Unlimited Blade Works" data-genres="Action,Fantasy" data-year="2014" data-status="Completed" data-type="TV Series" data-rating="4.8" data-episodes="26">
                             <a href="watch.html" class="card-link">
                                 <div class="card-poster">
                                     <img src="https://images.unsplash.com/photo-1578632767115-351597cf2477?q=80&w=400&auto=format&fit=crop" alt="Fate/Stay Night">
@@ -445,13 +386,24 @@
                                         <span class="genre-badge">Fantasy</span>
                                     </div>
                                     <div class="anime-meta">
-                                        <span><i class="fas fa-star"></i> 4.8</span>
+                                        <span class="meta-rating"><i class="fas fa-star"></i> 4.8</span>
+                                        <span class="meta-year"><i class="fas fa-calendar"></i> 2014</span>
                                     </div>
+                                    <p class="anime-description">Shirou Emiya is a high school student and amateur magus living in Fuyuki City. He is dragged into the Fifth Holy Grail War, a secret magical tournament.</p>
                                 </div>
                             </a>
+                            <div class="card-actions">
+                                <button class="action-btn-card add-to-list" title="Add to List">
+                                    <i class="fas fa-plus"></i>
+                                </button>
+                                <button class="action-btn-card add-to-favorite" title="Add to Favorites">
+                                    <i class="far fa-heart"></i>
+                                </button>
+                            </div>
                         </div>
 
-                        <div class="anime-card">
+                        <!-- Anime Card 2 -->
+                        <div class="anime-card" data-id="2" data-title="Demon Slayer: Kimetsu no Yaiba" data-genres="Action,Fantasy,Adventure" data-year="2019" data-status="Completed" data-type="TV Series" data-rating="4.9" data-episodes="26">
                             <a href="watch.html" class="card-link">
                                 <div class="card-poster">
                                     <img src="https://images.unsplash.com/photo-1541562232579-512a21360020?q=80&w=400&auto=format&fit=crop" alt="Demon Slayer">
@@ -472,13 +424,24 @@
                                         <span class="genre-badge">Fantasy</span>
                                     </div>
                                     <div class="anime-meta">
-                                        <span><i class="fas fa-star"></i> 4.9</span>
+                                        <span class="meta-rating"><i class="fas fa-star"></i> 4.9</span>
+                                        <span class="meta-year"><i class="fas fa-calendar"></i> 2019</span>
                                     </div>
+                                    <p class="anime-description">Tanjiro sets out to become a demon slayer to avenge his family and cure his sister.</p>
                                 </div>
                             </a>
+                            <div class="card-actions">
+                                <button class="action-btn-card add-to-list" title="Add to List">
+                                    <i class="fas fa-plus"></i>
+                                </button>
+                                <button class="action-btn-card add-to-favorite" title="Add to Favorites">
+                                    <i class="far fa-heart"></i>
+                                </button>
+                            </div>
                         </div>
 
-                        <div class="anime-card">
+                        <!-- Anime Card 3 -->
+                        <div class="anime-card" data-id="3" data-title="Sword Art Online: Alicization" data-genres="Action,Adventure,Sci-Fi" data-year="2018" data-status="Completed" data-type="TV Series" data-rating="4.5" data-episodes="47">
                             <a href="watch.html" class="card-link">
                                 <div class="card-poster">
                                     <img src="https://images.unsplash.com/photo-1612404730960-5c71578fca37?q=80&w=400&auto=format&fit=crop" alt="Sword Art Online">
@@ -499,13 +462,24 @@
                                         <span class="genre-badge">Sci-Fi</span>
                                     </div>
                                     <div class="anime-meta">
-                                        <span><i class="fas fa-star"></i> 4.5</span>
+                                        <span class="meta-rating"><i class="fas fa-star"></i> 4.5</span>
+                                        <span class="meta-year"><i class="fas fa-calendar"></i> 2018</span>
                                     </div>
+                                    <p class="anime-description">Kirito awakens in a vast, fantasy-like virtual world. With only murky memories, he starts his journey.</p>
                                 </div>
                             </a>
+                            <div class="card-actions">
+                                <button class="action-btn-card add-to-list" title="Add to List">
+                                    <i class="fas fa-plus"></i>
+                                </button>
+                                <button class="action-btn-card add-to-favorite" title="Add to Favorites">
+                                    <i class="far fa-heart"></i>
+                                </button>
+                            </div>
                         </div>
 
-                        <div class="anime-card">
+                        <!-- Anime Card 4 -->
+                        <div class="anime-card" data-id="4" data-title="Attack on Titan: The Final Season" data-genres="Action,Drama,Fantasy" data-year="2020" data-status="Completed" data-type="TV Series" data-rating="4.9" data-episodes="28">
                             <a href="watch.html" class="card-link">
                                 <div class="card-poster">
                                     <img src="https://images.unsplash.com/photo-1581833971358-2c8b550f87b3?q=80&w=400&auto=format&fit=crop" alt="Attack on Titan">
@@ -526,13 +500,24 @@
                                         <span class="genre-badge">Drama</span>
                                     </div>
                                     <div class="anime-meta">
-                                        <span><i class="fas fa-star"></i> 4.9</span>
+                                        <span class="meta-rating"><i class="fas fa-star"></i> 4.9</span>
+                                        <span class="meta-year"><i class="fas fa-calendar"></i> 2020</span>
                                     </div>
+                                    <p class="anime-description">The epic conclusion to the story of Eren Yeager and the battle for Paradis Island.</p>
                                 </div>
                             </a>
+                            <div class="card-actions">
+                                <button class="action-btn-card add-to-list" title="Add to List">
+                                    <i class="fas fa-plus"></i>
+                                </button>
+                                <button class="action-btn-card add-to-favorite" title="Add to Favorites">
+                                    <i class="far fa-heart"></i>
+                                </button>
+                            </div>
                         </div>
 
-                        <div class="anime-card">
+                        <!-- Anime Card 5 -->
+                        <div class="anime-card" data-id="5" data-title="Jujutsu Kaisen" data-genres="Action,Supernatural,Fantasy" data-year="2020" data-status="Completed" data-type="TV Series" data-rating="4.7" data-episodes="24">
                             <a href="watch.html" class="card-link">
                                 <div class="card-poster">
                                     <img src="https://images.unsplash.com/photo-1607604276583-eef5d076aa5f?q=80&w=400&auto=format&fit=crop" alt="Jujutsu Kaisen">
@@ -553,13 +538,24 @@
                                         <span class="genre-badge">Supernatural</span>
                                     </div>
                                     <div class="anime-meta">
-                                        <span><i class="fas fa-star"></i> 4.7</span>
+                                        <span class="meta-rating"><i class="fas fa-star"></i> 4.7</span>
+                                        <span class="meta-year"><i class="fas fa-calendar"></i> 2020</span>
                                     </div>
+                                    <p class="anime-description">Yuji Itadori joins a secret organization of Jujutsu Sorcerers to eliminate a powerful Curse.</p>
                                 </div>
                             </a>
+                            <div class="card-actions">
+                                <button class="action-btn-card add-to-list" title="Add to List">
+                                    <i class="fas fa-plus"></i>
+                                </button>
+                                <button class="action-btn-card add-to-favorite" title="Add to Favorites">
+                                    <i class="far fa-heart"></i>
+                                </button>
+                            </div>
                         </div>
 
-                        <div class="anime-card">
+                        <!-- Anime Card 6 -->
+                        <div class="anime-card" data-id="6" data-title="My Hero Academia Season 6" data-genres="Action,Superhero,Comedy" data-year="2022" data-status="Completed" data-type="TV Series" data-rating="4.6" data-episodes="25">
                             <a href="watch.html" class="card-link">
                                 <div class="card-poster">
                                     <img src="https://images.unsplash.com/photo-1626544827763-d516dce335ca?q=80&w=400&auto=format&fit=crop" alt="My Hero Academia">
@@ -580,13 +576,24 @@
                                         <span class="genre-badge">Superhero</span>
                                     </div>
                                     <div class="anime-meta">
-                                        <span><i class="fas fa-star"></i> 4.6</span>
+                                        <span class="meta-rating"><i class="fas fa-star"></i> 4.6</span>
+                                        <span class="meta-year"><i class="fas fa-calendar"></i> 2022</span>
                                     </div>
+                                    <p class="anime-description">The students of U.A. High School face their greatest challenge yet in the Paranormal Liberation War.</p>
                                 </div>
                             </a>
+                            <div class="card-actions">
+                                <button class="action-btn-card add-to-list" title="Add to List">
+                                    <i class="fas fa-plus"></i>
+                                </button>
+                                <button class="action-btn-card add-to-favorite" title="Add to Favorites">
+                                    <i class="far fa-heart"></i>
+                                </button>
+                            </div>
                         </div>
 
-                        <div class="anime-card">
+                        <!-- Anime Card 7 -->
+                        <div class="anime-card" data-id="7" data-title="One Piece: Film Red" data-genres="Action,Adventure,Fantasy" data-year="2022" data-status="Completed" data-type="Movie" data-rating="4.8" data-episodes="1">
                             <a href="watch.html" class="card-link">
                                 <div class="card-poster">
                                     <img src="https://images.unsplash.com/photo-1618336753974-aae8e04506aa?q=80&w=400&auto=format&fit=crop" alt="One Piece">
@@ -597,7 +604,7 @@
                                         </div>
                                     </div>
                                     <div class="card-badges">
-                                        <span class="ep-badge">1 EP</span>
+                                        <span class="ep-badge">Movie</span>
                                     </div>
                                 </div>
                                 <div class="card-detail">
@@ -607,13 +614,24 @@
                                         <span class="genre-badge">Adventure</span>
                                     </div>
                                     <div class="anime-meta">
-                                        <span><i class="fas fa-star"></i> 4.8</span>
+                                        <span class="meta-rating"><i class="fas fa-star"></i> 4.8</span>
+                                        <span class="meta-year"><i class="fas fa-calendar"></i> 2022</span>
                                     </div>
+                                    <p class="anime-description">The Straw Hat Pirates attend a concert by the famous singer Uta, only to find themselves in a new adventure.</p>
                                 </div>
                             </a>
+                            <div class="card-actions">
+                                <button class="action-btn-card add-to-list" title="Add to List">
+                                    <i class="fas fa-plus"></i>
+                                </button>
+                                <button class="action-btn-card add-to-favorite" title="Add to Favorites">
+                                    <i class="far fa-heart"></i>
+                                </button>
+                            </div>
                         </div>
 
-                        <div class="anime-card">
+                        <!-- Anime Card 8 -->
+                        <div class="anime-card" data-id="8" data-title="Spy x Family" data-genres="Action,Comedy,Slice of Life" data-year="2022" data-status="Ongoing" data-type="TV Series" data-rating="4.8" data-episodes="25">
                             <a href="watch.html" class="card-link">
                                 <div class="card-poster">
                                     <img src="https://images.unsplash.com/photo-1590955559144-a82332cf2c08?q=80&w=400&auto=format&fit=crop" alt="Spy x Family">
@@ -635,136 +653,171 @@
                                         <span class="genre-badge">Comedy</span>
                                     </div>
                                     <div class="anime-meta">
-                                        <span><i class="fas fa-star"></i> 4.8</span>
+                                        <span class="meta-rating"><i class="fas fa-star"></i> 4.8</span>
+                                        <span class="meta-year"><i class="fas fa-calendar"></i> 2022</span>
                                     </div>
+                                    <p class="anime-description">A spy, an assassin, and a telepath form a fake family to achieve their individual goals.</p>
                                 </div>
                             </a>
+                            <div class="card-actions">
+                                <button class="action-btn-card add-to-list" title="Add to List">
+                                    <i class="fas fa-plus"></i>
+                                </button>
+                                <button class="action-btn-card add-to-favorite" title="Add to Favorites">
+                                    <i class="far fa-heart"></i>
+                                </button>
+                            </div>
                         </div>
 
-                        <div class="anime-card">
+                        <!-- Anime Card 9 -->
+                        <div class="anime-card" data-id="9" data-title="Chainsaw Man" data-genres="Action,Horror,Supernatural" data-year="2022" data-status="Completed" data-type="TV Series" data-rating="4.7" data-episodes="12">
                             <a href="watch.html" class="card-link">
-                                <div class="card-poster"><img src="https://images.unsplash.com/photo-1560972550-aba3456b5564?q=80&w=400&auto=format&fit=crop" alt="Chainsaw Man">
-                                <div class="card-overlay">
-                                    <div class="play-indicator">
-                                        <i class="fas fa-play"></i>
-                                        <span>Watch Now</span>
+                                <div class="card-poster">
+                                    <img src="https://images.unsplash.com/photo-1560972550-aba3456b5564?q=80&w=400&auto=format&fit=crop" alt="Chainsaw Man">
+                                    <div class="card-overlay">
+                                        <div class="play-indicator">
+                                            <i class="fas fa-play"></i>
+                                            <span>Watch Now</span>
+                                        </div>
+                                    </div>
+                                    <div class="card-badges">
+                                        <span class="ep-badge">12 EP</span>
                                     </div>
                                 </div>
-                                <div class="card-badges">
-                                    <span class="ep-badge">12 EP</span>
+                                <div class="card-detail">
+                                    <h3 class="anime-title">Chainsaw Man</h3>
+                                    <div class="genre-badges-bottom">
+                                        <span class="genre-badge">Action</span>
+                                        <span class="genre-badge">Horror</span>
+                                    </div>
+                                    <div class="anime-meta">
+                                        <span class="meta-rating"><i class="fas fa-star"></i> 4.7</span>
+                                        <span class="meta-year"><i class="fas fa-calendar"></i> 2022</span>
+                                    </div>
+                                    <p class="anime-description">Denji becomes Chainsaw Man, a devil-human hybrid, and joins the Public Safety Devil Hunters.</p>
                                 </div>
+                            </a>
+                            <div class="card-actions">
+                                <button class="action-btn-card add-to-list" title="Add to List">
+                                    <i class="fas fa-plus"></i>
+                                </button>
+                                <button class="action-btn-card add-to-favorite" title="Add to Favorites">
+                                    <i class="far fa-heart"></i>
+                                </button>
                             </div>
-                            <div class="card-detail">
-                                <h3 class="anime-title">Chainsaw Man</h3>
-                                <div class="genre-badges-bottom">
-                                    <span class="genre-badge">Action</span>
-                                    <span class="genre-badge">Horror</span>
-                                </div>
-                                <div class="anime-meta">
-                                    <span><i class="fas fa-star"></i> 4.7</span>
-                                </div>
-                            </div>
-                        </a>
-                    </div>
+                        </div>
 
-                    <div class="anime-card">
-                        <a href="watch.html" class="card-link">
-                            <div class="card-poster">
-                                <img src="https://images.unsplash.com/photo-1542256844-d3d05538a5b8?q=80&w=400&auto=format&fit=crop" alt="Vinland Saga">
-                                <div class="card-overlay">
-                                    <div class="play-indicator">
-                                        <i class="fas fa-play"></i>
-                                        <span>Watch Now</span>
+                        <!-- Anime Card 10 -->
+                        <div class="anime-card" data-id="10" data-title="Vinland Saga Season 2" data-genres="Action,Adventure,Drama" data-year="2023" data-status="Completed" data-type="TV Series" data-rating="4.9" data-episodes="24">
+                            <a href="watch.html" class="card-link">
+                                <div class="card-poster">
+                                    <img src="https://images.unsplash.com/photo-1542256844-d3d05538a5b8?q=80&w=400&auto=format&fit=crop" alt="Vinland Saga">
+                                    <div class="card-overlay">
+                                        <div class="play-indicator">
+                                            <i class="fas fa-play"></i>
+                                            <span>Watch Now</span>
+                                        </div>
+                                    </div>
+                                    <div class="card-badges">
+                                        <span class="ep-badge">24 EP</span>
                                     </div>
                                 </div>
-                                <div class="card-badges">
-                                    <span class="ep-badge">24 EP</span>
+                                <div class="card-detail">
+                                    <h3 class="anime-title">Vinland Saga Season 2</h3>
+                                    <div class="genre-badges-bottom">
+                                        <span class="genre-badge">Action</span>
+                                        <span class="genre-badge">Drama</span>
+                                    </div>
+                                    <div class="anime-meta">
+                                        <span class="meta-rating"><i class="fas fa-star"></i> 4.9</span>
+                                        <span class="meta-year"><i class="fas fa-calendar"></i> 2023</span>
+                                    </div>
+                                    <p class="anime-description">Thorfinn's journey continues as he seeks redemption and a new purpose in life.</p>
                                 </div>
+                            </a>
+                            <div class="card-actions">
+                                <button class="action-btn-card add-to-list" title="Add to List">
+                                    <i class="fas fa-plus"></i>
+                                </button>
+                                <button class="action-btn-card add-to-favorite" title="Add to Favorites">
+                                    <i class="far fa-heart"></i>
+                                </button>
                             </div>
-                            <div class="card-detail">
-                                <h3 class="anime-title">Vinland Saga Season 2</h3>
-                                <div class="genre-badges-bottom">
-                                    <span class="genre-badge">Action</span>
-                                    <span class="genre-badge">Drama</span>
-                                </div>
-                                <div class="anime-meta">
-                                    <span><i class="fas fa-star"></i> 4.9</span>
-                                </div>
-                            </div>
-                        </a>
+                        </div>
                     </div>
-                </div>
 
-                <!-- Pagination -->
-                <div class="pagination">
-                    <button class="pagination-btn prev" disabled>
-                        <i class="fas fa-chevron-left"></i>
-                    </button>
-                    <div class="pagination-numbers">
-                        <button class="pagination-number active">1</button>
-                        <button class="pagination-number">2</button>
-                        <button class="pagination-number">3</button>
-                        <span class="pagination-ellipsis">...</span>
-                        <button class="pagination-number">12</button>
+                    <!-- Pagination -->
+                    <div class="pagination">
+                        <button class="pagination-btn prev" disabled>
+                            <i class="fas fa-chevron-left"></i>
+                        </button>
+                        <div class="pagination-numbers">
+                            <button class="pagination-number active">1</button>
+                            <button class="pagination-number">2</button>
+                            <button class="pagination-number">3</button>
+                            <span class="pagination-ellipsis">...</span>
+                            <button class="pagination-number">12</button>
+                        </div>
+                        <button class="pagination-btn next">
+                            <i class="fas fa-chevron-right"></i>
+                        </button>
                     </div>
-                    <button class="pagination-btn next">
-                        <i class="fas fa-chevron-right"></i>
-                    </button>
-                </div>
 
-                <!-- No Results State -->
-                <div class="no-results" id="noResults" style="display: none;">
-                    <div class="no-results-icon">
-                        <i class="fas fa-search"></i>
+                    <!-- No Results State -->
+                    <div class="no-results" id="noResults" style="display: none;">
+                        <div class="no-results-icon">
+                            <i class="fas fa-search"></i>
+                        </div>
+                        <h3>Tidak ada hasil yang ditemukan</h3>
+                        <p>Coba ubah kata kunci pencarian atau filter yang digunakan</p>
+                        <button class="btn-primary" id="resetSearch">Reset Pencarian</button>
                     </div>
-                    <h3>Tidak ada hasil yang ditemukan</h3>
-                    <p>Coba ubah kata kunci pencarian atau filter yang digunakan</p>
-                    <button class="btn-primary" id="resetSearch">Reset Pencarian</button>
-                </div>
-            </main>
+                </main>
+            </div>
         </div>
     </div>
-</div>
 
-<footer class="footer">
-    <div class="footer-bg-graphics"></div>
-    <div class="container">
-        <div class="footer-top">
-            <div class="footer-col brand-col">
-                 <div class="logo">
-                    <a href="home.html">ANI<span class="highlight">ME</span>STREAM</a>
+    <footer class="footer">
+        <div class="footer-bg-graphics"></div>
+        <div class="container">
+            <div class="footer-top">
+                <div class="footer-col brand-col">
+                    <div class="logo">
+                        <a href="home.html">ANI<span class="highlight">ME</span>STREAM</a>
+                    </div>
+                    <p>The premier destination for high-quality anime streaming. Join our community today.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-discord"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                    </div>
                 </div>
-                <p>The premier destination for high-quality anime streaming. Join our community today.</p>
-                <div class="social-links">
-                    <a href="#"><i class="fab fa-facebook-f"></i></a>
-                    <a href="#"><i class="fab fa-twitter"></i></a>
-                    <a href="#"><i class="fab fa-discord"></i></a>
-                    <a href="#"><i class="fab fa-instagram"></i></a>
+                <div class="footer-col links-col">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#">Our Blog</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Contacts</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col newsletter-col">
+                    <h4>Newsletter</h4>
+                    <p>Subscribe to get the latest updates.</p>
+                    <form class="newsletter-form">
+                        <input type="email" placeholder="Your Email...">
+                        <button><i class="fas fa-paper-plane"></i></button>
+                    </form>
                 </div>
             </div>
-            <div class="footer-col links-col">
-                <h4>Quick Links</h4>
-                <ul>
-                    <li><a href="#">About Us</a></li>
-                    <li><a href="#">Our Blog</a></li>
-                    <li><a href="#">Privacy Policy</a></li>
-                    <li><a href="#">Contacts</a></li>
-                </ul>
-            </div>
-            <div class="footer-col newsletter-col">
-                <h4>Newsletter</h4>
-                <p>Subscribe to get the latest updates.</p>
-                <form class="newsletter-form">
-                    <input type="email" placeholder="Your Email...">
-                    <button><i class="fas fa-paper-plane"></i></button>
-                </form>
+            <div class="footer-bottom">
+                <p>&copy; 2025 ANIMESTREAM Inc. All Rights Reserved</p>
+                <a href="#" id="backToTop" class="back-to-top"><i class="fas fa-arrow-up"></i></a>
             </div>
         </div>
-        <div class="footer-bottom">
-            <p>&copy; 2025 ANIMESTREAM Inc. All Rights Reserved</p>
-            <a href="#" id="backToTop" class="back-to-top"><i class="fas fa-arrow-up"></i></a>
-        </div>
-    </div>
-</footer>
+    </footer>
 
-<script src="../script/search.js"></script>
+    <script src="../script/search.js"></script>
+</body>
+</html>

@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Anime Schedule - AniStream</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Mulish:wght@300;400;500;600;700;800&family=Oswald:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <link rel="stylesheet" href="../styles/schedule.css">
+</head>
+<body>
+    <header class="header" id="mainHeader">
+        <div class="container header-container">
+            <div class="logo">
+                <a href="home.html">ANI<span class="highlight">ME</span>STREAM</a>
+            </div>
+
+            <nav class="navbar" id="navbar">
+                <ul class="menu">
+                    <li class="menu-item"><a href="home.html">Home</a></li>
+                    <li class="menu-item"><a href="genre.html">Genre</a></li>
+                    <li class="menu-item active"><a href="schedule.html">Schedule</a></li>
+                    <li class="menu-item"><a href="#">News</a></li>
+                </ul>
+            </nav>
+
+            <div class="header-actions">
+                <button class="action-btn search-trigger" id="searchTrigger"><i class="fas fa-search"></i></button>
+                
+                <div class="user-profile">
+                    <button class="user-btn" id="userBtn">
+                        <i class="fas fa-user"></i>
+                    </button>
+                    <div class="user-dropdown" id="userDropdown">
+                        <div class="user-info">
+                            <div class="user-avatar">
+                                <i class="fas fa-user-circle"></i>
+                            </div>
+                            <div class="user-details">
+                                <span class="user-name">AnimeLover</span>
+                                <span class="user-status">Premium Member</span>
+                            </div>
+                        </div>
+                        <div class="dropdown-divider"></div>
+                        <a href="profile.html" class="dropdown-item">
+                            <i class="fas fa-user"></i>
+                            <span>My Profile</span>
+                        </a>
+                        <a href="#" class="dropdown-item">
+                            <i class="fas fa-cog"></i>
+                            <span>Settings</span>
+                        </a>
+                        <a href="list.html" class="dropdown-item">
+                            <i class="fas fa-list"></i>
+                            <span>My List</span>
+                        </a>
+                        <a href="history.html" class="dropdown-item">
+                            <i class="fas fa-history"></i>
+                            <span>Watch History</span>
+                        </a>
+                        <div class="dropdown-divider"></div>
+                        <a href="#" class="dropdown-item logout">
+                            <i class="fas fa-sign-out-alt"></i>
+                            <span>Log Out</span>
+                        </a>
+                    </div>
+                </div>
+
+                <button class="mobile-toggle" id="mobileToggle">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Search Overlay -->
+    <div class="search-overlay" id="searchOverlay">
+        <div class="search-close" id="searchClose"><i class="fas fa-times"></i></div>
+        <div class="search-box">
+            <input type="text" placeholder="Type to search anime...">
+            <button><i class="fas fa-search"></i></button>
+        </div>
+        <div class="search-tags">
+            <span>Popular:</span>
+            <a href="#">One Piece</a>
+            <a href="#">Naruto</a>
+            <a href="#">Demon Slayer</a>
+            <a href="#">Jujutsu Kaisen</a>
+        </div>
+    </div>
+
+    <!-- Main Schedule Content -->
+    <div class="schedule-container">
+        <div class="container">
+            <!-- Schedule Header -->
+            <div class="schedule-header">
+                <div class="schedule-hero">
+                    <h1 class="page-title">Anime Schedule</h1>
+                    <p class="page-subtitle">Never miss a new episode with our weekly anime broadcast schedule</p>
+                    
+                    <div class="current-week">
+                        <div class="week-info">
+                            <i class="fas fa-calendar-alt"></i>
+                            <span id="currentWeek">Week of March 10, 2025</span>
+                        </div>
+                        <div class="week-nav">
+                            <button class="week-nav-btn" id="prevWeek">
+                                <i class="fas fa-chevron-left"></i>
+                                <span>Previous Week</span>
+                            </button>
+                            <button class="week-nav-btn active" id="currentWeekBtn">
+                                <i class="fas fa-calendar-day"></i>
+                                <span>Current Week</span>
+                            </button>
+                            <button class="week-nav-btn" id="nextWeek">
+                                <span>Next Week</span>
+                                <i class="fas fa-chevron-right"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Schedule Controls -->
+            <div class="schedule-controls">
+                <div class="controls-left">
+                    <div class="filter-toggle" id="filterToggle">
+                        <i class="fas fa-filter"></i>
+                        <span>Filters</span>
+                    </div>
+                    
+                    <div class="view-toggle">
+                        <button class="view-btn active" data-view="grid">
+                            <i class="fas fa-th"></i>
+                            <span>Grid View</span>
+                        </button>
+                        <button class="view-btn" data-view="list">
+                            <i class="fas fa-list"></i>
+                            <span>List View</span>
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="controls-right">
+                    <div class="timezone-selector">
+                        <i class="fas fa-globe"></i>
+                        <select id="timezoneSelect">
+                            <option value="JST">Japan Standard Time (JST)</option>
+                            <option value="PST">Pacific Time (PST)</option>
+                            <option value="EST">Eastern Time (EST)</option>
+                            <option value="GMT">Greenwich Mean Time (GMT)</option>
+                            <option value="CET">Central European Time (CET)</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Filters Panel -->
+            <div class="filters-panel" id="filtersPanel">
+                <div class="filter-section">
+                    <h3>Filter by Status</h3>
+                    <div class="filter-options">
+                        <div class="filter-option">
+                            <input type="checkbox" id="filter-ongoing" checked>
+                            <label for="filter-ongoing">
+                                <span class="status-indicator ongoing"></span>
+                                <span>Currently Airing</span>
+                            </label>
+                        </div>
+                        <div class="filter-option">
+                            <input type="checkbox" id="filter-upcoming" checked>
+                            <label for="filter-upcoming">
+                                <span class="status-indicator upcoming"></span>
+                                <span>Upcoming</span>
+                            </label>
+                        </div>
+                        <div class="filter-option">
+                            <input type="checkbox" id="filter-completed">
+                            <label for="filter-completed">
+                                <span class="status-indicator completed"></span>
+                                <span>Completed</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="filter-section">
+                    <h3>Filter by Genre</h3>
+                    <div class="genre-filters">
+                        <div class="filter-option">
+                            <input type="checkbox" id="genre-action">
+                            <label for="genre-action">Action</label>
+                        </div>
+                        <div class="filter-option">
+                            <input type="checkbox" id="genre-fantasy">
+                            <label for="genre-fantasy">Fantasy</label>
+                        </div>
+                        <div class="filter-option">
+                            <input type="checkbox" id="genre-comedy">
+                            <label for="genre-comedy">Comedy</label>
+                        </div>
+                        <div class="filter-option">
+                            <input type="checkbox" id="genre-drama">
+                            <label for="genre-drama">Drama</label>
+                        </div>
+                        <div class="filter-option">
+                            <input type="checkbox" id="genre-romance">
+                            <label for="genre-romance">Romance</label>
+                        </div>
+                        <div class="filter-option">
+                            <input type="checkbox" id="genre-scifi">
+                            <label for="genre-scifi">Sci-Fi</label>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="filter-actions">
+                    <button class="btn-secondary" id="resetFilters">Reset Filters</button>
+                    <button class="btn-primary" id="applyFilters">Apply Filters</button>
+                </div>
+            </div>
+
+            <!-- Schedule Days Navigation -->
+            <div class="schedule-days-nav">
+                <div class="days-container" id="daysContainer">
+                    <!-- Days will be populated by JavaScript -->
+                </div>
+            </div>
+
+            <!-- Schedule Content -->
+            <div class="schedule-content">
+                <!-- Grid View -->
+                <div class="schedule-grid" id="scheduleGrid">
+                    <!-- Schedule content will be populated by JavaScript -->
+                </div>
+                
+                <!-- List View -->
+                <div class="schedule-list" id="scheduleList" style="display: none;">
+                    <!-- List content will be populated by JavaScript -->
+                </div>
+                
+                <!-- Empty State -->
+                <div class="empty-schedule" id="emptySchedule" style="display: none;">
+                    <div class="empty-icon">
+                        <i class="fas fa-tv"></i>
+                    </div>
+                    <h3>No Anime Scheduled</h3>
+                    <p>There are no anime airing on this day with the current filters.</p>
+                    <button class="btn-primary" id="resetFiltersEmpty">Reset All Filters</button>
+                </div>
+            </div>
+
+            <!-- Today's Highlights -->
+            <div class="highlights-section">
+                <div class="section-header">
+                    <h2><i class="fas fa-fire"></i> Today's Highlights</h2>
+                    <div class="day-indicator">
+                        <i class="fas fa-calendar-day"></i>
+                        <span id="todayDate">Monday, March 10</span>
+                    </div>
+                </div>
+                
+                <div class="highlights-grid">
+                    <div class="highlight-card main-highlight">
+                        <div class="highlight-badge">
+                            <i class="fas fa-crown"></i>
+                            <span>Most Anticipated</span>
+                        </div>
+                        <div class="highlight-content">
+                            <div class="highlight-poster">
+                                <img src="https://images.unsplash.com/photo-1541562232579-512a21360020?q=80&w=600&auto=format&fit=crop" alt="Demon Slayer">
+                                <div class="airing-time">
+                                    <i class="fas fa-clock"></i>
+                                    <span>9:00 PM JST</span>
+                                </div>
+                            </div>
+                            <div class="highlight-info">
+                                <h3 class="highlight-title">Demon Slayer: Hashira Training Arc</h3>
+                                <div class="highlight-meta">
+                                    <span class="episode">Episode 8</span>
+                                    <span class="rating">
+                                        <i class="fas fa-star"></i> 4.9
+                                    </span>
+                                </div>
+                                <p class="highlight-desc">Tanjiro and the other Demon Slayers undergo intense training with the Hashira to prepare for the final battle against Muzan Kibutsuji.</p>
+                                <div class="highlight-tags">
+                                    <span class="tag">Action</span>
+                                    <span class="tag">Fantasy</span>
+                                    <span class="tag">Adventure</span>
+                                </div>
+                                <div class="highlight-actions">
+                                    <button class="btn-primary">
+                                        <i class="fas fa-bell"></i>
+                                        <span>Set Reminder</span>
+                                    </button>
+                                    <button class="btn-secondary">
+                                        <i class="fas fa-plus"></i>
+                                        <span>Add to List</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="highlights-sidebar">
+                        <div class="highlight-card side-highlight">
+                            <div class="highlight-poster">
+                                <img src="https://images.unsplash.com/photo-1607604276583-eef5d076aa5f?q=80&w=300&auto=format&fit=crop" alt="Jujutsu Kaisen">
+                            </div>
+                            <div class="highlight-info">
+                                <h4>Jujutsu Kaisen Season 3</h4>
+                                <div class="highlight-meta">
+                                    <span class="episode">Episode 5</span>
+                                    <span class="time">8:30 PM JST</span>
+                                </div>
+                                <div class="progress-indicator">
+                                    <div class="progress-bar">
+                                        <div class="progress-fill" style="width: 60%"></div>
+                                    </div>
+                                    <span>60% Watched</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="highlight-card side-highlight">
+                            <div class="highlight-poster">
+                                <img src="https://images.unsplash.com/photo-1590955559144-a82332cf2c08?q=80&w=300&auto=format&fit=crop" alt="Spy x Family">
+                            </div>
+                            <div class="highlight-info">
+                                <h4>Spy x Family Season 2</h4>
+                                <div class="highlight-meta">
+                                    <span class="episode">Episode 12</span>
+                                    <span class="time">7:00 PM JST</span>
+                                </div>
+                                <div class="progress-indicator">
+                                    <div class="progress-bar">
+                                        <div class="progress-fill" style="width: 100%"></div>
+                                    </div>
+                                    <span>Completed</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="highlight-card side-highlight">
+                            <div class="highlight-poster">
+                                <img src="https://images.unsplash.com/photo-1626544827763-d516dce335ca?q=80&w=300&auto=format&fit=crop" alt="My Hero Academia">
+                            </div>
+                            <div class="highlight-info">
+                                <h4>My Hero Academia Season 7</h4>
+                                <div class="highlight-meta">
+                                    <span class="episode">Episode 3</span>
+                                    <span class="time">10:00 PM JST</span>
+                                </div>
+                                <div class="progress-indicator">
+                                    <div class="progress-bar">
+                                        <div class="progress-fill" style="width: 30%"></div>
+                                    </div>
+                                    <span>30% Watched</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Weekly Statistics -->
+            <div class="stats-section">
+                <div class="section-header">
+                    <h2><i class="fas fa-chart-line"></i> Weekly Broadcast Stats</h2>
+                </div>
+                
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-tv"></i>
+                        </div>
+                        <div class="stat-content">
+                            <div class="stat-value" id="totalAnime">42</div>
+                            <div class="stat-label">Anime Airing This Week</div>
+                        </div>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                        <div class="stat-content">
+                            <div class="stat-value" id="totalEpisodes">68</div>
+                            <div class="stat-label">Total Episodes</div>
+                        </div>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-fire"></i>
+                        </div>
+                        <div class="stat-content">
+                            <div class="stat-value" id="mostActiveDay">Saturday</div>
+                            <div class="stat-label">Most Active Day</div>
+                        </div>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <div class="stat-content">
+                            <div class="stat-value" id="avgRating">4.6</div>
+                            <div class="stat-label">Average Rating</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="day-distribution">
+                    <h3>Episodes by Day</h3>
+                    <div class="distribution-chart">
+                        <div class="chart-bar" data-day="Mon" data-value="8" style="height: 40%;">
+                            <span class="bar-label">Mon</span>
+                            <span class="bar-value">8</span>
+                        </div>
+                        <div class="chart-bar" data-day="Tue" data-value="10" style="height: 50%;">
+                            <span class="bar-label">Tue</span>
+                            <span class="bar-value">10</span>
+                        </div>
+                        <div class="chart-bar" data-day="Wed" data-value="7" style="height: 35%;">
+                            <span class="bar-label">Wed</span>
+                            <span class="bar-value">7</span>
+                        </div>
+                        <div class="chart-bar" data-day="Thu" data-value="9" style="height: 45%;">
+                            <span class="bar-label">Thu</span>
+                            <span class="bar-value">9</span>
+                        </div>
+                        <div class="chart-bar" data-day="Fri" data-value="12" style="height: 60%;">
+                            <span class="bar-label">Fri</span>
+                            <span class="bar-value">12</span>
+                        </div>
+                        <div class="chart-bar" data-day="Sat" data-value="15" style="height: 75%;">
+                            <span class="bar-label">Sat</span>
+                            <span class="bar-value">15</span>
+                        </div>
+                        <div class="chart-bar" data-day="Sun" data-value="7" style="height: 35%;">
+                            <span class="bar-label">Sun</span>
+                            <span class="bar-value">7</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="footer-bg-graphics"></div>
+        <div class="container">
+            <div class="footer-top">
+                <div class="footer-col brand-col">
+                     <div class="logo">
+                        <a href="home.html">ANI<span class="highlight">ME</span>STREAM</a>
+                    </div>
+                    <p>The premier destination for high-quality anime streaming. Join our community today.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-discord"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+                <div class="footer-col links-col">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#">Our Blog</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Contacts</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col newsletter-col">
+                    <h4>Newsletter</h4>
+                    <p>Subscribe to get the latest updates.</p>
+                    <form class="newsletter-form">
+                        <input type="email" placeholder="Your Email...">
+                        <button><i class="fas fa-paper-plane"></i></button>
+                    </form>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 ANIMESTREAM Inc. All Rights Reserved</p>
+                <a href="#" id="backToTop" class="back-to-top"><i class="fas fa-arrow-up"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../script/schedule.js"></script>
+</body>
+</html>

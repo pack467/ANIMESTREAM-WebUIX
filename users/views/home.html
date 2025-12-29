@@ -19,7 +19,7 @@
             <div class="progress-bar-wrap">
                 <div class="progress-bar" id="loader-progress"></div>
             </div>
-            <div class="loading-text">Initializing Core Systems...</div>
+            <div class="loading-text" id="loadingText">Initializing Core Systems...</div>
         </div>
     </div>
 
@@ -46,16 +46,8 @@
 
             <nav class="navbar" id="navbar">
                 <ul class="menu">
-                    <li class="menu-item active"><a href="#">Home</a></li>
-                    <li class="menu-item has-dropdown">
-                        <a href="#">Genre <i class="fas fa-chevron-down"></i></a>
-                        <ul class="dropdown">
-                            <li><a href="#">Action</a></li>
-                            <li><a href="#">Adventure</a></li>
-                            <li><a href="#">Fantasy</a></li>
-                            <li><a href="#">Sci-Fi</a></li>
-                        </ul>
-                    </li>
+                    <li class="menu-item active"><a href="home.html">Home</a></li>
+                    <li class="menu-item"><a href="#">Genre</a></li>
                     <li class="menu-item"><a href="#">Schedule</a></li>
                     <li class="menu-item"><a href="#">News</a></li>
                 </ul>
@@ -64,7 +56,6 @@
             <div class="header-actions">
                 <button class="action-btn search-trigger" id="searchTrigger"><i class="fas fa-search"></i></button>
                 
-                <!-- User Profile Button dengan Dropdown Menu -->
                 <div class="user-profile">
                     <button class="user-btn" id="userBtn">
                         <i class="fas fa-user"></i>
@@ -75,7 +66,7 @@
                                 <i class="fas fa-user-circle"></i>
                             </div>
                             <div class="user-details">
-                                <span class="user-name">AnimeLover</span>
+                                <span class="user-name" id="userName">AnimeLover</span>
                                 <span class="user-status">Premium Member</span>
                             </div>
                         </div>
@@ -120,10 +111,10 @@
         <div class="container hero-content-wrapper">
             <div class="hero-slider" id="heroSlider">
                 
-                <div class="hero-slide active" data-bg="https://images.unsplash.com/photo-1578632767115-351597cf2477?q=80&w=1920&auto=format&fit=crop" data-cover="https://images.unsplash.com/photo-1578632767115-351597cf2477?q=80&w=400&auto=format&fit=crop">
+                <div class="hero-slide active" data-bg="https://images.unsplash.com/photo-1578632767115-351597cf2477?q=80&w=1920&auto=format&fit=crop" data-anime="Fate/Stay Night: Unlimited Blade Works">
                     <div class="slide-info">
                         <div class="slide-meta fade-up">
-                            <span class="badge quality">4K Quality</span>
+                            <span class="badge quality">Recommended</span>
                             <span class="badge genre">Action</span>
                             <span class="badge year">2024</span>
                         </div>
@@ -133,7 +124,10 @@
                         </p>
                         <div class="slide-buttons fade-up delay-300">
                             <a href="#" class="btn-primary"><i class="fas fa-play"></i> Watch Now</a>
-                            <a href="#" class="btn-secondary"><i class="fas fa-plus"></i> Add to List</a>
+                            <button class="btn-secondary btn-add-list">
+                                <i class="fas fa-plus"></i> 
+                                <span class="btn-text">Add to List</span>
+                            </button>
                         </div>
                     </div>
                     <div class="slide-cover fade-up delay-300">
@@ -142,10 +136,10 @@
                     </div>
                 </div>
 
-                <div class="hero-slide" data-bg="https://images.unsplash.com/photo-1541562232579-512a21360020?q=80&w=1920&auto=format&fit=crop" data-cover="https://images.unsplash.com/photo-1541562232579-512a21360020?q=80&w=400&auto=format&fit=crop">
+                <div class="hero-slide" data-bg="https://images.unsplash.com/photo-1541562232579-512a21360020?q=80&w=1920&auto=format&fit=crop" data-anime="Demon Slayer: Kimetsu no Yaiba">
                     <div class="slide-info">
                         <div class="slide-meta fade-up">
-                            <span class="badge quality">HD</span>
+                            <span class="badge quality">Trending</span>
                             <span class="badge genre">Demon</span>
                             <span class="badge year">2023</span>
                         </div>
@@ -155,7 +149,10 @@
                         </p>
                         <div class="slide-buttons fade-up delay-300">
                             <a href="#" class="btn-primary"><i class="fas fa-play"></i> Watch Now</a>
-                            <a href="#" class="btn-secondary"><i class="fas fa-plus"></i> Add to List</a>
+                            <button class="btn-secondary btn-add-list">
+                                <i class="fas fa-plus"></i> 
+                                <span class="btn-text">Add to List</span>
+                            </button>
                         </div>
                     </div>
                     <div class="slide-cover fade-up delay-300">
@@ -164,10 +161,10 @@
                     </div>
                 </div>
 
-                <div class="hero-slide" data-bg="https://images.unsplash.com/photo-1612404730960-5c71578fca37?q=80&w=1920&auto=format&fit=crop" data-cover="https://images.unsplash.com/photo-1612404730960-5c71578fca37?q=80&w=400&auto=format&fit=crop">
+                <div class="hero-slide" data-bg="https://images.unsplash.com/photo-1612404730960-5c71578fca37?q=80&w=1920&auto=format&fit=crop" data-anime="Sword Art Online: Alicization">
                     <div class="slide-info">
                         <div class="slide-meta fade-up">
-                            <span class="badge quality">FHD</span>
+                            <span class="badge quality">New</span>
                             <span class="badge genre">Sci-Fi</span>
                             <span class="badge year">2022</span>
                         </div>
@@ -177,7 +174,10 @@
                         </p>
                         <div class="slide-buttons fade-up delay-300">
                             <a href="#" class="btn-primary"><i class="fas fa-play"></i> Watch Now</a>
-                            <a href="#" class="btn-secondary"><i class="fas fa-plus"></i> Add to List</a>
+                            <button class="btn-secondary btn-add-list">
+                                <i class="fas fa-plus"></i> 
+                                <span class="btn-text">Add to List</span>
+                            </button>
                         </div>
                     </div>
                     <div class="slide-cover fade-up delay-300">
@@ -229,9 +229,20 @@
                                     <h3 class="anime-title">Made in Abyss</h3>
                                     <div class="genre-badges-bottom">
                                         <span class="genre-badge">Adventure</span>
+                                        <span class="genre-badge">Fantasy</span>
+                                        <span class="genre-badge">Drama</span>
                                     </div>
                                     <div class="anime-meta">
+                                        <span class="year-badge"><i class="fas fa-calendar"></i> 2017</span>
                                         <span><i class="fas fa-star"></i> 4.8</span>
+                                    </div>
+                                    <div class="card-actions">
+                                        <button class="action-icon-btn list-btn" title="Add to List">
+                                            <i class="fas fa-list"></i>
+                                        </button>
+                                        <button class="action-icon-btn favorite-btn" title="Add to Favorites">
+                                            <i class="far fa-heart"></i>
+                                        </button>
                                     </div>
                                 </div>
                             </a>
@@ -255,9 +266,19 @@
                                     <h3 class="anime-title">Fate/Stay Heaven's Feel</h3>
                                     <div class="genre-badges-bottom">
                                         <span class="genre-badge">Fantasy</span>
+                                        <span class="genre-badge">Action</span>
                                     </div>
                                     <div class="anime-meta">
+                                        <span class="year-badge"><i class="fas fa-calendar"></i> 2019</span>
                                         <span><i class="fas fa-star"></i> 4.9</span>
+                                    </div>
+                                    <div class="card-actions">
+                                        <button class="action-icon-btn list-btn" title="Add to List">
+                                            <i class="fas fa-list"></i>
+                                        </button>
+                                        <button class="action-icon-btn favorite-btn" title="Add to Favorites">
+                                            <i class="far fa-heart"></i>
+                                        </button>
                                     </div>
                                 </div>
                             </a>
@@ -281,9 +302,19 @@
                                     <h3 class="anime-title">Sword Art Online</h3>
                                     <div class="genre-badges-bottom">
                                         <span class="genre-badge">Sci-Fi</span>
+                                        <span class="genre-badge">Romance</span>
                                     </div>
                                     <div class="anime-meta">
+                                        <span class="year-badge"><i class="fas fa-calendar"></i> 2012</span>
                                         <span><i class="fas fa-star"></i> 4.5</span>
+                                    </div>
+                                    <div class="card-actions">
+                                        <button class="action-icon-btn list-btn" title="Add to List">
+                                            <i class="fas fa-list"></i>
+                                        </button>
+                                        <button class="action-icon-btn favorite-btn" title="Add to Favorites">
+                                            <i class="far fa-heart"></i>
+                                        </button>
                                     </div>
                                 </div>
                             </a>
@@ -307,9 +338,20 @@
                                     <h3 class="anime-title">Gintama: The Final</h3>
                                     <div class="genre-badges-bottom">
                                         <span class="genre-badge">Comedy</span>
+                                        <span class="genre-badge">Action</span>
+                                        <span class="genre-badge">Sci-Fi</span>
                                     </div>
                                     <div class="anime-meta">
+                                        <span class="year-badge"><i class="fas fa-calendar"></i> 2021</span>
                                         <span><i class="fas fa-star"></i> 4.9</span>
+                                    </div>
+                                    <div class="card-actions">
+                                        <button class="action-icon-btn list-btn" title="Add to List">
+                                            <i class="fas fa-list"></i>
+                                        </button>
+                                        <button class="action-icon-btn favorite-btn" title="Add to Favorites">
+                                            <i class="far fa-heart"></i>
+                                        </button>
                                     </div>
                                 </div>
                             </a>
@@ -333,9 +375,19 @@
                                     <h3 class="anime-title">Your Name</h3>
                                     <div class="genre-badges-bottom">
                                         <span class="genre-badge">Romance</span>
+                                        <span class="genre-badge">Drama</span>
                                     </div>
                                     <div class="anime-meta">
+                                        <span class="year-badge"><i class="fas fa-calendar"></i> 2016</span>
                                         <span><i class="fas fa-star"></i> 4.7</span>
+                                    </div>
+                                    <div class="card-actions">
+                                        <button class="action-icon-btn list-btn" title="Add to List">
+                                            <i class="fas fa-list"></i>
+                                        </button>
+                                        <button class="action-icon-btn favorite-btn" title="Add to Favorites">
+                                            <i class="far fa-heart"></i>
+                                        </button>
                                     </div>
                                 </div>
                             </a>
@@ -359,9 +411,20 @@
                                     <h3 class="anime-title">Tokyo Ghoul</h3>
                                     <div class="genre-badges-bottom">
                                         <span class="genre-badge">Action</span>
+                                        <span class="genre-badge">Horror</span>
+                                        <span class="genre-badge">Drama</span>
                                     </div>
                                     <div class="anime-meta">
+                                        <span class="year-badge"><i class="fas fa-calendar"></i> 2014</span>
                                         <span><i class="fas fa-star"></i> 4.6</span>
+                                    </div>
+                                    <div class="card-actions">
+                                        <button class="action-icon-btn list-btn" title="Add to List">
+                                            <i class="fas fa-list"></i>
+                                        </button>
+                                        <button class="action-icon-btn favorite-btn" title="Add to Favorites">
+                                            <i class="far fa-heart"></i>
+                                        </button>
                                     </div>
                                 </div>
                             </a>
@@ -396,9 +459,19 @@
                                     <h3 class="anime-title">Seven Deadly Sins</h3>
                                     <div class="genre-badges-bottom">
                                         <span class="genre-badge">Action</span>
+                                        <span class="genre-badge">Fantasy</span>
                                     </div>
                                     <div class="anime-meta">
+                                        <span class="year-badge"><i class="fas fa-calendar"></i> 2014</span>
                                         <span><i class="fas fa-star"></i> 4.8</span>
+                                    </div>
+                                    <div class="card-actions">
+                                        <button class="action-icon-btn list-btn" title="Add to List">
+                                            <i class="fas fa-list"></i>
+                                        </button>
+                                        <button class="action-icon-btn favorite-btn" title="Add to Favorites">
+                                            <i class="far fa-heart"></i>
+                                        </button>
                                     </div>
                                 </div>
                             </a>
@@ -422,9 +495,19 @@
                                     <h3 class="anime-title">Gintama: The Final</h3>
                                     <div class="genre-badges-bottom">
                                         <span class="genre-badge">Comedy</span>
+                                        <span class="genre-badge">Action</span>
                                     </div>
                                     <div class="anime-meta">
+                                        <span class="year-badge"><i class="fas fa-calendar"></i> 2021</span>
                                         <span><i class="fas fa-star"></i> 4.9</span>
+                                    </div>
+                                    <div class="card-actions">
+                                        <button class="action-icon-btn list-btn" title="Add to List">
+                                            <i class="fas fa-list"></i>
+                                        </button>
+                                        <button class="action-icon-btn favorite-btn" title="Add to Favorites">
+                                            <i class="far fa-heart"></i>
+                                        </button>
                                     </div>
                                 </div>
                             </a>
@@ -448,9 +531,19 @@
                                     <h3 class="anime-title">Attack on Titan S3</h3>
                                     <div class="genre-badges-bottom">
                                         <span class="genre-badge">Action</span>
+                                        <span class="genre-badge">Drama</span>
                                     </div>
                                     <div class="anime-meta">
+                                        <span class="year-badge"><i class="fas fa-calendar"></i> 2018</span>
                                         <span><i class="fas fa-star"></i> 5.0</span>
+                                    </div>
+                                    <div class="card-actions">
+                                        <button class="action-icon-btn list-btn" title="Add to List">
+                                            <i class="fas fa-list"></i>
+                                        </button>
+                                        <button class="action-icon-btn favorite-btn" title="Add to Favorites">
+                                            <i class="far fa-heart"></i>
+                                        </button>
                                     </div>
                                 </div>
                             </a>
@@ -474,9 +567,19 @@
                                     <h3 class="anime-title">Sword Art Online</h3>
                                     <div class="genre-badges-bottom">
                                         <span class="genre-badge">Sci-Fi</span>
+                                        <span class="genre-badge">Romance</span>
                                     </div>
                                     <div class="anime-meta">
+                                        <span class="year-badge"><i class="fas fa-calendar"></i> 2012</span>
                                         <span><i class="fas fa-star"></i> 4.5</span>
+                                    </div>
+                                    <div class="card-actions">
+                                        <button class="action-icon-btn list-btn" title="Add to List">
+                                            <i class="fas fa-list"></i>
+                                        </button>
+                                        <button class="action-icon-btn favorite-btn" title="Add to Favorites">
+                                            <i class="far fa-heart"></i>
+                                        </button>
                                     </div>
                                 </div>
                             </a>
@@ -500,9 +603,19 @@
                                     <h3 class="anime-title">Fate/Stay Heaven's Feel</h3>
                                     <div class="genre-badges-bottom">
                                         <span class="genre-badge">Fantasy</span>
+                                        <span class="genre-badge">Action</span>
                                     </div>
                                     <div class="anime-meta">
+                                        <span class="year-badge"><i class="fas fa-calendar"></i> 2019</span>
                                         <span><i class="fas fa-star"></i> 4.9</span>
+                                    </div>
+                                    <div class="card-actions">
+                                        <button class="action-icon-btn list-btn" title="Add to List">
+                                            <i class="fas fa-list"></i>
+                                        </button>
+                                        <button class="action-icon-btn favorite-btn" title="Add to Favorites">
+                                            <i class="far fa-heart"></i>
+                                        </button>
                                     </div>
                                 </div>
                             </a>
@@ -526,9 +639,19 @@
                                     <h3 class="anime-title">Made in Abyss</h3>
                                     <div class="genre-badges-bottom">
                                         <span class="genre-badge">Adventure</span>
+                                        <span class="genre-badge">Fantasy</span>
                                     </div>
                                     <div class="anime-meta">
+                                        <span class="year-badge"><i class="fas fa-calendar"></i> 2017</span>
                                         <span><i class="fas fa-star"></i> 4.8</span>
+                                    </div>
+                                    <div class="card-actions">
+                                        <button class="action-icon-btn list-btn" title="Add to List">
+                                            <i class="fas fa-list"></i>
+                                        </button>
+                                        <button class="action-icon-btn favorite-btn" title="Add to Favorites">
+                                            <i class="far fa-heart"></i>
+                                        </button>
                                     </div>
                                 </div>
                             </a>
@@ -564,9 +687,19 @@
                                     <h3 class="anime-title">Boruto: Next Generation</h3>
                                     <div class="genre-badges-bottom">
                                         <span class="genre-badge">Action</span>
+                                        <span class="genre-badge">Adventure</span>
                                     </div>
                                     <div class="anime-meta">
+                                        <span class="year-badge"><i class="fas fa-calendar"></i> 2024</span>
                                         <span><i class="fas fa-star"></i> 4.3</span>
+                                    </div>
+                                    <div class="card-actions">
+                                        <button class="action-icon-btn list-btn" title="Add to List">
+                                            <i class="fas fa-list"></i>
+                                        </button>
+                                        <button class="action-icon-btn favorite-btn" title="Add to Favorites">
+                                            <i class="far fa-heart"></i>
+                                        </button>
                                     </div>
                                 </div>
                             </a>
@@ -591,9 +724,19 @@
                                     <h3 class="anime-title">Tokyo Ghoul: Re</h3>
                                     <div class="genre-badges-bottom">
                                         <span class="genre-badge">Horror</span>
+                                        <span class="genre-badge">Action</span>
                                     </div>
                                     <div class="anime-meta">
+                                        <span class="year-badge"><i class="fas fa-calendar"></i> 2024</span>
                                         <span><i class="fas fa-star"></i> 4.7</span>
+                                    </div>
+                                    <div class="card-actions">
+                                        <button class="action-icon-btn list-btn" title="Add to List">
+                                            <i class="fas fa-list"></i>
+                                        </button>
+                                        <button class="action-icon-btn favorite-btn" title="Add to Favorites">
+                                            <i class="far fa-heart"></i>
+                                        </button>
                                     </div>
                                 </div>
                             </a>
@@ -618,9 +761,19 @@
                                     <h3 class="anime-title">Demon Slayer S4</h3>
                                     <div class="genre-badges-bottom">
                                         <span class="genre-badge">Demon</span>
+                                        <span class="genre-badge">Action</span>
                                     </div>
                                     <div class="anime-meta">
+                                        <span class="year-badge"><i class="fas fa-calendar"></i> 2024</span>
                                         <span><i class="fas fa-star"></i> 4.9</span>
+                                    </div>
+                                    <div class="card-actions">
+                                        <button class="action-icon-btn list-btn" title="Add to List">
+                                            <i class="fas fa-list"></i>
+                                        </button>
+                                        <button class="action-icon-btn favorite-btn" title="Add to Favorites">
+                                            <i class="far fa-heart"></i>
+                                        </button>
                                     </div>
                                 </div>
                             </a>
@@ -645,9 +798,19 @@
                                     <h3 class="anime-title">Jujutsu Kaisen S3</h3>
                                     <div class="genre-badges-bottom">
                                         <span class="genre-badge">Fantasy</span>
+                                        <span class="genre-badge">Action</span>
                                     </div>
                                     <div class="anime-meta">
+                                        <span class="year-badge"><i class="fas fa-calendar"></i> 2024</span>
                                         <span><i class="fas fa-star"></i> 4.8</span>
+                                    </div>
+                                    <div class="card-actions">
+                                        <button class="action-icon-btn list-btn" title="Add to List">
+                                            <i class="fas fa-list"></i>
+                                        </button>
+                                        <button class="action-icon-btn favorite-btn" title="Add to Favorites">
+                                            <i class="far fa-heart"></i>
+                                        </button>
                                     </div>
                                 </div>
                             </a>
@@ -672,9 +835,19 @@
                                     <h3 class="anime-title">Weathering with You</h3>
                                     <div class="genre-badges-bottom">
                                         <span class="genre-badge">Drama</span>
+                                        <span class="genre-badge">Romance</span>
                                     </div>
                                     <div class="anime-meta">
+                                        <span class="year-badge"><i class="fas fa-calendar"></i> 2024</span>
                                         <span><i class="fas fa-star"></i> 4.6</span>
+                                    </div>
+                                    <div class="card-actions">
+                                        <button class="action-icon-btn list-btn" title="Add to List">
+                                            <i class="fas fa-list"></i>
+                                        </button>
+                                        <button class="action-icon-btn favorite-btn" title="Add to Favorites">
+                                            <i class="far fa-heart"></i>
+                                        </button>
                                     </div>
                                 </div>
                             </a>
@@ -699,9 +872,19 @@
                                     <h3 class="anime-title">My Hero Academia S7</h3>
                                     <div class="genre-badges-bottom">
                                         <span class="genre-badge">Slice of Life</span>
+                                        <span class="genre-badge">Action</span>
                                     </div>
                                     <div class="anime-meta">
+                                        <span class="year-badge"><i class="fas fa-calendar"></i> 2024</span>
                                         <span><i class="fas fa-star"></i> 4.7</span>
+                                    </div>
+                                    <div class="card-actions">
+                                        <button class="action-icon-btn list-btn" title="Add to List">
+                                            <i class="fas fa-list"></i>
+                                        </button>
+                                        <button class="action-icon-btn favorite-btn" title="Add to Favorites">
+                                            <i class="far fa-heart"></i>
+                                        </button>
                                     </div>
                                 </div>
                             </a>
@@ -715,71 +898,46 @@
                         <div class="widget-header">
                             <h4>Top Views</h4>
                             <div class="widget-nav">
-                                <span class="active">Day</span>
-                                <span>Week</span>
-                                <span>Month</span>
+                                <span class="active" data-timeframe="day">Day</span>
+                                <span data-timeframe="week">Week</span>
+                                <span data-timeframe="month">Month</span>
                             </div>
                         </div>
-                        <div class="widget-content">
-                            <div class="sidebar-item">
-                                <div class="item-img">
-                                    <img src="https://images.unsplash.com/photo-1578632748624-fbd20d345187?q=80&w=200&auto=format&fit=crop" alt="Thumb">
-                                </div>
-                                <div class="item-info">
-                                    <h5><a href="#">Seven Deadly Sins</a></h5>
-                                    <span class="views"><i class="fas fa-eye"></i> 32,100</span>
-                                </div>
-                            </div>
-                            <div class="sidebar-item">
-                                <div class="item-img">
-                                    <img src="https://images.unsplash.com/photo-1612404730960-5c71578fca37?q=80&w=200&auto=format&fit=crop" alt="Thumb">
-                                </div>
-                                <div class="item-info">
-                                    <h5><a href="#">Sword Art Online</a></h5>
-                                    <span class="views"><i class="fas fa-eye"></i> 28,900</span>
-                                </div>
-                            </div>
+                        <div class="widget-content" id="topViewsContent">
+                            <!-- Content will be loaded dynamically with transition -->
+                        </div>
+                        <div class="widget-pagination">
+                            <button class="pagination-btn prev-btn" id="topViewsPrev" disabled>
+                                <i class="fas fa-chevron-left"></i>
+                            </button>
+                            <button class="pagination-btn next-btn" id="topViewsNext">
+                                <i class="fas fa-chevron-right"></i>
+                            </button>
                         </div>
                     </div>
 
                     <div class="widget scroll-reveal">
                         <div class="widget-header">
                             <h4>Today</h4>
+                            <a href="#" class="view-all-link">View All <i class="fas fa-arrow-right"></i></a>
                         </div>
-                        <div class="widget-content">
-                            <div class="sidebar-item">
-                                <div class="item-img">
-                                    <img src="https://images.unsplash.com/photo-1542256844-d3d05538a5b8?q=80&w=200&auto=format&fit=crop" alt="Thumb">
-                                </div>
-                                <div class="item-info">
-                                    <h5><a href="#">Boruto: Next Generation</a></h5>
-                                    <span class="episode">Episode 12</span>
-                                </div>
-                            </div>
-                            <div class="sidebar-item">
-                                <div class="item-img">
-                                    <img src="https://images.unsplash.com/photo-1578632748624-fbd20d345187?q=80&w=200&auto=format&fit=crop" alt="Thumb">
-                                </div>
-                                <div class="item-info">
-                                    <h5><a href="#">Tokyo Ghoul: Re</a></h5>
-                                    <span class="episode">Episode 5</span>
-                                </div>
-                            </div>
-                            <div class="sidebar-item">
-                                <div class="item-img">
-                                    <img src="https://images.unsplash.com/photo-1541562232579-512a21360020?q=80&w=200&auto=format&fit=crop" alt="Thumb">
-                                </div>
-                                <div class="item-info">
-                                    <h5><a href="#">Demon Slayer S4</a></h5>
-                                    <span class="episode">Episode 7</span>
-                                </div>
-                            </div>
+                        <div class="widget-content" id="todayContent">
+                            <!-- Content will be loaded dynamically with time stamps -->
+                        </div>
+                        <div class="widget-pagination">
+                            <button class="pagination-btn prev-btn" id="todayPrev" disabled>
+                                <i class="fas fa-chevron-left"></i>
+                            </button>
+                            <button class="pagination-btn next-btn" id="todayNext">
+                                <i class="fas fa-chevron-right"></i>
+                            </button>
                         </div>
                     </div>
 
                     <div class="widget scroll-reveal">
                         <div class="widget-header">
                             <h4>Genres</h4>
+                            <a href="#" class="view-all-link">View All <i class="fas fa-arrow-right"></i></a>
                         </div>
                         <div class="tag-cloud">
                             <a href="#">Action</a>
@@ -791,6 +949,9 @@
                             <a href="#">Mecha</a>
                             <a href="#">Psychological</a>
                             <a href="#">Horror</a>
+                            <a href="#">Fantasy</a>
+                            <a href="#">Sci-Fi</a>
+                            <a href="#">Drama</a>
                         </div>
                     </div>
 

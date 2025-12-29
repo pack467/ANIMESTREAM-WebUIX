@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Anime News - AniStream</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Mulish:wght@300;400;500;600;700;800&family=Oswald:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <link rel="stylesheet" href="../styles/news.css">
+</head>
+<body>
+    <header class="header" id="mainHeader">
+        <div class="container header-container">
+            <div class="logo">
+                <a href="home.html">ANI<span class="highlight">ME</span>STREAM</a>
+            </div>
+
+            <nav class="navbar" id="navbar">
+                <ul class="menu">
+                    <li class="menu-item"><a href="home.html">Home</a></li>
+                    <li class="menu-item"><a href="genre.html">Genre</a></li>
+                    <li class="menu-item"><a href="schedule.html">Schedule</a></li>
+                    <li class="menu-item active"><a href="news.html">News</a></li>
+                </ul>
+            </nav>
+
+            <div class="header-actions">
+                <button class="action-btn search-trigger" id="searchTrigger"><i class="fas fa-search"></i></button>
+                
+                <div class="user-profile">
+                    <button class="user-btn" id="userBtn">
+                        <i class="fas fa-user"></i>
+                    </button>
+                    <div class="user-dropdown" id="userDropdown">
+                        <div class="user-info">
+                            <div class="user-avatar">
+                                <i class="fas fa-user-circle"></i>
+                            </div>
+                            <div class="user-details">
+                                <span class="user-name">AnimeLover</span>
+                                <span class="user-status">Premium Member</span>
+                            </div>
+                        </div>
+                        <div class="dropdown-divider"></div>
+                        <a href="profile.html" class="dropdown-item">
+                            <i class="fas fa-user"></i>
+                            <span>My Profile</span>
+                        </a>
+                        <a href="#" class="dropdown-item">
+                            <i class="fas fa-cog"></i>
+                            <span>Settings</span>
+                        </a>
+                        <a href="list.html" class="dropdown-item">
+                            <i class="fas fa-list"></i>
+                            <span>My List</span>
+                        </a>
+                        <a href="history.html" class="dropdown-item">
+                            <i class="fas fa-history"></i>
+                            <span>Watch History</span>
+                        </a>
+                        <div class="dropdown-divider"></div>
+                        <a href="#" class="dropdown-item logout">
+                            <i class="fas fa-sign-out-alt"></i>
+                            <span>Log Out</span>
+                        </a>
+                    </div>
+                </div>
+
+                <button class="mobile-toggle" id="mobileToggle">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Search Overlay -->
+    <div class="search-overlay" id="searchOverlay">
+        <div class="search-close" id="searchClose"><i class="fas fa-times"></i></div>
+        <div class="search-box">
+            <input type="text" placeholder="Type to search anime...">
+            <button><i class="fas fa-search"></i></button>
+        </div>
+        <div class="search-tags">
+            <span>Popular:</span>
+            <a href="#">One Piece</a>
+            <a href="#">Naruto</a>
+            <a href="#">Demon Slayer</a>
+            <a href="#">Jujutsu Kaisen</a>
+        </div>
+    </div>
+
+    <!-- Main News Content -->
+    <div class="news-container">
+        <div class="container">
+            <!-- News Header -->
+            <div class="news-header">
+                <div class="news-hero">
+                    <div class="hero-content">
+                        <div class="hero-tag">
+                            <span class="breaking-news">BREAKING NEWS</span>
+                            <span class="hero-category">Anime Announcement</span>
+                        </div>
+                        <h1 class="page-title">"Demon Slayer" Infinity Castle Arc Gets Movie Trilogy Announcement</h1>
+                        <p class="page-subtitle">The highly anticipated finale of Demon Slayer will be released as a three-part movie series starting in 2025</p>
+                        <div class="hero-meta">
+                            <div class="meta-item">
+                                <i class="fas fa-user"></i>
+                                <span>By AnimeNews Staff</span>
+                            </div>
+                            <div class="meta-item">
+                                <i class="fas fa-calendar-alt"></i>
+                                <span>March 10, 2025</span>
+                            </div>
+                            <div class="meta-item">
+                                <i class="fas fa-clock"></i>
+                                <span>5 min read</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="hero-image">
+                        <img src="https://images.unsplash.com/photo-1541562232579-512a21360020?q=80&w=1200&auto=format&fit=crop" alt="Demon Slayer News">
+                        <div class="image-overlay"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- News Categories -->
+            <div class="news-categories">
+                <div class="categories-nav">
+                    <button class="category-btn active" data-category="all">
+                        <i class="fas fa-newspaper"></i>
+                        <span>All News</span>
+                    </button>
+                    <button class="category-btn" data-category="announcements">
+                        <i class="fas fa-bullhorn"></i>
+                        <span>Announcements</span>
+                    </button>
+                    <button class="category-btn" data-category="reviews">
+                        <i class="fas fa-star"></i>
+                        <span>Reviews</span>
+                    </button>
+                    <button class="category-btn" data-category="interviews">
+                        <i class="fas fa-microphone"></i>
+                        <span>Interviews</span>
+                    </button>
+                    <button class="category-btn" data-category="industry">
+                        <i class="fas fa-chart-line"></i>
+                        <span>Industry</span>
+                    </button>
+                    <button class="category-btn" data-category="events">
+                        <i class="fas fa-calendar-star"></i>
+                        <span>Events</span>
+                    </button>
+                </div>
+                
+                <div class="trending-topics">
+                    <span class="trending-label">Trending:</span>
+                    <div class="topics-list">
+                        <a href="#" class="topic-tag">#DemonSlayerMovie</a>
+                        <a href="#" class="topic-tag">#AnimeExpo2025</a>
+                        <a href="#" class="topic-tag">#JujutsuKaisenS3</a>
+                        <a href="#" class="topic-tag">#CrunchyrollAwards</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Main News Content -->
+            <div class="news-content">
+                <!-- Left Column: Featured and Latest News -->
+                <div class="news-main">
+                    <!-- Featured News Section -->
+                    <section class="featured-section">
+                        <div class="section-header">
+                            <h2 class="section-title">
+                                <i class="fas fa-fire"></i>
+                                Featured Stories
+                            </h2>
+                            <a href="#" class="view-all">View All <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                        
+                        <div class="featured-grid">
+                            <article class="featured-card large-featured">
+                                <div class="featured-image">
+                                    <img src="https://images.unsplash.com/photo-1581833971358-2c8b550f87b3?q=80&w=800&auto=format&fit=crop" alt="Attack on Titan Exhibition">
+                                    <div class="featured-badge">
+                                        <span>Exclusive</span>
+                                    </div>
+                                </div>
+                                <div class="featured-content">
+                                    <div class="article-category">
+                                        <span class="category-tag events">Events</span>
+                                        <span class="article-date">2 days ago</span>
+                                    </div>
+                                    <h3 class="article-title">Attack on Titan Exhibition Opens in Tokyo with Life-Sized Titans</h3>
+                                    <p class="article-excerpt">The immersive exhibition features original artwork, life-sized Titan statues, and exclusive merchandise that fans won't find anywhere else.</p>
+                                    <div class="article-meta">
+                                        <div class="author-info">
+                                            <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=100&auto=format&fit=crop" alt="Author">
+                                            <span>By Kenji Sato</span>
+                                        </div>
+                                        <div class="article-stats">
+                                            <span><i class="fas fa-eye"></i> 12.5K</span>
+                                            <span><i class="fas fa-comment"></i> 342</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </article>
+                            
+                            <div class="featured-sidebar">
+                                <article class="featured-card small-featured">
+                                    <div class="featured-image">
+                                        <img src="https://images.unsplash.com/photo-1607604276583-eef5d076aa5f?q=80&w-400&auto=format&fit=crop" alt="Jujutsu Kaisen Season 3">
+                                        <div class="featured-badge">
+                                            <span>Hot</span>
+                                        </div>
+                                    </div>
+                                    <div class="featured-content">
+                                        <div class="article-category">
+                                            <span class="category-tag announcements">Announcements</span>
+                                        </div>
+                                        <h3 class="article-title">Jujutsu Kaisen Season 3 Release Date Confirmed for Fall 2025</h3>
+                                        <div class="article-meta">
+                                            <span class="article-date">1 day ago</span>
+                                            <span><i class="fas fa-eye"></i> 8.7K</span>
+                                        </div>
+                                    </div>
+                                </article>
+                                
+                                <article class="featured-card small-featured">
+                                    <div class="featured-image">
+                                        <img src="https://images.unsplash.com/photo-1590955559144-a82332cf2c08?q=80&w=400&auto=format&fit=crop" alt="Spy x Family Movie">
+                                    </div>
+                                    <div class="featured-content">
+                                        <div class="article-category">
+                                            <span class="category-tag announcements">Announcements</span>
+                                        </div>
+                                        <h3 class="article-title">Spy x Family Movie Breaks Box Office Records in Opening Weekend</h3>
+                                        <div class="article-meta">
+                                            <span class="article-date">3 days ago</span>
+                                            <span><i class="fas fa-eye"></i> 6.2K</span>
+                                        </div>
+                                    </div>
+                                </article>
+                                
+                                <article class="featured-card small-featured">
+                                    <div class="featured-image">
+                                        <img src="https://images.unsplash.com/photo-1626544827763-d516dce335ca?q=80&w=400&auto=format&fit=crop" alt="My Hero Academia">
+                                    </div>
+                                    <div class="featured-content">
+                                        <div class="article-category">
+                                            <span class="category-tag industry">Industry</span>
+                                        </div>
+                                        <h3 class="article-title">My Hero Academia Creator Reveals Plans for Final Arc Adaptation</h3>
+                                        <div class="article-meta">
+                                            <span class="article-date">4 days ago</span>
+                                            <span><i class="fas fa-eye"></i> 9.1K</span>
+                                        </div>
+                                    </div>
+                                </article>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Latest News Section -->
+                    <section class="latest-section">
+                        <div class="section-header">
+                            <h2 class="section-title">
+                                <i class="fas fa-history"></i>
+                                Latest News
+                            </h2>
+                            <div class="sort-options">
+                                <select id="sortNews">
+                                    <option value="newest">Newest First</option>
+                                    <option value="popular">Most Popular</option>
+                                    <option value="trending">Trending</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="latest-news-grid" id="latestNewsGrid">
+                            <!-- News articles will be loaded here dynamically -->
+                        </div>
+                        
+                        <!-- Load More Button -->
+                        <div class="load-more-container">
+                            <button class="btn-secondary" id="loadMoreNews">
+                                <i class="fas fa-sync-alt"></i>
+                                <span>Load More News</span>
+                            </button>
+                        </div>
+                    </section>
+                </div>
+
+                <!-- Right Column: Sidebar -->
+                <div class="news-sidebar">
+                    <!-- Newsletter Subscription -->
+                    <div class="sidebar-widget newsletter-widget">
+                        <div class="widget-icon">
+                            <i class="fas fa-paper-plane"></i>
+                        </div>
+                        <h3 class="widget-title">Stay Updated</h3>
+                        <p class="widget-description">Get the latest anime news delivered directly to your inbox</p>
+                        <form class="newsletter-form" id="newsletterForm">
+                            <input type="email" placeholder="Your email address" required>
+                            <button type="submit" class="btn-primary">
+                                <i class="fas fa-envelope"></i>
+                                Subscribe
+                            </button>
+                        </form>
+                        <p class="privacy-note">By subscribing, you agree to our Privacy Policy</p>
+                    </div>
+                    
+                    <!-- Popular News -->
+                    <div class="sidebar-widget popular-widget">
+                        <h3 class="widget-title">
+                            <i class="fas fa-chart-line"></i>
+                            Popular This Week
+                        </h3>
+                        <div class="popular-list" id="popularNewsList">
+                            <!-- Popular news will be loaded here dynamically -->
+                        </div>
+                    </div>
+                    
+                    <!-- Upcoming Events -->
+                    <div class="sidebar-widget events-widget">
+                        <h3 class="widget-title">
+                            <i class="fas fa-calendar-star"></i>
+                            Upcoming Events
+                        </h3>
+                        <div class="events-list">
+                            <div class="event-item">
+                                <div class="event-date">
+                                    <span class="event-day">15</span>
+                                    <span class="event-month">MAR</span>
+                                </div>
+                                <div class="event-info">
+                                    <h4 class="event-title">Anime Japan 2025</h4>
+                                    <p class="event-location">Tokyo Big Sight</p>
+                                </div>
+                            </div>
+                            <div class="event-item">
+                                <div class="event-date">
+                                    <span class="event-day">22</span>
+                                    <span class="event-month">MAR</span>
+                                </div>
+                                <div class="event-info">
+                                    <h4 class="event-title">Crunchyroll Industry Panel</h4>
+                                    <p class="event-location">Virtual Event</p>
+                                </div>
+                            </div>
+                            <div class="event-item">
+                                <div class="event-date">
+                                    <span class="event-day">05</span>
+                                    <span class="event-month">APR</span>
+                                </div>
+                                <div class="event-info">
+                                    <h4 class="event-title">Studio MAPPA Exhibition</h4>
+                                    <p class="event-location">Osaka</p>
+                                </div>
+                            </div>
+                        </div>
+                        <a href="#" class="view-all-events">View All Events <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                    
+                    <!-- News Sources -->
+                    <div class="sidebar-widget sources-widget">
+                        <h3 class="widget-title">
+                            <i class="fas fa-rss"></i>
+                            Trusted Sources
+                        </h3>
+                        <div class="sources-list">
+                            <a href="#" class="source-item">
+                                <i class="fas fa-newspaper"></i>
+                                <span>Anime News Network</span>
+                            </a>
+                            <a href="#" class="source-item">
+                                <i class="fas fa-film"></i>
+                                <span>Crunchyroll News</span>
+                            </a>
+                            <a href="#" class="source-item">
+                                <i class="fas fa-tv"></i>
+                                <span>MyAnimeList</span>
+                            </a>
+                            <a href="#" class="source-item">
+                                <i class="fas fa-globe"></i>
+                                <span>Anime Corner</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Exclusive Interviews Section -->
+            <section class="interviews-section">
+                <div class="section-header">
+                    <h2 class="section-title">
+                        <i class="fas fa-microphone-alt"></i>
+                        Exclusive Interviews
+                    </h2>
+                    <a href="#" class="view-all">View All Interviews <i class="fas fa-arrow-right"></i></a>
+                </div>
+                
+                <div class="interviews-slider">
+                    <button class="slider-btn prev-btn" id="prevInterview">
+                        <i class="fas fa-chevron-left"></i>
+                    </button>
+                    
+                    <div class="interviews-container" id="interviewsContainer">
+                        <div class="interview-card">
+                            <div class="interview-image">
+                                <img src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?q=80&w=800&auto=format&fit=crop" alt="Koyoharu Gotouge">
+                                <div class="interview-badge">
+                                    <i class="fas fa-microphone"></i>
+                                    <span>Interview</span>
+                                </div>
+                            </div>
+                            <div class="interview-content">
+                                <h3 class="interview-title">Exclusive: Demon Slayer Creator Talks About the Series' Global Impact</h3>
+                                <p class="interview-excerpt">In an exclusive interview, Koyoharu Gotouge shares insights about the creation of Demon Slayer and its unprecedented worldwide success.</p>
+                                <div class="interview-meta">
+                                    <span class="interviewee">Koyoharu Gotouge</span>
+                                    <span class="interview-date">March 5, 2025</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="interview-card">
+                            <div class="interview-image">
+                                <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?q=80&w=800&auto=format&fit=crop" alt="Gege Akutami">
+                                <div class="interview-badge">
+                                    <i class="fas fa-microphone"></i>
+                                    <span>Interview</span>
+                                </div>
+                            </div>
+                            <div class="interview-content">
+                                <h3 class="interview-title">Gege Akutami Reveals Plans for Jujutsu Kaisen's Final Arc</h3>
+                                <p class="interview-excerpt">The creator of Jujutsu Kaisen discusses the upcoming final arc of the manga and what fans can expect from the conclusion.</p>
+                                <div class="interview-meta">
+                                    <span class="interviewee">Gege Akutami</span>
+                                    <span class="interview-date">March 1, 2025</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="interview-card">
+                            <div class="interview-image">
+                                <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=800&auto=format&fit=crop" alt="Eiichiro Oda">
+                                <div class="interview-badge">
+                                    <i class="fas fa-microphone"></i>
+                                    <span>Interview</span>
+                                </div>
+                            </div>
+                            <div class="interview-content">
+                                <h3 class="interview-title">One Piece Creator Discusses the Final Saga and Legacy</h3>
+                                <p class="interview-excerpt">Eiichiro Oda shares thoughts on the final saga of One Piece and what the series has meant to him over the past 25 years.</p>
+                                <div class="interview-meta">
+                                    <span class="interviewee">Eiichiro Oda</span>
+                                    <span class="interview-date">February 25, 2025</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <button class="slider-btn next-btn" id="nextInterview">
+                        <i class="fas fa-chevron-right"></i>
+                    </button>
+                </div>
+            </section>
+
+            <!-- Anime Awards Section -->
+            <section class="awards-section">
+                <div class="section-header">
+                    <h2 class="section-title">
+                        <i class="fas fa-trophy"></i>
+                        2025 Anime Awards Results
+                    </h2>
+                    <a href="#" class="view-all">Full Results <i class="fas fa-arrow-right"></i></a>
+                </div>
+                
+                <div class="awards-grid">
+                    <div class="award-category">
+                        <div class="category-header">
+                            <h3 class="category-title">Anime of the Year</h3>
+                            <i class="fas fa-crown"></i>
+                        </div>
+                        <div class="winner-card">
+                            <div class="winner-image">
+                                <img src="https://images.unsplash.com/photo-1541562232579-512a21360020?q=80&w=400&auto=format&fit=crop" alt="Demon Slayer">
+                            </div>
+                            <div class="winner-info">
+                                <h4 class="winner-title">Demon Slayer: Hashira Training Arc</h4>
+                                <div class="winner-stats">
+                                    <span class="votes">1.2M Votes</span>
+                                    <span class="percentage">42%</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="runner-up">
+                            <span>2nd: Jujutsu Kaisen Season 2</span>
+                            <span class="runner-votes">850K Votes</span>
+                        </div>
+                        <div class="runner-up">
+                            <span>3rd: Attack on Titan Final Season</span>
+                            <span class="runner-votes">720K Votes</span>
+                        </div>
+                    </div>
+                    
+                    <div class="award-category">
+                        <div class="category-header">
+                            <h3 class="category-title">Best Protagonist</h3>
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div class="winner-card">
+                            <div class="winner-image">
+                                <img src="https://images.unsplash.com/photo-1578632749014-ca77efd052eb?q=80&w=400&auto=format&fit=crop" alt="Tanjiro Kamado">
+                            </div>
+                            <div class="winner-info">
+                                <h4 class="winner-title">Tanjiro Kamado</h4>
+                                <div class="winner-stats">
+                                    <span class="votes">980K Votes</span>
+                                    <span class="percentage">38%</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="runner-up">
+                            <span>2nd: Yuji Itadori</span>
+                            <span class="runner-votes">650K Votes</span>
+                        </div>
+                        <div class="runner-up">
+                            <span>3rd: Eren Yeager</span>
+                            <span class="runner-votes">590K Votes</span>
+                        </div>
+                    </div>
+                    
+                    <div class="award-category">
+                        <div class="category-header">
+                            <h3 class="category-title">Best Animation</h3>
+                            <i class="fas fa-film"></i>
+                        </div>
+                        <div class="winner-card">
+                            <div class="winner-image">
+                                <img src="https://images.unsplash.com/photo-1607604276583-eef5d076aa5f?q=80&w=400&auto=format&fit=crop" alt="Jujutsu Kaisen">
+                            </div>
+                            <div class="winner-info">
+                                <h4 class="winner-title">Jujutsu Kaisen Season 2</h4>
+                                <div class="winner-stats">
+                                    <span class="votes">1.1M Votes</span>
+                                    <span class="percentage">45%</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="runner-up">
+                            <span>2nd: Demon Slayer S4</span>
+                            <span class="runner-votes">820K Votes</span>
+                        </div>
+                        <div class="runner-up">
+                            <span>3rd: Cyberpunk: Edgerunners</span>
+                            <span class="runner-votes">510K Votes</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="footer-bg-graphics"></div>
+        <div class="container">
+            <div class="footer-top">
+                <div class="footer-col brand-col">
+                     <div class="logo">
+                        <a href="home.html">ANI<span class="highlight">ME</span>STREAM</a>
+                    </div>
+                    <p>The premier destination for high-quality anime streaming. Join our community today.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-discord"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+                <div class="footer-col links-col">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#">Our Blog</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Contacts</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col newsletter-col">
+                    <h4>Newsletter</h4>
+                    <p>Subscribe to get the latest updates.</p>
+                    <form class="newsletter-form">
+                        <input type="email" placeholder="Your Email...">
+                        <button><i class="fas fa-paper-plane"></i></button>
+                    </form>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 ANIMESTREAM Inc. All Rights Reserved</p>
+                <a href="#" id="backToTop" class="back-to-top"><i class="fas fa-arrow-up"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../script/news.js"></script>
+</body>
+</html>

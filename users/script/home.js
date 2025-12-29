@@ -1,35 +1,75 @@
 document.addEventListener('DOMContentLoaded', () => {
     
-    /* ==================================================
-       1. ADVANCED PRELOADER & PROGRESS BAR
-    ================================================== */
+    // ==================================================
+    // USER DATA - Simulate logged in user
+    // ==================================================
+    const userData = {
+        username: 'AnimeLover',
+        isLoggedIn: true
+    };
+
+    // ==================================================
+    // 1. ADVANCED PRELOADER & PROGRESS BAR WITH PERSONALIZATION
+    // ==================================================
     const preloader = document.getElementById('preloader');
     const progressBar = document.getElementById('loader-progress');
+    const loadingText = document.getElementById('loadingText');
+    const userName = document.getElementById('userName');
     
-    // Simulate loading progress
+    if (userData.isLoggedIn && userName) {
+        userName.textContent = userData.username;
+    }
+    
+    const loadingMessages = userData.isLoggedIn ? [
+        `Welcome back, ${userData.username}!`,
+        'Loading your recommendations...',
+        'Fetching latest episodes...',
+        'Preparing your watch list...',
+        'Almost ready!'
+    ] : [
+        'Initializing Core Systems...',
+        'Loading anime database...',
+        'Preparing content...',
+        'Almost ready!'
+    ];
+    
+    let messageIndex = 0;
     let progress = 0;
+    
+    const updateLoadingMessage = () => {
+        if (messageIndex < loadingMessages.length) {
+            loadingText.textContent = loadingMessages[messageIndex];
+            messageIndex++;
+        }
+    };
+    
     const interval = setInterval(() => {
-        progress += Math.random() * 10;
+        progress += Math.random() * 15;
         if (progress > 100) progress = 100;
         progressBar.style.width = `${progress}%`;
         
+        if (progress > 20 && messageIndex === 0) updateLoadingMessage();
+        if (progress > 40 && messageIndex === 1) updateLoadingMessage();
+        if (progress > 60 && messageIndex === 2) updateLoadingMessage();
+        if (progress > 80 && messageIndex === 3) updateLoadingMessage();
+        
         if (progress === 100) {
             clearInterval(interval);
+            updateLoadingMessage();
             setTimeout(() => {
                 preloader.style.opacity = '0';
                 setTimeout(() => {
                     preloader.style.display = 'none';
-                    // Trigger hero text animation after loader is gone
                     animateHeroText();
                 }, 800);
             }, 500);
         }
-    }, 150); // Speed of loading simulation
+    }, 150);
 
 
-    /* ==================================================
-       2. HERO CAROUSEL LOGIC (Object Oriented Style)
-    ================================================== */
+    // ==================================================
+    // 2. HERO CAROUSEL WITH ADD TO LIST FUNCTIONALITY
+    // ==================================================
     const slider = {
         slides: document.querySelectorAll('.hero-slide'),
         dotsContainer: document.getElementById('sliderDots'),
@@ -40,7 +80,6 @@ document.addEventListener('DOMContentLoaded', () => {
         timer: null,
 
         init() {
-            // Create Dots
             this.slides.forEach((_, index) => {
                 const dot = document.createElement('div');
                 dot.classList.add('dot');
@@ -49,15 +88,42 @@ document.addEventListener('DOMContentLoaded', () => {
                 this.dotsContainer.appendChild(dot);
             });
 
-            // Event Listeners
             this.prevBtn.addEventListener('click', () => this.prevSlide());
             this.nextBtn.addEventListener('click', () => this.nextSlide());
 
-            // Start Auto Play
+            // Add to list button functionality for carousel
+            this.initAddToListButtons();
+
             this.startAutoPlay();
-            
-            // Initial BG
             this.updateBackground();
+        },
+
+        initAddToListButtons() {
+            const addToListBtns = document.querySelectorAll('.btn-add-list');
+            
+            addToListBtns.forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const slide = btn.closest('.hero-slide');
+                    const animeTitle = slide.getAttribute('data-anime');
+                    
+                    if (!btn.classList.contains('added')) {
+                        btn.classList.add('added');
+                        const icon = btn.querySelector('i');
+                        icon.classList.remove('fa-plus');
+                        icon.classList.add('fa-check');
+                        
+                        showNotification(`"${animeTitle}" has been added to your list`);
+                    } else {
+                        btn.classList.remove('added');
+                        const icon = btn.querySelector('i');
+                        icon.classList.remove('fa-check');
+                        icon.classList.add('fa-plus');
+                        
+                        showNotification(`"${animeTitle}" has been removed from your list`);
+                    }
+                });
+            });
         },
 
         updateBackground() {
@@ -69,20 +135,17 @@ document.addEventListener('DOMContentLoaded', () => {
         },
 
         updateClasses() {
-            // Slides
             this.slides.forEach(slide => slide.classList.remove('active'));
             this.slides[this.currentIndex].classList.add('active');
             
-            // Dots
             const dots = document.querySelectorAll('.dot');
             dots.forEach(dot => dot.classList.remove('active'));
             dots[this.currentIndex].classList.add('active');
 
-            // Trigger animations again
             const info = this.slides[this.currentIndex].querySelectorAll('.fade-up');
             info.forEach(el => {
                 el.style.animation = 'none';
-                el.offsetHeight; /* trigger reflow */
+                el.offsetHeight;
                 el.style.animation = null; 
             });
             
@@ -118,14 +181,13 @@ document.addEventListener('DOMContentLoaded', () => {
     slider.init();
 
 
-    /* ==================================================
-       3. SCROLL EFFECTS (Navbar & Reveal)
-    ================================================== */
+    // ==================================================
+    // 3. SCROLL EFFECTS
+    // ==================================================
     const header = document.getElementById('mainHeader');
     const backToTop = document.getElementById('backToTop');
 
     window.addEventListener('scroll', () => {
-        // Navbar Background
         if (window.scrollY > 100) {
             header.classList.add('scrolled');
             backToTop.classList.add('show');
@@ -135,15 +197,12 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // Intersection Observer for Fade In Elements
     const revealElements = document.querySelectorAll('.scroll-reveal');
     
     const revealObserver = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
                 entry.target.classList.add('visible');
-                // Optional: Stop observing once visible
-                // revealObserver.unobserve(entry.target);
             }
         });
     }, {
@@ -153,10 +212,9 @@ document.addEventListener('DOMContentLoaded', () => {
     revealElements.forEach(el => revealObserver.observe(el));
 
 
-    /* ==================================================
-       4. UI INTERACTIONS (Search & Mobile Menu)
-    ================================================== */
-    // Search Overlay
+    // ==================================================
+    // 4. UI INTERACTIONS
+    // ==================================================
     const searchTrigger = document.getElementById('searchTrigger');
     const searchOverlay = document.getElementById('searchOverlay');
     const searchClose = document.getElementById('searchClose');
@@ -169,20 +227,17 @@ document.addEventListener('DOMContentLoaded', () => {
         searchOverlay.classList.remove('active');
     });
 
-    // Close search on ESC key
     document.addEventListener('keydown', (e) => {
         if(e.key === "Escape" && searchOverlay.classList.contains('active')) {
             searchOverlay.classList.remove('active');
         }
     });
 
-    // Mobile Menu
     const mobileToggle = document.getElementById('mobileToggle');
     const navbar = document.getElementById('navbar');
 
     mobileToggle.addEventListener('click', () => {
         navbar.classList.toggle('active');
-        // Simple animation for hamburger icon
         const spans = mobileToggle.querySelectorAll('span');
         if (navbar.classList.contains('active')) {
             spans[0].style.transform = 'rotate(45deg) translate(5px, 5px)';
@@ -196,9 +251,9 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
 
-    /* ==================================================
-       5. USER PROFILE DROPDOWN
-    ================================================== */
+    // ==================================================
+    // 5. USER PROFILE DROPDOWN
+    // ==================================================
     const userBtn = document.getElementById('userBtn');
     const userDropdown = document.getElementById('userDropdown');
 
@@ -207,14 +262,12 @@ document.addEventListener('DOMContentLoaded', () => {
         userDropdown.classList.toggle('active');
     });
 
-    // Close dropdown when clicking outside
     document.addEventListener('click', function(e) {
         if (!userBtn.contains(e.target) && !userDropdown.contains(e.target)) {
             userDropdown.classList.remove('active');
         }
     });
 
-    // Close dropdown when pressing Escape key
     document.addEventListener('keydown', function(e) {
         if (e.key === 'Escape' && userDropdown.classList.contains('active')) {
             userDropdown.classList.remove('active');
@@ -222,36 +275,16 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
 
-    /* ==================================================
-       6. TODAY WIDGET NAVIGATION
-    ================================================== */
-    const widgetNavItems = document.querySelectorAll('.widget-nav span');
-    
-    widgetNavItems.forEach(item => {
-        item.addEventListener('click', function() {
-            // Remove active class from all items
-            widgetNavItems.forEach(i => i.classList.remove('active'));
-            // Add active class to clicked item
-            this.classList.add('active');
-            
-            // Here you would typically fetch and display data based on the selected timeframe
-            // For demo purposes, we'll just log the selection
-            console.log(`Selected timeframe: ${this.textContent}`);
-        });
-    });
-
-
-    /* ==================================================
-       7. ANIME CARD INTERACTIONS
-    ================================================== */
-    // Remove floating effect from anime cards (already handled in CSS)
+    // ==================================================
+    // 6. ANIME CARD INTERACTIONS
+    // ==================================================
     const animeCards = document.querySelectorAll('.anime-card');
     
-    // Add click handlers for entire card
     animeCards.forEach(card => {
         const cardLink = card.querySelector('.card-link');
+        const listBtn = card.querySelector('.list-btn');
+        const favoriteBtn = card.querySelector('.favorite-btn');
         
-        // Add subtle scale effect on hover (instead of floating)
         card.addEventListener('mouseenter', function() {
             this.style.transform = 'scale(1.02)';
         });
@@ -260,19 +293,260 @@ document.addEventListener('DOMContentLoaded', () => {
             this.style.transform = 'scale(1)';
         });
         
-        // Handle card clicks - entire card is clickable
         card.addEventListener('click', function(e) {
-            // If click is on the card link itself, let it handle the navigation
-            if (!e.target.closest('.card-link')) {
+            if (!e.target.closest('.card-link') && !e.target.closest('.action-icon-btn')) {
                 cardLink.click();
             }
+        });
+        
+        if (listBtn) {
+            listBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                this.classList.toggle('active');
+                
+                const animeTitle = card.querySelector('.anime-title').textContent;
+                if (this.classList.contains('active')) {
+                    showNotification(`"${animeTitle}" has been added to your list`);
+                } else {
+                    showNotification(`"${animeTitle}" has been removed from your list`);
+                }
+            });
+        }
+        
+        if (favoriteBtn) {
+            favoriteBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                this.classList.toggle('active');
+                
+                const animeTitle = card.querySelector('.anime-title').textContent;
+                const icon = this.querySelector('i');
+                
+                if (this.classList.contains('active')) {
+                    icon.classList.remove('far');
+                    icon.classList.add('fas');
+                    showNotification(`"${animeTitle}" has been added to favorites`);
+                } else {
+                    icon.classList.remove('fas');
+                    icon.classList.add('far');
+                    showNotification(`"${animeTitle}" has been removed from favorites`);
+                }
+            });
+        }
+    });
+
+
+    // ==================================================
+    // 7. TOP VIEWS DATA WITH DIFFERENT TIMEFRAMES
+    // ==================================================
+    const topViewsDataByTimeframe = {
+        day: [
+            { title: 'Seven Deadly Sins', image: 'https://images.unsplash.com/photo-1578632748624-fbd20d345187?q=80&w=200&auto=format&fit=crop', views: 32100 },
+            { title: 'Sword Art Online', image: 'https://images.unsplash.com/photo-1612404730960-5c71578fca37?q=80&w=200&auto=format&fit=crop', views: 28900 },
+            { title: 'Attack on Titan', image: 'https://images.unsplash.com/photo-1581833971358-2c8b550f87b3?q=80&w=200&auto=format&fit=crop', views: 27500 },
+            { title: 'Demon Slayer', image: 'https://images.unsplash.com/photo-1541562232579-512a21360020?q=80&w=200&auto=format&fit=crop', views: 25300 },
+            { title: 'Jujutsu Kaisen', image: 'https://images.unsplash.com/photo-1607604276583-eef5d076aa5f?q=80&w=200&auto=format&fit=crop', views: 24100 },
+            { title: 'Made in Abyss', image: 'https://images.unsplash.com/photo-1560972550-aba3456b5564?q=80&w=200&auto=format&fit=crop', views: 22800 },
+            { title: 'Tokyo Ghoul', image: 'https://images.unsplash.com/photo-1578632748624-fbd20d345187?q=80&w=200&auto=format&fit=crop', views: 21500 },
+            { title: 'Your Name', image: 'https://images.unsplash.com/photo-1612404730960-5c71578fca37?q=80&w=200&auto=format&fit=crop', views: 20300 }
+        ],
+        week: [
+            { title: 'Attack on Titan', image: 'https://images.unsplash.com/photo-1581833971358-2c8b550f87b3?q=80&w=200&auto=format&fit=crop', views: 185000 },
+            { title: 'Demon Slayer', image: 'https://images.unsplash.com/photo-1541562232579-512a21360020?q=80&w=200&auto=format&fit=crop', views: 172000 },
+            { title: 'One Piece', image: 'https://images.unsplash.com/photo-1618336753974-aae8e04506aa?q=80&w=200&auto=format&fit=crop', views: 168000 },
+            { title: 'Jujutsu Kaisen', image: 'https://images.unsplash.com/photo-1607604276583-eef5d076aa5f?q=80&w=200&auto=format&fit=crop', views: 156000 },
+            { title: 'Sword Art Online', image: 'https://images.unsplash.com/photo-1612404730960-5c71578fca37?q=80&w=200&auto=format&fit=crop', views: 145000 },
+            { title: 'My Hero Academia', image: 'https://images.unsplash.com/photo-1626544827763-d516dce335ca?q=80&w=200&auto=format&fit=crop', views: 138000 },
+            { title: 'Tokyo Ghoul', image: 'https://images.unsplash.com/photo-1578632748624-fbd20d345187?q=80&w=200&auto=format&fit=crop', views: 125000 },
+            { title: 'Naruto', image: 'https://images.unsplash.com/photo-1560972550-aba3456b5564?q=80&w=200&auto=format&fit=crop', views: 120000 }
+        ],
+        month: [
+            { title: 'One Piece', image: 'https://images.unsplash.com/photo-1618336753974-aae8e04506aa?q=80&w=200&auto=format&fit=crop', views: 892000 },
+            { title: 'Attack on Titan', image: 'https://images.unsplash.com/photo-1581833971358-2c8b550f87b3?q=80&w=200&auto=format&fit=crop', views: 756000 },
+            { title: 'Demon Slayer', image: 'https://images.unsplash.com/photo-1541562232579-512a21360020?q=80&w=200&auto=format&fit=crop', views: 698000 },
+            { title: 'Naruto', image: 'https://images.unsplash.com/photo-1560972550-aba3456b5564?q=80&w=200&auto=format&fit=crop', views: 645000 },
+            { title: 'My Hero Academia', image: 'https://images.unsplash.com/photo-1626544827763-d516dce335ca?q=80&w=200&auto=format&fit=crop', views: 587000 },
+            { title: 'Jujutsu Kaisen', image: 'https://images.unsplash.com/photo-1607604276583-eef5d076aa5f?q=80&w=200&auto=format&fit=crop', views: 543000 },
+            { title: 'Bleach', image: 'https://images.unsplash.com/photo-1590955559144-a82332cf2c08?q=80&w=200&auto=format&fit=crop', views: 512000 },
+            { title: 'Dragon Ball Z', image: 'https://images.unsplash.com/photo-1542256844-d3d05538a5b8?q=80&w=200&auto=format&fit=crop', views: 489000 }
+        ]
+    };
+    
+    // ==================================================
+    // 8. TODAY DATA WITH TIME STAMPS
+    // ==================================================
+    const todayData = [
+        { title: 'Boruto: Next Generation', image: 'https://images.unsplash.com/photo-1542256844-d3d05538a5b8?q=80&w=200&auto=format&fit=crop', episode: 'Episode 12', time: '2 hours ago' },
+        { title: 'Tokyo Ghoul: Re', image: 'https://images.unsplash.com/photo-1578632748624-fbd20d345187?q=80&w=200&auto=format&fit=crop', episode: 'Episode 5', time: '3 hours ago' },
+        { title: 'Demon Slayer S4', image: 'https://images.unsplash.com/photo-1541562232579-512a21360020?q=80&w=200&auto=format&fit=crop', episode: 'Episode 7', time: '5 hours ago' },
+        { title: 'Jujutsu Kaisen S3', image: 'https://images.unsplash.com/photo-1607604276583-eef5d076aa5f?q=80&w=200&auto=format&fit=crop', episode: 'Episode 3', time: '6 hours ago' },
+        { title: 'My Hero Academia S7', image: 'https://images.unsplash.com/photo-1626544827763-d516dce335ca?q=80&w=200&auto=format&fit=crop', episode: 'Episode 1', time: '8 hours ago' },
+        { title: 'One Piece', image: 'https://images.unsplash.com/photo-1618336753974-aae8e04506aa?q=80&w=200&auto=format&fit=crop', episode: 'Episode 1090', time: '10 hours ago' },
+        { title: 'Bleach: TYBW', image: 'https://images.unsplash.com/photo-1560972550-aba3456b5564?q=80&w=200&auto=format&fit=crop', episode: 'Episode 26', time: '12 hours ago' },
+        { title: 'Spy x Family', image: 'https://images.unsplash.com/photo-1590955559144-a82332cf2c08?q=80&w=200&auto=format&fit=crop', episode: 'Episode 25', time: '14 hours ago' }
+    ];
+    
+    
+    // ==================================================
+    // 9. WIDGET PAGINATION WITH SMOOTH TRANSITIONS
+    // ==================================================
+    class WidgetPagination {
+        constructor(data, contentId, prevBtnId, nextBtnId, itemsPerPage = 5, renderFunction, hasRank = true) {
+            this.data = data;
+            this.contentElement = document.getElementById(contentId);
+            this.prevBtn = document.getElementById(prevBtnId);
+            this.nextBtn = document.getElementById(nextBtnId);
+            this.itemsPerPage = itemsPerPage;
+            this.currentPage = 0;
+            this.renderFunction = renderFunction;
+            this.hasRank = hasRank;
+            
+            this.init();
+        }
+        
+        init() {
+            this.render();
+            this.updateButtons();
+            
+            this.prevBtn.addEventListener('click', () => this.prevPage());
+            this.nextBtn.addEventListener('click', () => this.nextPage());
+        }
+        
+        render(animate = false) {
+            if (animate) {
+                this.contentElement.classList.add('transitioning');
+            }
+            
+            setTimeout(() => {
+                const startIndex = this.currentPage * this.itemsPerPage;
+                const endIndex = startIndex + this.itemsPerPage;
+                const pageData = this.data.slice(startIndex, endIndex);
+                
+                this.contentElement.innerHTML = '';
+                pageData.forEach((item, index) => {
+                    const rank = startIndex + index + 1;
+                    this.contentElement.appendChild(this.renderFunction(item, rank, this.hasRank));
+                });
+                
+                if (animate) {
+                    this.contentElement.classList.remove('transitioning');
+                }
+            }, animate ? 200 : 0);
+        }
+        
+        updateButtons() {
+            const totalPages = Math.ceil(this.data.length / this.itemsPerPage);
+            
+            this.prevBtn.disabled = this.currentPage === 0;
+            this.nextBtn.disabled = this.currentPage >= totalPages - 1;
+        }
+        
+        nextPage() {
+            const totalPages = Math.ceil(this.data.length / this.itemsPerPage);
+            if (this.currentPage < totalPages - 1) {
+                this.currentPage++;
+                this.render(true);
+                this.updateButtons();
+            }
+        }
+        
+        prevPage() {
+            if (this.currentPage > 0) {
+                this.currentPage--;
+                this.render(true);
+                this.updateButtons();
+            }
+        }
+        
+        setData(newData) {
+            this.data = newData;
+            this.currentPage = 0;
+            this.render(true);
+            this.updateButtons();
+        }
+    }
+    
+    // Render function for Top Views
+    function renderTopViewItem(item, rank, hasRank = true) {
+        const div = document.createElement('div');
+        div.className = 'sidebar-item' + (hasRank ? ' with-rank' : '');
+        if (hasRank) {
+            div.setAttribute('data-rank', rank);
+        }
+        div.innerHTML = `
+            <div class="item-img">
+                <img src="${item.image}" alt="${item.title}">
+            </div>
+            <div class="item-info">
+                <h5><a href="#">${item.title}</a></h5>
+                <span class="views"><i class="fas fa-eye"></i> ${item.views.toLocaleString()}</span>
+            </div>
+        `;
+        return div;
+    }
+    
+    // Render function for Today with time stamps
+    function renderTodayItem(item, rank, hasRank = false) {
+        const div = document.createElement('div');
+        div.className = 'sidebar-item';
+        div.innerHTML = `
+            <div class="item-img">
+                <img src="${item.image}" alt="${item.title}">
+            </div>
+            <div class="item-info">
+                <h5><a href="#">${item.title}</a></h5>
+                <span class="episode">${item.episode}</span>
+                <span class="time-badge"><i class="fas fa-clock"></i> ${item.time}</span>
+            </div>
+        `;
+        return div;
+    }
+    
+    // Initialize Top Views pagination
+    let topViewsPagination = new WidgetPagination(
+        topViewsDataByTimeframe.day,
+        'topViewsContent',
+        'topViewsPrev',
+        'topViewsNext',
+        5,
+        renderTopViewItem,
+        true
+    );
+    
+    // Initialize Today pagination
+    const todayPagination = new WidgetPagination(
+        todayData,
+        'todayContent',
+        'todayPrev',
+        'todayNext',
+        5,
+        renderTodayItem,
+        false
+    );
+    
+    
+    // ==================================================
+    // 10. TOP VIEWS TIMEFRAME SWITCHER WITH SMOOTH TRANSITION
+    // ==================================================
+    const widgetNavItems = document.querySelectorAll('.widget-nav span');
+    
+    widgetNavItems.forEach(item => {
+        item.addEventListener('click', function() {
+            widgetNavItems.forEach(i => i.classList.remove('active'));
+            this.classList.add('active');
+            
+            const timeframe = this.getAttribute('data-timeframe');
+            const newData = topViewsDataByTimeframe[timeframe];
+            
+            topViewsPagination.setData(newData);
         });
     });
 
 
-    /* ==================================================
-       8. BACK TO TOP BUTTON
-    ================================================== */
+    // ==================================================
+    // 11. BACK TO TOP BUTTON
+    // ==================================================
     backToTop.addEventListener('click', function(e) {
         e.preventDefault();
         window.scrollTo({
@@ -282,37 +556,9 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
 
-    /* ==================================================
-       9. CAROUSEL ENHANCEMENTS
-    ================================================== */
-    // Add enhanced animations for all carousel slides
-    function enhanceCarouselAnimations() {
-        const slides = document.querySelectorAll('.hero-slide');
-        
-        slides.forEach((slide, index) => {
-            // Ensure all slides have proper animation classes
-            const elements = slide.querySelectorAll('.slide-meta, .slide-title, .slide-desc, .slide-buttons, .slide-cover');
-            
-            elements.forEach((el, elIndex) => {
-                if (!el.classList.contains('fade-up')) {
-                    el.classList.add('fade-up');
-                }
-                
-                // Add staggered delays
-                if (elIndex === 0) el.classList.add('delay-100');
-                if (elIndex === 1) el.classList.add('delay-200');
-                if (elIndex === 2) el.classList.add('delay-300');
-            });
-        });
-    }
-
-    // Initialize carousel enhancements
-    enhanceCarouselAnimations();
-
-
-    /* ==================================================
-       10. UTILS
-    ================================================== */
+    // ==================================================
+    // 12. UTILS
+    // ==================================================
     function animateHeroText() {
         const activeSlide = document.querySelector('.hero-slide.active');
         if(activeSlide) {
@@ -323,28 +569,85 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
     
-    // Add random rating to today's anime for demo purposes
-    function addRandomRatings() {
-        const todayItems = document.querySelectorAll('.sidebar-item');
-        todayItems.forEach(item => {
-            if (!item.querySelector('.anime-meta')) {
-                const rating = (Math.random() * 1 + 4).toFixed(1);
-                const meta = document.createElement('div');
-                meta.className = 'anime-meta';
-                meta.innerHTML = `<span><i class="fas fa-star"></i> ${rating}</span>`;
-                item.querySelector('.item-info').appendChild(meta);
-            }
-        });
+    // Enhanced notification system
+    function showNotification(message) {
+        const existingNotification = document.querySelector('.notification');
+        if (existingNotification) {
+            existingNotification.remove();
+        }
+        
+        const notification = document.createElement('div');
+        notification.className = 'notification';
+        notification.innerHTML = `
+            <i class="fas fa-check-circle"></i>
+            <span>${message}</span>
+        `;
+        notification.style.cssText = `
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: var(--bg-card);
+            color: var(--text-white);
+            padding: 15px 25px;
+            border-radius: 8px;
+            box-shadow: 0 10px 30px var(--shadow-heavy);
+            border-left: 4px solid var(--accent);
+            z-index: 10000;
+            animation: slideIn 0.3s ease-out;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            max-width: 350px;
+        `;
+        
+        const icon = notification.querySelector('i');
+        icon.style.cssText = `
+            color: var(--accent);
+            font-size: 18px;
+        `;
+        
+        document.body.appendChild(notification);
+        
+        setTimeout(() => {
+            notification.style.animation = 'slideOut 0.3s ease-out';
+            setTimeout(() => notification.remove(), 300);
+        }, 3000);
     }
     
-    // Initialize random ratings for today's anime
-    addRandomRatings();
+    // Add notification animations
+    if (!document.querySelector('#notification-styles')) {
+        const style = document.createElement('style');
+        style.id = 'notification-styles';
+        style.textContent = `
+            @keyframes slideIn {
+                from {
+                    transform: translateX(400px);
+                    opacity: 0;
+                }
+                to {
+                    transform: translateX(0);
+                    opacity: 1;
+                }
+            }
+            @keyframes slideOut {
+                from {
+                    transform: translateX(0);
+                    opacity: 1;
+                }
+                to {
+                    transform: translateX(400px);
+                    opacity: 0;
+                }
+            }
+        `;
+        document.head.appendChild(style);
+    }
 
 
-    /* ==================================================
-       11. PERFORMANCE OPTIMIZATIONS
-    ================================================== */
-    // Debounce function for scroll events
+    // ==================================================
+    // 13. PERFORMANCE OPTIMIZATIONS
+    // ==================================================
     function debounce(func, wait) {
         let timeout;
         return function executedFunction(...args) {
@@ -357,7 +660,6 @@ document.addEventListener('DOMContentLoaded', () => {
         };
     }
 
-    // Optimized scroll handler
     const optimizedScrollHandler = debounce(() => {
         // Scroll effects logic here
     }, 10);
@@ -365,10 +667,9 @@ document.addEventListener('DOMContentLoaded', () => {
     window.addEventListener('scroll', optimizedScrollHandler);
 
 
-    /* ==================================================
-       12. ACCESSIBILITY IMPROVEMENTS
-    ================================================== */
-    // Add keyboard navigation for carousel
+    // ==================================================
+    // 14. ACCESSIBILITY IMPROVEMENTS
+    // ==================================================
     document.addEventListener('keydown', (e) => {
         if (e.key === 'ArrowLeft') {
             slider.prevSlide();
@@ -377,7 +678,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // Focus management for modals
     function trapFocus(element) {
         const focusableElements = element.querySelectorAll(
             'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
@@ -402,8 +702,11 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Initialize focus trapping for search overlay
     if (searchOverlay) {
         trapFocus(searchOverlay);
     }
+
+    console.log('AnimeStream initialized successfully!');
+    console.log('User:', userData.username);
+    console.log('Features: Carousel Add to List, Top Views Transitions, Today Time Display');
 });

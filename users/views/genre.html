@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Browse Genres - AniStream</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Mulish:wght@300;400;500;600;700;800&family=Oswald:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <link rel="stylesheet" href="../styles/genre.css">
+</head>
+<body>
+    <div class="search-overlay" id="searchOverlay">
+        <div class="search-close" id="searchClose"><i class="fas fa-times"></i></div>
+        <div class="search-box">
+            <input type="text" placeholder="Type to search anime...">
+            <button><i class="fas fa-search"></i></button>
+        </div>
+        <div class="search-tags">
+            <span>Popular:</span>
+            <a href="#">One Piece</a>
+            <a href="#">Naruto</a>
+            <a href="#">Demon Slayer</a>
+            <a href="#">Jujutsu Kaisen</a>
+        </div>
+    </div>
+
+    <header class="header" id="mainHeader">
+        <div class="container header-container">
+            <div class="logo">
+                <a href="home.html">ANI<span class="highlight">ME</span>STREAM</a>
+            </div>
+
+            <nav class="navbar" id="navbar">
+                <ul class="menu">
+                    <li class="menu-item"><a href="">Home</a></li>
+                    <li class="menu-item active"><a href="genre.html">Genre</a></li>
+                    <li class="menu-item"><a href="#">Schedule</a></li>
+                    <li class="menu-item"><a href="#">News</a></li>
+                </ul>
+            </nav>
+
+            <div class="header-actions">
+                <button class="action-btn search-trigger" id="searchTrigger"><i class="fas fa-search"></i></button>
+                
+                <div class="user-profile">
+                    <button class="user-btn" id="userBtn">
+                        <i class="fas fa-user"></i>
+                    </button>
+                    <div class="user-dropdown" id="userDropdown">
+                        <div class="user-info">
+                            <div class="user-avatar">
+                                <i class="fas fa-user-circle"></i>
+                            </div>
+                            <div class="user-details">
+                                <span class="user-name">AnimeLover</span>
+                                <span class="user-status">Premium Member</span>
+                            </div>
+                        </div>
+                        <div class="dropdown-divider"></div>
+                        <a href="#" class="dropdown-item">
+                            <i class="fas fa-user"></i>
+                            <span>My Profile</span>
+                        </a>
+                        <a href="#" class="dropdown-item">
+                            <i class="fas fa-cog"></i>
+                            <span>Settings</span>
+                        </a>
+                        <a href="list.html" class="dropdown-item">
+                            <i class="fas fa-list"></i>
+                            <span>My List</span>
+                        </a>
+                        <a href="history.html" class="dropdown-item">
+                            <i class="fas fa-history"></i>
+                            <span>Watch History</span>
+                        </a>
+                        <div class="dropdown-divider"></div>
+                        <a href="#" class="dropdown-item logout">
+                            <i class="fas fa-sign-out-alt"></i>
+                            <span>Log Out</span>
+                        </a>
+                    </div>
+                </div>
+
+                <button class="mobile-toggle" id="mobileToggle">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <div class="genre-hero">
+        <div class="container">
+            <div class="genre-hero-content">
+                <h1 class="genre-title">Browse Genres</h1>
+                <p class="genre-subtitle">Discover anime by your favorite genres</p>
+                <div class="genre-search">
+                    <input type="text" id="genreSearch" placeholder="Search genres...">
+                    <button id="genreSearchBtn"><i class="fas fa-search"></i></button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="genre-container">
+        <div class="container">
+            <!-- Genre Carousel -->
+            <div class="genre-carousel-wrapper">
+                <button class="genre-nav-btn prev" id="genrePrevBtn">
+                    <i class="fas fa-chevron-left"></i>
+                </button>
+                <div class="genre-carousel" id="genreCarousel">
+                    <div class="genre-card active" data-genre="all">
+                        <div class="genre-icon" style="background: linear-gradient(135deg, var(--primary), var(--secondary));">
+                            <i class="fas fa-th-large"></i>
+                        </div>
+                        <h3>All Genres</h3>
+                        <div class="genre-count">12 anime</div>
+                    </div>
+
+                    <div class="genre-card" data-genre="action" data-icon="fa-fist-raised" data-color="#ff6b6b" data-count="245">
+                        <div class="genre-icon" style="background: #ff6b6b;">
+                            <i class="fas fa-fist-raised"></i>
+                        </div>
+                        <h3>Action</h3>
+                        <div class="genre-count">245 anime</div>
+                    </div>
+
+                    <div class="genre-card" data-genre="adventure" data-icon="fa-compass" data-color="#6c5ce7" data-count="189">
+                        <div class="genre-icon" style="background: #6c5ce7;">
+                            <i class="fas fa-compass"></i>
+                        </div>
+                        <h3>Adventure</h3>
+                        <div class="genre-count">189 anime</div>
+                    </div>
+
+                    <div class="genre-card" data-genre="fantasy" data-icon="fa-hat-wizard" data-color="#00b894" data-count="312">
+                        <div class="genre-icon" style="background: #00b894;">
+                            <i class="fas fa-hat-wizard"></i>
+                        </div>
+                        <h3>Fantasy</h3>
+                        <div class="genre-count">312 anime</div>
+                    </div>
+
+                    <div class="genre-card" data-genre="sci-fi" data-icon="fa-robot" data-color="#0984e3" data-count="156">
+                        <div class="genre-icon" style="background: #0984e3;">
+                            <i class="fas fa-robot"></i>
+                        </div>
+                        <h3>Sci-Fi</h3>
+                        <div class="genre-count">156 anime</div>
+                    </div>
+
+                    <div class="genre-card" data-genre="comedy" data-icon="fa-laugh" data-color="#fdcb6e" data-count="278">
+                        <div class="genre-icon" style="background: #fdcb6e;">
+                            <i class="fas fa-laugh"></i>
+                        </div>
+                        <h3>Comedy</h3>
+                        <div class="genre-count">278 anime</div>
+                    </div>
+
+                    <div class="genre-card" data-genre="drama" data-icon="fa-theater-masks" data-color="#e17055" data-count="194">
+                        <div class="genre-icon" style="background: #e17055;">
+                            <i class="fas fa-theater-masks"></i>
+                        </div>
+                        <h3>Drama</h3>
+                        <div class="genre-count">194 anime</div>
+                    </div>
+
+                    <div class="genre-card" data-genre="romance" data-icon="fa-heart" data-color="#ff6bc9" data-count="167">
+                        <div class="genre-icon" style="background: #ff6bc9;">
+                            <i class="fas fa-heart"></i>
+                        </div>
+                        <h3>Romance</h3>
+                        <div class="genre-count">167 anime</div>
+                    </div>
+
+                    <div class="genre-card" data-genre="mystery" data-icon="fa-search" data-color="#a29bfe" data-count="98">
+                        <div class="genre-icon" style="background: #a29bfe;">
+                            <i class="fas fa-search"></i>
+                        </div>
+                        <h3>Mystery</h3>
+                        <div class="genre-count">98 anime</div>
+                    </div>
+
+                    <div class="genre-card" data-genre="horror" data-icon="fa-ghost" data-color="#dfe6e9" data-count="76">
+                        <div class="genre-icon" style="background: #dfe6e9;">
+                            <i class="fas fa-ghost"></i>
+                        </div>
+                        <h3>Horror</h3>
+                        <div class="genre-count">76 anime</div>
+                    </div>
+
+                    <div class="genre-card" data-genre="slice of life" data-icon="fa-home" data-color="#fd79a8" data-count="123">
+                        <div class="genre-icon" style="background: #fd79a8;">
+                            <i class="fas fa-home"></i>
+                        </div>
+                        <h3>Slice of Life</h3>
+                        <div class="genre-count">123 anime</div>
+                    </div>
+
+                    <div class="genre-card" data-genre="sports" data-icon="fa-running" data-color="#74b9ff" data-count="54">
+                        <div class="genre-icon" style="background: #74b9ff;">
+                            <i class="fas fa-running"></i>
+                        </div>
+                        <h3>Sports</h3>
+                        <div class="genre-count">54 anime</div>
+                    </div>
+
+                    <div class="genre-card" data-genre="supernatural" data-icon="fa-magic" data-color="#55efc4" data-count="143">
+                        <div class="genre-icon" style="background: #55efc4;">
+                            <i class="fas fa-magic"></i>
+                        </div>
+                        <h3>Supernatural</h3>
+                        <div class="genre-count">143 anime</div>
+                    </div>
+                </div>
+                <button class="genre-nav-btn next" id="genreNextBtn">
+                    <i class="fas fa-chevron-right"></i>
+                </button>
+            </div>
+
+            <!-- Anime Content -->
+            <div class="genre-content" id="genreContent">
+                <div class="genre-header" id="genreHeader">
+                    <h2 id="selectedGenreTitle">Popular Anime</h2>
+                    <div class="genre-filter">
+                        <select id="sortFilter">
+                            <option value="popular">Most Popular</option>
+                            <option value="rating">Highest Rating</option>
+                            <option value="newest">Newest First</option>
+                            <option value="oldest">Oldest First</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Anime Data (Hidden) -->
+                <div id="animeData" style="display: none;">
+                    <div class="anime-item" 
+                         data-id="1"
+                         data-title="Demon Slayer: Kimetsu no Yaiba"
+                         data-genres="Action,Adventure,Fantasy"
+                         data-year="2019"
+                         data-episodes="26"
+                         data-rating="4.9"
+                         data-thumbnail="https://images.unsplash.com/photo-1541562232579-512a21360020?q=80&w=400&auto=format&fit=crop">
+                    </div>
+                    <div class="anime-item" 
+                         data-id="2"
+                         data-title="Attack on Titan"
+                         data-genres="Action,Drama,Fantasy"
+                         data-year="2013"
+                         data-episodes="75"
+                         data-rating="4.8"
+                         data-thumbnail="https://images.unsplash.com/photo-1581833971358-2c8b550f87b3?q=80&w=400&auto=format&fit=crop">
+                    </div>
+                    <div class="anime-item" 
+                         data-id="3"
+                         data-title="Jujutsu Kaisen"
+                         data-genres="Action,Fantasy,Supernatural"
+                         data-year="2020"
+                         data-episodes="24"
+                         data-rating="4.7"
+                         data-thumbnail="https://images.unsplash.com/photo-1607604276583-eef5d076aa5f?q=80&w=400&auto=format&fit=crop">
+                    </div>
+                    <div class="anime-item" 
+                         data-id="4"
+                         data-title="One Punch Man"
+                         data-genres="Action,Comedy,Sci-Fi"
+                         data-year="2015"
+                         data-episodes="24"
+                         data-rating="4.6"
+                         data-thumbnail="https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=400&auto=format&fit=crop">
+                    </div>
+                    <div class="anime-item" 
+                         data-id="5"
+                         data-title="My Hero Academia"
+                         data-genres="Action,Comedy,Supernatural"
+                         data-year="2016"
+                         data-episodes="138"
+                         data-rating="4.5"
+                         data-thumbnail="https://images.unsplash.com/photo-1626544827763-d516dce335ca?q=80&w=400&auto=format&fit=crop">
+                    </div>
+                    <div class="anime-item" 
+                         data-id="6"
+                         data-title="Sword Art Online"
+                         data-genres="Action,Adventure,Sci-Fi"
+                         data-year="2012"
+                         data-episodes="96"
+                         data-rating="4.3"
+                         data-thumbnail="https://images.unsplash.com/photo-1612404730960-5c71578fca37?q=80&w=400&auto=format&fit=crop">
+                    </div>
+                    <div class="anime-item" 
+                         data-id="7"
+                         data-title="Tokyo Ghoul"
+                         data-genres="Action,Horror,Drama"
+                         data-year="2014"
+                         data-episodes="48"
+                         data-rating="4.4"
+                         data-thumbnail="https://images.unsplash.com/photo-1578632748624-fbd20d345187?q=80&w=400&auto=format&fit=crop">
+                    </div>
+                    <div class="anime-item" 
+                         data-id="8"
+                         data-title="Fullmetal Alchemist: Brotherhood"
+                         data-genres="Action,Adventure,Fantasy"
+                         data-year="2009"
+                         data-episodes="64"
+                         data-rating="4.9"
+                         data-thumbnail="https://images.unsplash.com/photo-1560972550-aba3456b5564?q=80&w=400&auto=format&fit=crop">
+                    </div>
+                    <div class="anime-item" 
+                         data-id="9"
+                         data-title="Death Note"
+                         data-genres="Mystery,Psychological,Supernatural"
+                         data-year="2006"
+                         data-episodes="37"
+                         data-rating="4.8"
+                         data-thumbnail="https://images.unsplash.com/photo-1590955559144-a82332cf2c08?q=80&w=400&auto=format&fit=crop">
+                    </div>
+                    <div class="anime-item" 
+                         data-id="10"
+                         data-title="Naruto: Shippuden"
+                         data-genres="Action,Adventure,Fantasy"
+                         data-year="2007"
+                         data-episodes="500"
+                         data-rating="4.7"
+                         data-thumbnail="https://images.unsplash.com/photo-1542256844-d3d05538a5b8?q=80&w=400&auto=format&fit=crop">
+                    </div>
+                    <div class="anime-item" 
+                         data-id="11"
+                         data-title="Your Lie in April"
+                         data-genres="Drama,Romance,Music"
+                         data-year="2014"
+                         data-episodes="22"
+                         data-rating="4.6"
+                         data-thumbnail="https://images.unsplash.com/photo-1494790108755-2616b612b786?q=80&w=400&auto=format&fit=crop">
+                    </div>
+                    <div class="anime-item" 
+                         data-id="12"
+                         data-title="Hunter x Hunter"
+                         data-genres="Action,Adventure,Fantasy"
+                         data-year="2011"
+                         data-episodes="148"
+                         data-rating="4.9"
+                         data-thumbnail="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?q=80&w=400&auto=format&fit=crop">
+                    </div>
+                </div>
+
+                <div class="anime-grid" id="animeGrid">
+                    <!-- Anime cards will be loaded here dynamically -->
+                </div>
+
+                <div class="empty-anime" id="emptyAnime" style="display: none;">
+                    <div class="empty-icon">
+                        <i class="fas fa-film"></i>
+                    </div>
+                    <h3>No Anime Found</h3>
+                    <p>Try selecting a different genre or search term</p>
+                </div>
+
+                <div class="pagination" id="pagination">
+                    <!-- Pagination will be added here dynamically -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="footer-bg-graphics"></div>
+        <div class="container">
+            <div class="footer-top">
+                <div class="footer-col brand-col">
+                     <div class="logo">
+                        <a href="home.html">ANI<span class="highlight">ME</span>STREAM</a>
+                    </div>
+                    <p>The premier destination for high-quality anime streaming. Join our community today.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-discord"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+                <div class="footer-col links-col">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#">Our Blog</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Contacts</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col newsletter-col">
+                    <h4>Newsletter</h4>
+                    <p>Subscribe to get the latest updates.</p>
+                    <form class="newsletter-form">
+                        <input type="email" placeholder="Your Email...">
+                        <button><i class="fas fa-paper-plane"></i></button>
+                    </form>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 ANIMESTREAM Inc. All Rights Reserved</p>
+                <a href="#" id="backToTop" class="back-to-top"><i class="fas fa-arrow-up"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../script/genre.js"></script>
+</body>
+</html>
