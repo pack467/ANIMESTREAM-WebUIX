@@ -35,7 +35,44 @@ document.addEventListener('DOMContentLoaded', () => {
     };
     
     /* ==================================================
-       2. HEADER & NAVIGATION
+       2. TOAST NOTIFICATION SYSTEM
+    ================================================== */
+    const toastContainer = document.getElementById('toastContainer');
+    
+    function showToast(message, detail = '', type = 'success') {
+        const toast = document.createElement('div');
+        toast.className = `toast ${type}`;
+        
+        const icon = type === 'success' ? 'fa-check-circle' : 'fa-exclamation-circle';
+        
+        toast.innerHTML = `
+            <div class="toast-icon">
+                <i class="fas ${icon}"></i>
+            </div>
+            <div class="toast-content">
+                <div class="toast-message">${message}</div>
+                ${detail ? `<div class="toast-detail">${detail}</div>` : ''}
+            </div>
+        `;
+        
+        toastContainer.appendChild(toast);
+        
+        // Trigger animation
+        setTimeout(() => {
+            toast.classList.add('show');
+        }, 10);
+        
+        // Auto remove after 3 seconds
+        setTimeout(() => {
+            toast.classList.add('hide');
+            setTimeout(() => {
+                toast.remove();
+            }, 300);
+        }, 3000);
+    }
+    
+    /* ==================================================
+       3. HEADER & NAVIGATION
     ================================================== */
     const header = document.getElementById('mainHeader');
     const backToTop = document.getElementById('backToTop');
@@ -134,9 +171,9 @@ document.addEventListener('DOMContentLoaded', () => {
                     userDropdown.classList.remove('active');
                     
                     if (itemText === 'Log Out') {
-                        alert('Logging out...');
+                        showToast('Logging out...', 'See you soon!', 'success');
                     } else {
-                        alert(`Opening ${itemText}...`);
+                        showToast(`Opening ${itemText}...`, '', 'success');
                     }
                 });
             });
@@ -152,7 +189,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     
     /* ==================================================
-       3. SEARCH FUNCTIONALITY
+       4. SEARCH FUNCTIONALITY
     ================================================== */
     const mainSearchBtn = document.getElementById('mainSearchBtn');
     const searchSuggestions = document.getElementById('searchSuggestions');
@@ -293,8 +330,23 @@ document.addEventListener('DOMContentLoaded', () => {
         
         // Update UI
         resultsCount.textContent = visibleCount;
-        noResults.style.display = visibleCount === 0 ? 'block' : 'none';
-        resultsGrid.style.display = visibleCount === 0 ? 'none' : 'grid';
+        
+        // FIXED: Proper display logic for no results and pagination
+        if (visibleCount === 0) {
+            noResults.style.display = 'block';
+            resultsGrid.style.display = 'none';
+            
+            // Hide pagination when no results
+            const pagination = document.querySelector('.pagination');
+            if (pagination) pagination.style.display = 'none';
+        } else {
+            noResults.style.display = 'none';
+            resultsGrid.style.display = '';
+            
+            // Show pagination when results exist
+            const pagination = document.querySelector('.pagination');
+            if (pagination) pagination.style.display = 'flex';
+        }
         
         // Sort results
         sortResults();
@@ -430,11 +482,26 @@ document.addEventListener('DOMContentLoaded', () => {
         if (defaultSort) defaultSort.checked = true;
         currentSort = 'popular';
         
+        // Reset view to grid if in list view
+        const gridView = document.querySelector('.view-option[data-view="grid"]');
+        if (gridView && !gridView.classList.contains('active')) {
+            const listView = document.querySelector('.view-option[data-view="list"]');
+            if (listView) listView.classList.remove('active');
+            gridView.classList.add('active');
+            
+            resultsGrid.classList.remove('list-view');
+            getAllAnimeCards().forEach(card => {
+                card.classList.remove('list-view');
+            });
+            currentView = 'grid';
+        }
+        
         performSearch();
+        showToast('Search Reset', 'All filters have been cleared', 'success');
     }
     
     /* ==================================================
-       4. FILTER FUNCTIONALITY
+       5. FILTER FUNCTIONALITY
     ================================================== */
     const filterToggles = document.querySelectorAll('.filter-toggle');
     const applyFilters = document.getElementById('applyFilters');
@@ -493,6 +560,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (selectedSort) currentSort = selectedSort.value;
                 
                 performSearch();
+                showToast('Filters Applied', 'Search results updated', 'success');
             });
         }
         
@@ -520,6 +588,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 };
                 
                 updateActiveFilters();
+                showToast('Filters Reset', 'All filters cleared', 'success');
             });
         }
         
@@ -552,7 +621,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     
     /* ==================================================
-       5. CARD ACTIONS (List & Favorite)
+       6. CARD ACTIONS (List & Favorite) - WITH TOAST
     ================================================== */
     function initCardActions() {
         const allCards = getAllAnimeCards();
@@ -572,10 +641,10 @@ document.addEventListener('DOMContentLoaded', () => {
                     
                     if (isActive) {
                         console.log(`Added "${animeTitle}" to list`);
-                        alert(`✓ "${animeTitle}" ditambahkan ke daftar Anda!`);
+                        showToast('Added to List', `"${animeTitle}" added to your watchlist`, 'success');
                     } else {
                         console.log(`Removed "${animeTitle}" from list`);
-                        alert(`"${animeTitle}" dihapus dari daftar Anda.`);
+                        showToast('Removed from List', `"${animeTitle}" removed from your watchlist`, 'success');
                     }
                 });
             }
@@ -595,12 +664,12 @@ document.addEventListener('DOMContentLoaded', () => {
                             icon.classList.remove('far');
                             icon.classList.add('fas');
                             console.log(`Added "${animeTitle}" to favorites`);
-                            alert(`❤️ "${animeTitle}" ditambahkan ke favorit!`);
+                            showToast('Added to Favorites', `"${animeTitle}" added to your favorites`, 'success');
                         } else {
                             icon.classList.remove('fas');
                             icon.classList.add('far');
                             console.log(`Removed "${animeTitle}" from favorites`);
-                            alert(`"${animeTitle}" dihapus dari favorit.`);
+                            showToast('Removed from Favorites', `"${animeTitle}" removed from your favorites`, 'success');
                         }
                     }
                 });
@@ -609,7 +678,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     
     /* ==================================================
-       6. QUICK SEARCH TAGS
+       7. QUICK SEARCH TAGS
     ================================================== */
     function initQuickSearch() {
         const quickSearchTags = document.querySelectorAll('.quick-search-tags .tag');
@@ -634,7 +703,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     
     /* ==================================================
-       7. PAGINATION
+       8. PAGINATION
     ================================================== */
     function initPagination() {
         const paginationBtns = document.querySelectorAll('.pagination-btn');
@@ -673,7 +742,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     
     /* ==================================================
-       8. INITIALIZATION
+       9. INITIALIZATION
     ================================================== */
     function init() {
         initHeader();

@@ -1,83 +1,166 @@
 document.addEventListener('DOMContentLoaded', () => {
     
     /* ==================================================
-       1. VIDEO PLAYER FUNCTIONALITY
+       UTILITY FUNCTIONS
+    ================================================== */
+    function formatTime(seconds) {
+        const minutes = Math.floor(seconds / 60);
+        const secs = Math.floor(seconds % 60);
+        return `${minutes.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+    }
+
+    function showNotification(message, type = 'success') {
+        const toast = document.getElementById('notificationToast');
+        const messageEl = document.getElementById('notificationMessage');
+        
+        messageEl.textContent = message;
+        toast.className = 'notification-toast ' + type;
+        toast.classList.add('show');
+        
+        setTimeout(() => {
+            toast.classList.remove('show');
+        }, 3000);
+    }
+
+    /* ==================================================
+       VIDEO PLAYER FUNCTIONALITY
     ================================================== */
     const video = document.getElementById('animeVideo');
+    const customControls = document.getElementById('customControls');
+    const playBtn = document.getElementById('playBtn');
     const playPauseBtn = document.getElementById('playPauseBtn');
-    const playPauseSmallBtn = document.getElementById('playPauseSmallBtn');
-    const progressBar = document.getElementById('progress');
-    const bufferBar = document.getElementById('buffer');
+    const progressRangeSlider = document.getElementById('progressRangeSlider');
     const currentTimeEl = document.getElementById('currentTime');
     const durationEl = document.getElementById('duration');
     const volumeBtn = document.getElementById('volumeBtn');
-    const volumeSlider = document.getElementById('volumeSlider');
-    const volumeLevel = document.getElementById('volumeLevel');
+    const volumeRangeSlider = document.getElementById('volumeRangeSlider');
     const rewindBtn = document.getElementById('rewindBtn');
     const forwardBtn = document.getElementById('forwardBtn');
     const fullscreenBtn = document.getElementById('fullscreenBtn');
-    const videoPlayer = document.getElementById('videoPlayer');
-    const progressContainer = document.querySelector('.progress-bar');
+    const progressArea = document.getElementById('progressArea');
+    const videoWrapper = document.querySelector('.video-wrapper');
+    const qualityBtn = document.getElementById('qualityBtn');
+    const qualityMenu = document.getElementById('qualityMenu');
+    const subtitleBtn = document.getElementById('subtitleBtn');
+    const subtitleMenu = document.getElementById('subtitleMenu');
+    const settingsBtn = document.getElementById('settingsBtn');
+    const settingsMenu = document.getElementById('settingsMenu');
+    const playbackSpeed = document.getElementById('playbackSpeed');
+    const autoplayToggle = document.getElementById('autoplayToggle');
     
+    let controlsTimeout;
+    let isDraggingProgress = false;
+
     // Initialize video player
     function initVideoPlayer() {
+        // Remove default controls
+        video.removeAttribute('controls');
+        
         // Set initial volume
         video.volume = 0.8;
         updateVolumeUI();
         
         // Add event listeners
-        video.addEventListener('loadedmetadata', updateDuration);
+        video.addEventListener('loadedmetadata', () => {
+            durationEl.textContent = formatTime(video.duration);
+            progressRangeSlider.max = Math.floor(video.duration);
+        });
+        
         video.addEventListener('timeupdate', updateProgress);
-        video.addEventListener('progress', updateBuffer);
         video.addEventListener('volumechange', updateVolumeUI);
+        video.addEventListener('play', () => updatePlayButtons(true));
+        video.addEventListener('pause', () => updatePlayButtons(false));
+        video.addEventListener('ended', () => updatePlayButtons(false));
         
+        // Play/Pause buttons
+        playBtn.addEventListener('click', togglePlayPause);
         playPauseBtn.addEventListener('click', togglePlayPause);
-        playPauseSmallBtn.addEventListener('click', togglePlayPause);
+        video.addEventListener('click', togglePlayPause);
         
-        rewindBtn.addEventListener('click', rewind);
-        forwardBtn.addEventListener('click', forward);
+        // Time controls
+        rewindBtn.addEventListener('click', () => {
+            video.currentTime = Math.max(0, video.currentTime - 10);
+        });
         
+        forwardBtn.addEventListener('click', () => {
+            video.currentTime = Math.min(video.duration, video.currentTime + 10);
+        });
+        
+        // Volume controls
         volumeBtn.addEventListener('click', toggleMute);
-        volumeSlider.addEventListener('click', setVolume);
+        volumeRangeSlider.addEventListener('input', (e) => {
+            const volume = e.target.value / 100;
+            video.volume = volume;
+            video.muted = volume === 0;
+            updateVolumeUI();
+        });
         
+        // Fullscreen
         fullscreenBtn.addEventListener('click', toggleFullscreen);
         
-        progressContainer.addEventListener('click', setProgress);
+        // Progress bar
+        progressRangeSlider.addEventListener('input', (e) => {
+            isDraggingProgress = true;
+            const time = e.target.value;
+            currentTimeEl.textContent = formatTime(time);
+            updateProgressBackground();
+        });
+        
+        progressRangeSlider.addEventListener('change', (e) => {
+            video.currentTime = e.target.value;
+            isDraggingProgress = false;
+        });
         
         // Keyboard controls
         document.addEventListener('keydown', handleKeyPress);
+        
+        // Auto-hide controls
+        videoWrapper.addEventListener('mousemove', showControls);
+        videoWrapper.addEventListener('mouseleave', hideControlsDelayed);
+        customControls.addEventListener('mouseenter', () => clearTimeout(controlsTimeout));
     }
-    
+
     function togglePlayPause() {
         if (video.paused || video.ended) {
             video.play();
-            updatePlayPauseButtons(true);
         } else {
             video.pause();
-            updatePlayPauseButtons(false);
+        }
+    }
+
+    function updatePlayButtons(isPlaying) {
+        const playIcon = isPlaying ? 'fa-pause' : 'fa-play';
+        playBtn.innerHTML = `<i class="fas ${playIcon}"></i>`;
+        playPauseBtn.innerHTML = `<i class="fas ${playIcon}"></i>`;
+        
+        // Add margin for play icon to center it visually
+        if (!isPlaying) {
+            playBtn.querySelector('i').style.marginLeft = '4px';
+        } else {
+            playBtn.querySelector('i').style.marginLeft = '0';
+        }
+    }
+
+    function updateProgress() {
+        if (!isDraggingProgress) {
+            const currentTime = video.currentTime;
+            const duration = video.duration;
+            
+            if (!isNaN(duration) && duration > 0) {
+                progressRangeSlider.value = currentTime;
+                currentTimeEl.textContent = formatTime(currentTime);
+                updateProgressBackground();
+            }
         }
     }
     
-    function updatePlayPauseButtons(isPlaying) {
-        const icon = isPlaying ? 'fa-pause' : 'fa-play';
-        playPauseBtn.innerHTML = `<i class="fas ${icon}"></i>`;
-        playPauseSmallBtn.innerHTML = `<i class="fas ${icon}"></i>`;
+    function updateProgressBackground() {
+        const value = progressRangeSlider.value;
+        const max = progressRangeSlider.max;
+        const percentage = (value / max) * 100;
+        progressRangeSlider.style.background = `linear-gradient(to right, var(--primary) 0%, var(--primary) ${percentage}%, rgba(255,255,255,0.2) ${percentage}%, rgba(255,255,255,0.2) 100%)`;
     }
-    
-    function updateDuration() {
-        const duration = video.duration;
-        durationEl.textContent = formatTime(duration);
-    }
-    
-    function updateProgress() {
-        const currentTime = video.currentTime;
-        const duration = video.duration;
-        const progress = (currentTime / duration) * 100;
-        
-        progressBar.style.width = `${progress}%`;
-        currentTimeEl.textContent = formatTime(currentTime);
-    }
-    
+
     function updateBuffer() {
         if (video.buffered.length > 0) {
             const bufferedEnd = video.buffered.end(video.buffered.length - 1);
@@ -87,12 +170,11 @@ document.addEventListener('DOMContentLoaded', () => {
             bufferBar.style.width = `${bufferPercent}%`;
         }
     }
-    
+
     function updateVolumeUI() {
         const volume = video.volume;
         const isMuted = video.muted || volume === 0;
         
-        // Update volume button icon
         let volumeIcon = 'fa-volume-up';
         if (isMuted || volume === 0) {
             volumeIcon = 'fa-volume-mute';
@@ -101,50 +183,128 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         
         volumeBtn.innerHTML = `<i class="fas ${volumeIcon}"></i>`;
+        volumeRangeSlider.value = isMuted ? 0 : volume * 100;
         
-        // Update volume slider
-        volumeLevel.style.width = `${isMuted ? 0 : volume * 100}%`;
+        // Update slider gradient
+        const percentage = isMuted ? 0 : volume * 100;
+        volumeRangeSlider.style.background = `linear-gradient(to right, var(--primary) 0%, var(--primary) ${percentage}%, rgba(255,255,255,0.3) ${percentage}%, rgba(255,255,255,0.3) 100%)`;
     }
-    
+
     function toggleMute() {
         video.muted = !video.muted;
-        updateVolumeUI();
     }
     
-    function setVolume(e) {
-        const rect = volumeSlider.getBoundingClientRect();
-        const percent = (e.clientX - rect.left) / rect.width;
-        const volume = Math.max(0, Math.min(1, percent));
-        
-        video.volume = volume;
-        video.muted = volume === 0;
-        updateVolumeUI();
-    }
+    // Subtitle Menu
+    subtitleBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        subtitleMenu.classList.toggle('show');
+        qualityMenu.classList.remove('show');
+        settingsMenu.classList.remove('show');
+    });
     
-    function rewind() {
-        video.currentTime = Math.max(0, video.currentTime - 10);
-    }
+    // Prevent subtitle menu from closing when clicking inside
+    subtitleMenu.addEventListener('click', (e) => {
+        e.stopPropagation();
+    });
     
-    function forward() {
-        video.currentTime = Math.min(video.duration, video.currentTime + 10);
-    }
+    document.querySelectorAll('.subtitle-menu .menu-item').forEach(item => {
+        item.addEventListener('click', function() {
+            const subtitle = this.getAttribute('data-subtitle');
+            
+            // Update active state
+            document.querySelectorAll('.subtitle-menu .menu-item i').forEach(icon => {
+                icon.classList.remove('active');
+            });
+            this.querySelector('i').classList.add('active');
+            
+            // Close menu
+            subtitleMenu.classList.remove('show');
+            
+            const subtitleText = subtitle === 'off' ? 'Subtitles turned off' : `Subtitles: ${this.querySelector('span').textContent}`;
+            showNotification(subtitleText, 'success');
+        });
+    });
     
-    function setProgress(e) {
-        const rect = progressContainer.getBoundingClientRect();
-        const percent = (e.clientX - rect.left) / rect.width;
-        video.currentTime = percent * video.duration;
-    }
+    // Quality Menu
+    qualityBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        qualityMenu.classList.toggle('show');
+        settingsMenu.classList.remove('show');
+        subtitleMenu.classList.remove('show');
+    });
     
+    // Prevent quality menu from closing when clicking inside
+    qualityMenu.addEventListener('click', (e) => {
+        e.stopPropagation();
+    });
+    
+    document.querySelectorAll('.quality-menu .menu-item').forEach(item => {
+        item.addEventListener('click', function() {
+            const quality = this.getAttribute('data-quality');
+            
+            // Update active state
+            document.querySelectorAll('.quality-menu .menu-item i').forEach(icon => {
+                icon.classList.remove('active');
+            });
+            this.querySelector('i').classList.add('active');
+            
+            // Update button text
+            document.querySelector('.quality-text').textContent = quality;
+            
+            // Close menu
+            qualityMenu.classList.remove('show');
+            
+            showNotification(`Quality changed to ${quality}`, 'success');
+        });
+    });
+    
+    // Settings Menu
+    settingsBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        settingsMenu.classList.toggle('show');
+        qualityMenu.classList.remove('show');
+        subtitleMenu.classList.remove('show');
+    });
+    
+    // Prevent settings menu from closing when clicking inside
+    settingsMenu.addEventListener('click', (e) => {
+        e.stopPropagation();
+    });
+    
+    // Playback Speed
+    playbackSpeed.addEventListener('change', (e) => {
+        video.playbackRate = parseFloat(e.target.value);
+        const speedText = e.target.value === '1' ? 'Normal' : `${e.target.value}x`;
+        showNotification(`Playback speed: ${speedText}`, 'success');
+    });
+    
+    // Prevent closing when clicking on speed select
+    playbackSpeed.addEventListener('click', (e) => {
+        e.stopPropagation();
+    });
+    
+    // Autoplay Toggle
+    autoplayToggle.addEventListener('change', (e) => {
+        const status = e.target.checked ? 'enabled' : 'disabled';
+        showNotification(`Autoplay ${status}`, 'success');
+    });
+    
+    // Close menus when clicking outside
+    document.addEventListener('click', () => {
+        qualityMenu.classList.remove('show');
+        settingsMenu.classList.remove('show');
+        subtitleMenu.classList.remove('show');
+    });
+
     function toggleFullscreen() {
         if (!document.fullscreenElement) {
-            if (videoPlayer.requestFullscreen) {
-                videoPlayer.requestFullscreen();
-            } else if (videoPlayer.webkitRequestFullscreen) {
-                videoPlayer.webkitRequestFullscreen();
-            } else if (videoPlayer.msRequestFullscreen) {
-                videoPlayer.msRequestFullscreen();
+            if (videoWrapper.requestFullscreen) {
+                videoWrapper.requestFullscreen();
+            } else if (videoWrapper.webkitRequestFullscreen) {
+                videoWrapper.webkitRequestFullscreen();
+            } else if (videoWrapper.msRequestFullscreen) {
+                videoWrapper.msRequestFullscreen();
             }
-            
             fullscreenBtn.innerHTML = '<i class="fas fa-compress"></i>';
         } else {
             if (document.exitFullscreen) {
@@ -154,13 +314,11 @@ document.addEventListener('DOMContentLoaded', () => {
             } else if (document.msExitFullscreen) {
                 document.msExitFullscreen();
             }
-            
             fullscreenBtn.innerHTML = '<i class="fas fa-expand"></i>';
         }
     }
-    
+
     function handleKeyPress(e) {
-        // Don't trigger if user is typing in an input field
         if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
         
         switch(e.key) {
@@ -179,45 +337,47 @@ document.addEventListener('DOMContentLoaded', () => {
                 break;
             case 'ArrowLeft':
                 e.preventDefault();
-                rewind();
+                video.currentTime = Math.max(0, video.currentTime - 10);
                 break;
             case 'ArrowRight':
                 e.preventDefault();
-                forward();
+                video.currentTime = Math.min(video.duration, video.currentTime + 10);
                 break;
-            case '0':
-            case '1':
-            case '2':
-            case '3':
-            case '4':
-            case '5':
-            case '6':
-            case '7':
-            case '8':
-            case '9':
+            case 'ArrowUp':
                 e.preventDefault();
-                const percent = parseInt(e.key) / 10;
-                video.currentTime = percent * video.duration;
+                video.volume = Math.min(1, video.volume + 0.1);
+                break;
+            case 'ArrowDown':
+                e.preventDefault();
+                video.volume = Math.max(0, video.volume - 0.1);
                 break;
         }
     }
-    
-    function formatTime(seconds) {
-        const minutes = Math.floor(seconds / 60);
-        const secs = Math.floor(seconds % 60);
-        return `${minutes.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+
+    function showControls() {
+        customControls.classList.add('show');
+        clearTimeout(controlsTimeout);
+        hideControlsDelayed();
     }
-    
+
+    function hideControlsDelayed() {
+        clearTimeout(controlsTimeout);
+        if (!video.paused) {
+            controlsTimeout = setTimeout(() => {
+                customControls.classList.remove('show');
+            }, 3000);
+        }
+    }
+
     // Initialize video player
     initVideoPlayer();
-    
+
     /* ==================================================
-       2. EPISODE LIST MANAGEMENT
+       EPISODE LIST MANAGEMENT
     ================================================== */
     const episodeList = document.getElementById('episodeList');
     const seasonSelect = document.getElementById('seasonSelect');
     
-    // Sample episode data
     const episodes = {
         season1: [
             { number: 1, title: "Winter Days, A Fateful Night", duration: "24:10", thumbnail: "https://images.unsplash.com/photo-1578632767115-351597cf2477?q=80&w=300&auto=format&fit=crop" },
@@ -240,7 +400,7 @@ document.addEventListener('DOMContentLoaded', () => {
             { number: 3, title: "Unlimited Blade Works", duration: "24:25", thumbnail: "https://images.unsplash.com/photo-1612404730960-5c71578fca37?q=80&w=300&auto=format&fit=crop" }
         ]
     };
-    
+
     function renderEpisodes(season) {
         episodeList.innerHTML = '';
         
@@ -260,55 +420,139 @@ document.addEventListener('DOMContentLoaded', () => {
             `;
             
             episodeItem.addEventListener('click', () => {
-                // Remove active class from all episodes
                 document.querySelectorAll('.episode-item').forEach(item => {
                     item.classList.remove('active');
                 });
                 
-                // Add active class to clicked episode
                 episodeItem.classList.add('active');
-                
-                // Update episode info
                 updateEpisodeInfo(episode);
                 
-                // In a real app, you would load the actual video here
-                // For demo purposes, we'll just reset the current video
                 video.currentTime = 0;
                 video.play();
-                updatePlayPauseButtons(true);
             });
             
             episodeList.appendChild(episodeItem);
         });
     }
-    
+
     function updateEpisodeInfo(episode) {
         const episodeHeader = document.querySelector('.episode-header h2');
-        const episodeMeta = document.querySelector('.episode-meta');
-        
         episodeHeader.textContent = `Episode ${episode.number}: ${episode.title}`;
         
-        // Update video title in player
-        document.querySelector('.player-title h3').textContent = 'Fate/Stay Night: Unlimited Blade Works';
-        document.querySelector('.player-title span').textContent = `Episode ${episode.number}: ${episode.title}`;
+        document.querySelector('.video-title-info h3').textContent = 'Fate/Stay Night: Unlimited Blade Works';
+        document.querySelector('.video-title-info span').textContent = `Episode ${episode.number}: ${episode.title}`;
     }
-    
-    // Initialize episode list
+
     renderEpisodes('season1');
     
-    // Handle season change
     seasonSelect.addEventListener('change', (e) => {
         renderEpisodes(e.target.value);
     });
-    
+
     /* ==================================================
-       3. COMMENTS SYSTEM
+       SLIDER RATING SYSTEM (0.0-10.0 with decimals)
+    ================================================== */
+    const ratingSlider = document.getElementById('ratingSlider');
+    const ratingNumber = document.getElementById('ratingNumber');
+    const ratingText = document.getElementById('ratingText');
+    const btnSubmitRating = document.getElementById('btnSubmitRating');
+    let currentRating = 0;
+    let tempRating = 0;
+    let isRatingSubmitted = false;
+
+    ratingSlider.addEventListener('input', (e) => {
+        const sliderValue = parseInt(e.target.value);
+        tempRating = (sliderValue / 10).toFixed(1);
+        
+        // Update BOTH the big number AND the text immediately
+        ratingNumber.textContent = tempRating;
+        ratingText.textContent = `Rate ${tempRating}/10`;
+        
+        if (tempRating > 0) {
+            btnSubmitRating.disabled = false;
+        } else {
+            ratingText.textContent = 'Drag slider to rate (0.0 - 10.0)';
+            btnSubmitRating.disabled = true;
+        }
+        
+        updateSliderColor(sliderValue);
+    });
+
+    btnSubmitRating.addEventListener('click', () => {
+        if (tempRating > 0) {
+            currentRating = tempRating;
+            isRatingSubmitted = true;
+            
+            // Keep the number as is
+            ratingNumber.textContent = currentRating;
+            ratingText.textContent = `You rated: ${currentRating}/10`;
+            btnSubmitRating.disabled = true;
+            btnSubmitRating.innerHTML = '<i class="fas fa-check-circle"></i><span>Rating Submitted</span>';
+            
+            showNotification(`You rated this anime ${currentRating}/10!`, 'success');
+            
+            // Optional: Reset button after 3 seconds
+            setTimeout(() => {
+                btnSubmitRating.innerHTML = '<i class="fas fa-check"></i><span>Submit Rating</span>';
+            }, 3000);
+        }
+    });
+
+    function updateSliderColor(value) {
+        const percentage = value;
+        ratingSlider.style.background = `linear-gradient(to right, 
+            #ff4444 0%, 
+            #ff6b6b ${percentage * 0.2}%, 
+            #ffa500 ${percentage * 0.4}%, 
+            #ffd700 ${percentage * 0.6}%, 
+            #90EE90 ${percentage * 0.8}%, 
+            #00d900 100%)`;
+    }
+
+    /* ==================================================
+       FAVORITE & LIST BUTTONS
+    ================================================== */
+    const btnFavorite = document.getElementById('btnFavorite');
+    const btnList = document.getElementById('btnList');
+    let isFavorited = false;
+    let isInList = false;
+
+    btnFavorite.addEventListener('click', () => {
+        isFavorited = !isFavorited;
+        
+        if (isFavorited) {
+            btnFavorite.classList.add('active');
+            btnFavorite.innerHTML = '<i class="fas fa-heart"></i><span>Added to Favorite</span>';
+            showNotification('Anime added to favorites!', 'favorite');
+        } else {
+            btnFavorite.classList.remove('active');
+            btnFavorite.innerHTML = '<i class="far fa-heart"></i><span>Add to Favorite</span>';
+            showNotification('Anime removed from favorites!', 'success');
+        }
+    });
+
+    btnList.addEventListener('click', () => {
+        isInList = !isInList;
+        
+        if (isInList) {
+            btnList.classList.add('active');
+            btnList.innerHTML = '<i class="fas fa-plus"></i><span>Added to List</span>';
+            showNotification('Anime added to your list!', 'success');
+        } else {
+            btnList.classList.remove('active');
+            btnList.innerHTML = '<i class="fas fa-plus"></i><span>Add to List</span>';
+            showNotification('Anime removed from your list!', 'success');
+        }
+    });
+
+    /* ==================================================
+       COMMENTS SYSTEM
     ================================================== */
     const commentInput = document.getElementById('commentInput');
     const submitComment = document.getElementById('submitComment');
+    const cancelComment = document.getElementById('cancelComment');
     const commentsList = document.getElementById('commentsList');
     
-    // Sample comments data
     const sampleComments = [
         {
             id: 1,
@@ -338,7 +582,7 @@ document.addEventListener('DOMContentLoaded', () => {
             liked: false
         }
     ];
-    
+
     function renderComments() {
         commentsList.innerHTML = '';
         
@@ -373,15 +617,26 @@ document.addEventListener('DOMContentLoaded', () => {
             commentsList.appendChild(commentItem);
         });
         
-        // Add event listeners to like buttons
         document.querySelectorAll('.like-btn').forEach(btn => {
             btn.addEventListener('click', function() {
                 const commentId = this.getAttribute('data-id');
                 toggleLike(commentId, this);
             });
         });
+        
+        // Add reply button functionality
+        document.querySelectorAll('.comment-action:not(.like-btn)').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const commentItem = this.closest('.comment-item');
+                const author = commentItem.querySelector('.comment-author').textContent;
+                commentInput.value = `@${author} `;
+                commentInput.focus();
+                commentInput.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                showNotification(`Replying to ${author}`, 'success');
+            });
+        });
     }
-    
+
     function toggleLike(commentId, element) {
         const comment = sampleComments.find(c => c.id == commentId);
         if (comment) {
@@ -398,22 +653,19 @@ document.addEventListener('DOMContentLoaded', () => {
             element.querySelector('.like-count').textContent = comment.likes;
         }
     }
-    
+
     function getRandomColor() {
         const colors = ['#ff6b6b', '#6c5ce7', '#00b894', '#fdcb6e', '#e17055', '#0984e3'];
         return colors[Math.floor(Math.random() * colors.length)];
     }
-    
-    // Handle comment submission
+
     submitComment.addEventListener('click', () => {
         const commentText = commentInput.value.trim();
         
         if (commentText) {
-            // In a real app, you would send this to a server
-            // For demo purposes, we'll just add it to the top of the list
             const newComment = {
                 id: sampleComments.length + 1,
-                author: "AnimeLover", // Current user
+                author: "AnimeLover",
                 avatar: "A",
                 time: "Just now",
                 text: commentText,
@@ -425,16 +677,19 @@ document.addEventListener('DOMContentLoaded', () => {
             renderComments();
             commentInput.value = '';
             
-            // Update comment count
             document.querySelector('.comments-count').textContent = `${sampleComments.length} Comments`;
+            showNotification('Comment posted successfully!', 'success');
         }
     });
-    
-    // Initialize comments
+
+    cancelComment.addEventListener('click', () => {
+        commentInput.value = '';
+    });
+
     renderComments();
-    
+
     /* ==================================================
-       4. HEADER & NAVIGATION FUNCTIONALITY
+       HEADER & NAVIGATION FUNCTIONALITY
     ================================================== */
     const header = document.getElementById('mainHeader');
     const backToTop = document.getElementById('backToTop');
@@ -446,7 +701,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const userBtn = document.getElementById('userBtn');
     const userDropdown = document.getElementById('userDropdown');
     
-    // Scroll effects
     window.addEventListener('scroll', () => {
         if (window.scrollY > 100) {
             header.classList.add('scrolled');
@@ -457,7 +711,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
     
-    // Search overlay
     searchTrigger.addEventListener('click', () => {
         searchOverlay.classList.add('active');
     });
@@ -466,17 +719,14 @@ document.addEventListener('DOMContentLoaded', () => {
         searchOverlay.classList.remove('active');
     });
     
-    // Close search on ESC key
     document.addEventListener('keydown', (e) => {
         if(e.key === "Escape" && searchOverlay.classList.contains('active')) {
             searchOverlay.classList.remove('active');
         }
     });
     
-    // Mobile menu
     mobileToggle.addEventListener('click', () => {
         navbar.classList.toggle('active');
-        // Simple animation for hamburger icon
         const spans = mobileToggle.querySelectorAll('span');
         if (navbar.classList.contains('active')) {
             spans[0].style.transform = 'rotate(45deg) translate(5px, 5px)';
@@ -489,27 +739,23 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
     
-    // User dropdown
     userBtn.addEventListener('click', function(e) {
         e.stopPropagation();
         userDropdown.classList.toggle('active');
     });
     
-    // Close dropdown when clicking outside
     document.addEventListener('click', function(e) {
         if (!userBtn.contains(e.target) && !userDropdown.contains(e.target)) {
             userDropdown.classList.remove('active');
         }
     });
     
-    // Close dropdown when pressing Escape key
     document.addEventListener('keydown', function(e) {
         if (e.key === 'Escape' && userDropdown.classList.contains('active')) {
             userDropdown.classList.remove('active');
         }
     });
     
-    // Back to top button
     backToTop.addEventListener('click', function(e) {
         e.preventDefault();
         window.scrollTo({
@@ -517,60 +763,25 @@ document.addEventListener('DOMContentLoaded', () => {
             behavior: 'smooth'
         });
     });
-    
+
     /* ==================================================
-       5. RECOMMENDATION INTERACTIONS
+       RECOMMENDATION & CHARACTER INTERACTIONS
     ================================================== */
     const recommendationItems = document.querySelectorAll('.recommendation-item');
     
     recommendationItems.forEach(item => {
         item.addEventListener('click', function() {
-            // In a real app, this would navigate to the selected anime's page
-            alert(`You clicked on ${this.querySelector('h4').textContent}. In a real app, this would navigate to that anime's page.`);
+            const title = this.querySelector('h4').textContent;
+            showNotification(`Navigating to ${title}...`, 'success');
         });
     });
-    
-    /* ==================================================
-       6. CHARACTER INTERACTIONS
-    ================================================== */
+
     const characterItems = document.querySelectorAll('.character-item');
     
     characterItems.forEach(item => {
         item.addEventListener('click', function() {
             const characterName = this.querySelector('h4').textContent;
-            alert(`You clicked on ${characterName}. In a real app, this would show more details about the character.`);
+            showNotification(`Viewing ${characterName} profile...`, 'success');
         });
     });
-    
-    /* ==================================================
-       7. ADDITIONAL UI ENHANCEMENTS
-    ================================================== */
-    
-    // Auto-hide controls after inactivity
-    let controlsTimeout;
-    function resetControlsTimeout() {
-        clearTimeout(controlsTimeout);
-        controlsTimeout = setTimeout(() => {
-            const controls = document.getElementById('playerControls');
-            if (!video.paused) {
-                controls.style.opacity = '0';
-                controls.style.pointerEvents = 'none';
-            }
-        }, 3000);
-    }
-    
-    videoPlayer.addEventListener('mousemove', () => {
-        const controls = document.getElementById('playerControls');
-        controls.style.opacity = '1';
-        controls.style.pointerEvents = 'all';
-        resetControlsTimeout();
-    });
-    
-    // Initialize controls timeout
-    resetControlsTimeout();
-    
-    // Simulate video buffering for demo purposes
-    setTimeout(() => {
-        bufferBar.style.width = '100%';
-    }, 2000);
 });

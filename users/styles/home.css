@@ -560,10 +560,25 @@ img {
     background: transparent;
     border: 1px solid rgba(255,255,255,0.3);
     color: var(--text-white);
+    cursor: pointer;
 }
 .btn-secondary:hover {
     background: rgba(255,255,255,0.1); 
     color: var(--text-white);
+}
+
+/* IMPROVED: Green state for added to list */
+.btn-secondary.added {
+    background: var(--accent) !important;
+    border-color: var(--accent) !important;
+    color: #fff !important;
+    box-shadow: 0 10px 25px var(--accent-glow);
+}
+
+.btn-secondary.added:hover {
+    background: #00a074 !important;
+    transform: translateY(-3px);
+    box-shadow: 0 15px 35px var(--accent-glow);
 }
 
 /* IMPROVED: Controls - Horizontal & Di Bawah Cover */
@@ -870,7 +885,7 @@ img {
     gap: 4px;
 }
 
-/* IMPROVED: Card Actions - List and Favorite Buttons */
+/* IMPROVED: Card Actions - Plus icon & Green when active */
 .card-actions {
     display: flex;
     gap: 8px;
@@ -900,9 +915,29 @@ img {
     transform: translateY(-2px);
 }
 
-.action-icon-btn.active {
+/* IMPROVED: Green state ONLY for list button */
+.list-btn.active {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: #fff;
+}
+
+.list-btn.active:hover {
+    background: #00a074;
+    border-color: #00a074;
+    color: #fff;
+}
+
+/* Favorite button stays RED when active */
+.favorite-btn.active {
     background: var(--primary);
     border-color: var(--primary);
+    color: #fff;
+}
+
+.favorite-btn.active:hover {
+    background: var(--primary-hover);
+    border-color: var(--primary-hover);
     color: #fff;
 }
 
@@ -1172,6 +1207,57 @@ img {
 }
 .scroll-reveal.visible { opacity: 1; transform: translateY(0); }
 
+/* Widget Content Smooth Transition */
+.widget-content {
+    transition: opacity 0.3s ease-out;
+}
+
+.widget-content.transitioning {
+    opacity: 0.3;
+    pointer-events: none;
+}
+
+/* Time Badge for Today Widget */
+.time-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 11px;
+    color: var(--text-gray);
+    background: rgba(255, 255, 255, 0.05);
+    padding: 3px 8px;
+    border-radius: 3px;
+    margin-top: 4px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.time-badge i {
+    color: var(--primary);
+    font-size: 10px;
+}
+
+/* Sidebar Item Adjustments - Support both ranked and non-ranked */
+.sidebar-item.with-rank {
+    padding-left: 35px;
+}
+
+.sidebar-item:not(.with-rank) {
+    padding-left: 0;
+}
+
+.sidebar-item:not(.with-rank)::before {
+    display: none;
+}
+
+/* Enhanced notification with icon */
+.notification i.fa-check-circle {
+    flex-shrink: 0;
+}
+
+.notification span {
+    flex: 1;
+}
+
 /* ==============================================================
    8. RESPONSIVE DESIGN - IMPROVED
    ============================================================== 
@@ -1299,82 +1385,24 @@ img {
     }
 }
 
-/* ============================================================== 
-   ADDITIONAL IMPROVEMENTS - Carousel Button States & Transitions
-   ============================================================== */
-
-/* Carousel Add to List Button - Green State */
-.btn-secondary {
-    cursor: pointer;
-    position: relative;
-    overflow: hidden;
-    transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+/* Notification animations */
+@keyframes slideIn {
+    from {
+        transform: translateX(400px);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
 }
-
-.btn-secondary.added {
-    background: var(--accent) !important;
-    border-color: var(--accent) !important;
-    color: #fff !important;
-    box-shadow: 0 10px 25px var(--accent-glow);
-}
-
-.btn-secondary.added i {
-    transition: transform 0.3s;
-}
-
-.btn-secondary.added:hover {
-    background: #00a074 !important;
-    transform: translateY(-3px);
-    box-shadow: 0 15px 35px var(--accent-glow);
-}
-
-/* Widget Content Smooth Transition */
-.widget-content {
-    transition: opacity 0.3s ease-out;
-}
-
-.widget-content.transitioning {
-    opacity: 0.3;
-    pointer-events: none;
-}
-
-/* Time Badge for Today Widget */
-.time-badge {
-    display: inline-flex;
-    align-items: center;
-    gap: 4px;
-    font-size: 11px;
-    color: var(--text-gray);
-    background: rgba(255, 255, 255, 0.05);
-    padding: 3px 8px;
-    border-radius: 3px;
-    margin-top: 4px;
-    border: 1px solid rgba(255, 255, 255, 0.08);
-}
-
-.time-badge i {
-    color: var(--primary);
-    font-size: 10px;
-}
-
-/* Sidebar Item Adjustments - Support both ranked and non-ranked */
-.sidebar-item.with-rank {
-    padding-left: 35px;
-}
-
-.sidebar-item:not(.with-rank) {
-    padding-left: 0;
-}
-
-.sidebar-item:not(.with-rank)::before {
-    display: none;
-}
-
-/* Enhanced notification with icon */
-.notification i.fa-check-circle {
-    flex-shrink: 0;
-}
-
-.notification span {
-    flex: 1;
+@keyframes slideOut {
+    from {
+        transform: translateX(0);
+        opacity: 1;
+    }
+    to {
+        transform: translateX(400px);
+        opacity: 0;
+    }
 }

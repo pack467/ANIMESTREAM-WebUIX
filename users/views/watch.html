@@ -30,7 +30,6 @@
             <div class="header-actions">
                 <button class="action-btn search-trigger" id="searchTrigger"><i class="fas fa-search"></i></button>
                 
-                <!-- User Profile Button dengan Dropdown Menu -->
                 <div class="user-profile">
                     <button class="user-btn" id="userBtn">
                         <i class="fas fa-user"></i>
@@ -94,6 +93,12 @@
         </div>
     </div>
 
+    <!-- Notification Toast -->
+    <div class="notification-toast" id="notificationToast">
+        <i class="fas fa-check-circle"></i>
+        <span id="notificationMessage"></span>
+    </div>
+
     <div class="watch-container">
         <div class="container">
             <div class="watch-layout">
@@ -101,64 +106,144 @@
                     <!-- Video Player -->
                     <div class="video-player-container">
                         <div class="video-wrapper">
-                            <div class="video-player" id="videoPlayer">
-                                <video id="animeVideo" controls poster="https://images.unsplash.com/photo-1578632767115-351597cf2477?q=80&w=1920&auto=format&fit=crop">
-                                    <source src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4" type="video/mp4">
-                                    Your browser does not support the video tag.
-                                </video>
-                                <div class="player-controls-overlay" id="playerControls">
-                                    <div class="player-controls-top">
-                                        <div class="player-title">
-                                            <h3>Fate/Stay Night: Unlimited Blade Works</h3>
-                                            <span>Episode 1: Winter Days, A Fateful Night</span>
-                                        </div>
-                                        <div class="player-settings">
-                                            <button class="control-btn" id="settingsBtn">
+                            <video id="animeVideo" class="video-player" poster="https://images.unsplash.com/photo-1578632767115-351597cf2477?q=80&w=1920&auto=format&fit=crop">
+                                <source src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4" type="video/mp4">
+                                Your browser does not support the video tag.
+                            </video>
+                            
+                            <!-- Custom Video Controls Overlay -->
+                            <div class="custom-controls" id="customControls">
+                                <div class="controls-top">
+                                    <div class="video-title-info">
+                                        <h3>Fate/Stay Night: Unlimited Blade Works</h3>
+                                        <span>Episode 1: Winter Days, A Fateful Night</span>
+                                    </div>
+                                    <div class="controls-top-right">
+                                        <div class="settings-container">
+                                            <button class="control-btn" id="settingsBtn" title="Settings">
                                                 <i class="fas fa-cog"></i>
                                             </button>
-                                            <button class="control-btn" id="fullscreenBtn">
-                                                <i class="fas fa-expand"></i>
-                                            </button>
-                                        </div>
-                                    </div>
-                                    <div class="player-controls-center">
-                                        <button class="control-btn large" id="playPauseBtn">
-                                            <i class="fas fa-play"></i>
-                                        </button>
-                                    </div>
-                                    <div class="player-controls-bottom">
-                                        <div class="progress-container">
-                                            <div class="progress-bar" id="progressBar">
-                                                <div class="progress" id="progress"></div>
-                                                <div class="buffer" id="buffer"></div>
-                                            </div>
-                                            <div class="time-display">
-                                                <span id="currentTime">00:00</span> / <span id="duration">00:00</span>
-                                            </div>
-                                        </div>
-                                        <div class="control-buttons">
-                                            <button class="control-btn" id="rewindBtn">
-                                                <i class="fas fa-backward"></i>
-                                            </button>
-                                            <button class="control-btn" id="playPauseSmallBtn">
-                                                <i class="fas fa-play"></i>
-                                            </button>
-                                            <button class="control-btn" id="forwardBtn">
-                                                <i class="fas fa-forward"></i>
-                                            </button>
-                                            <div class="volume-control">
-                                                <button class="control-btn" id="volumeBtn">
-                                                    <i class="fas fa-volume-up"></i>
-                                                </button>
-                                                <div class="volume-slider" id="volumeSlider">
-                                                    <div class="volume-level" id="volumeLevel"></div>
+                                            <div class="settings-menu" id="settingsMenu">
+                                                <div class="menu-item">
+                                                    <span>Playback Speed</span>
+                                                    <select id="playbackSpeed">
+                                                        <option value="0.25">0.25x</option>
+                                                        <option value="0.5">0.5x</option>
+                                                        <option value="0.75">0.75x</option>
+                                                        <option value="1" selected>Normal</option>
+                                                        <option value="1.25">1.25x</option>
+                                                        <option value="1.5">1.5x</option>
+                                                        <option value="2">2x</option>
+                                                    </select>
+                                                </div>
+                                                <div class="menu-item">
+                                                    <span>Autoplay</span>
+                                                    <label class="toggle-switch">
+                                                        <input type="checkbox" id="autoplayToggle" checked>
+                                                        <span class="toggle-slider"></span>
+                                                    </label>
                                                 </div>
                                             </div>
-                                            <button class="control-btn" id="subtitleBtn">
-                                                <i class="fas fa-closed-captioning"></i>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="controls-center">
+                                    <button class="control-btn play-btn" id="playBtn" title="Play/Pause">
+                                        <i class="fas fa-play"></i>
+                                    </button>
+                                </div>
+
+                                <div class="controls-bottom">
+                                    <div class="progress-area" id="progressArea">
+                                        <input type="range" min="0" max="100" value="0" class="progress-range-slider" id="progressRangeSlider">
+                                    </div>
+                                    
+                                    <div class="controls-row">
+                                        <div class="controls-left">
+                                            <button class="control-btn" id="rewindBtn" title="Rewind 10s">
+                                                <i class="fas fa-backward"></i>
                                             </button>
-                                            <button class="control-btn" id="qualityBtn">
-                                                <i class="fas fa-hd"></i>
+                                            <button class="control-btn" id="playPauseBtn" title="Play/Pause">
+                                                <i class="fas fa-play"></i>
+                                            </button>
+                                            <button class="control-btn" id="forwardBtn" title="Forward 10s">
+                                                <i class="fas fa-forward"></i>
+                                            </button>
+                                            
+                                            <div class="volume-container">
+                                                <button class="control-btn" id="volumeBtn" title="Mute/Unmute">
+                                                    <i class="fas fa-volume-up"></i>
+                                                </button>
+                                                <div class="volume-slider-wrapper">
+                                                    <input type="range" min="0" max="100" value="80" class="volume-range-slider" id="volumeRangeSlider">
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="time-display">
+                                                <span id="currentTime">00:00</span>
+                                                <span class="time-separator">/</span>
+                                                <span id="duration">00:00</span>
+                                            </div>
+                                        </div>
+
+                                        <div class="controls-right">
+                                            <div class="subtitle-container">
+                                                <button class="control-btn" id="subtitleBtn" title="Subtitles">
+                                                    <i class="fas fa-closed-captioning"></i>
+                                                </button>
+                                                <div class="subtitle-menu" id="subtitleMenu">
+                                                    <div class="menu-item" data-subtitle="off">
+                                                        <span>Off</span>
+                                                        <i class="fas fa-check active"></i>
+                                                    </div>
+                                                    <div class="menu-item" data-subtitle="english">
+                                                        <span>English</span>
+                                                        <i class="fas fa-check"></i>
+                                                    </div>
+                                                    <div class="menu-item" data-subtitle="indonesian">
+                                                        <span>Indonesian</span>
+                                                        <i class="fas fa-check"></i>
+                                                    </div>
+                                                    <div class="menu-item" data-subtitle="japanese">
+                                                        <span>Japanese</span>
+                                                        <i class="fas fa-check"></i>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="quality-container">
+                                                <button class="control-btn" id="qualityBtn" title="Quality">
+                                                    <span class="quality-text">1080p</span>
+                                                </button>
+                                                <div class="quality-menu" id="qualityMenu">
+                                                    <div class="menu-item" data-quality="2160p">
+                                                        <span>2160p</span>
+                                                        <i class="fas fa-check"></i>
+                                                    </div>
+                                                    <div class="menu-item" data-quality="1080p">
+                                                        <span>1080p</span>
+                                                        <i class="fas fa-check active"></i>
+                                                    </div>
+                                                    <div class="menu-item" data-quality="720p">
+                                                        <span>720p</span>
+                                                        <i class="fas fa-check"></i>
+                                                    </div>
+                                                    <div class="menu-item" data-quality="480p">
+                                                        <span>480p</span>
+                                                        <i class="fas fa-check"></i>
+                                                    </div>
+                                                    <div class="menu-item" data-quality="360p">
+                                                        <span>360p</span>
+                                                        <i class="fas fa-check"></i>
+                                                    </div>
+                                                    <div class="menu-item" data-quality="auto">
+                                                        <span>Auto</span>
+                                                        <i class="fas fa-check"></i>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <button class="control-btn" id="fullscreenBtn" title="Fullscreen">
+                                                <i class="fas fa-expand"></i>
                                             </button>
                                         </div>
                                     </div>
@@ -209,7 +294,7 @@
                             <div class="comment-input-container">
                                 <textarea placeholder="Add a comment..." id="commentInput"></textarea>
                                 <div class="comment-actions">
-                                    <button class="btn-secondary">Cancel</button>
+                                    <button class="btn-secondary" id="cancelComment">Cancel</button>
                                     <button class="btn-primary" id="submitComment">Comment</button>
                                 </div>
                             </div>
@@ -252,9 +337,41 @@
                                     </span>
                                 </div>
                             </div>
+
+                            <!-- User Rating Section -->
+                            <div class="user-rating-section">
+                                <h4>Rate This Anime</h4>
+                                <div class="rating-slider-container">
+                                    <div class="rating-display">
+                                        <div class="rating-number" id="ratingNumber">0.0</div>
+                                        <div class="rating-label">/ 10</div>
+                                    </div>
+                                    <input type="range" min="0" max="100" value="0" class="rating-slider" id="ratingSlider">
+                                    <div class="rating-markers">
+                                        <span>0</span>
+                                        <span>2</span>
+                                        <span>4</span>
+                                        <span>6</span>
+                                        <span>8</span>
+                                        <span>10</span>
+                                    </div>
+                                </div>
+                                <div class="rating-text" id="ratingText">Drag slider to rate (0.0 - 10.0)</div>
+                                <button class="btn-submit-rating" id="btnSubmitRating" disabled>
+                                    <i class="fas fa-check"></i>
+                                    <span>Submit Rating</span>
+                                </button>
+                            </div>
+
                             <div class="anime-actions">
-                                <button class="btn-primary"><i class="fa-solid fa-heart"></i> Add to Favorite</button>
-                                <button class="btn-secondary"><i class="fas fa-plus"></i> Add to List</button>
+                                <button class="btn-favorite" id="btnFavorite">
+                                    <i class="far fa-heart"></i>
+                                    <span>Add to Favorite</span>
+                                </button>
+                                <button class="btn-list" id="btnList">
+                                    <i class="fas fa-plus"></i>
+                                    <span>Add to List</span>
+                                </button>
                             </div>
                         </div>
                     </div>

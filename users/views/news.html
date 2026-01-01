@@ -12,6 +12,9 @@
     <link rel="stylesheet" href="../styles/news.css">
 </head>
 <body>
+    <!-- Toast Notification Container -->
+    <div class="toast-container" id="toastContainer"></div>
+
     <header class="header" id="mainHeader">
         <div class="container header-container">
             <div class="logo">
@@ -97,7 +100,7 @@
     <!-- Main News Content -->
     <div class="news-container">
         <div class="container">
-            <!-- News Header -->
+            <!-- News Header / Breaking News Banner -->
             <div class="news-header">
                 <div class="news-hero">
                     <div class="hero-content">
@@ -121,6 +124,11 @@
                                 <span>5 min read</span>
                             </div>
                         </div>
+                        <!-- READ NOW BUTTON -->
+                        <button class="btn-read-now" id="readBreakingNews">
+                            <i class="fas fa-book-open"></i>
+                            <span>Read Now</span>
+                        </button>
                     </div>
                     <div class="hero-image">
                         <img src="https://images.unsplash.com/photo-1541562232579-512a21360020?q=80&w=1200&auto=format&fit=crop" alt="Demon Slayer News">
@@ -161,10 +169,10 @@
                 <div class="trending-topics">
                     <span class="trending-label">Trending:</span>
                     <div class="topics-list">
-                        <a href="#" class="topic-tag">#DemonSlayerMovie</a>
-                        <a href="#" class="topic-tag">#AnimeExpo2025</a>
-                        <a href="#" class="topic-tag">#JujutsuKaisenS3</a>
-                        <a href="#" class="topic-tag">#CrunchyrollAwards</a>
+                        <a href="#" class="topic-tag" data-topic="DemonSlayerMovie">#DemonSlayerMovie</a>
+                        <a href="#" class="topic-tag" data-topic="AnimeExpo2025">#AnimeExpo2025</a>
+                        <a href="#" class="topic-tag" data-topic="JujutsuKaisenS3">#JujutsuKaisenS3</a>
+                        <a href="#" class="topic-tag" data-topic="CrunchyrollAwards">#CrunchyrollAwards</a>
                     </div>
                 </div>
             </div>
@@ -184,7 +192,8 @@
                         </div>
                         
                         <div class="featured-grid">
-                            <article class="featured-card large-featured">
+                            <!-- Large Featured Article -->
+                            <article class="featured-card large-featured" data-id="featured-1" data-category="events">
                                 <div class="featured-image">
                                     <img src="https://images.unsplash.com/photo-1581833971358-2c8b550f87b3?q=80&w=800&auto=format&fit=crop" alt="Attack on Titan Exhibition">
                                     <div class="featured-badge">
@@ -211,10 +220,11 @@
                                 </div>
                             </article>
                             
+                            <!-- Small Featured Articles -->
                             <div class="featured-sidebar">
-                                <article class="featured-card small-featured">
+                                <article class="featured-card small-featured" data-id="featured-2" data-category="announcements">
                                     <div class="featured-image">
-                                        <img src="https://images.unsplash.com/photo-1607604276583-eef5d076aa5f?q=80&w-400&auto=format&fit=crop" alt="Jujutsu Kaisen Season 3">
+                                        <img src="https://images.unsplash.com/photo-1607604276583-eef5d076aa5f?q=80&w=400&auto=format&fit=crop" alt="Jujutsu Kaisen Season 3">
                                         <div class="featured-badge">
                                             <span>Hot</span>
                                         </div>
@@ -231,7 +241,7 @@
                                     </div>
                                 </article>
                                 
-                                <article class="featured-card small-featured">
+                                <article class="featured-card small-featured" data-id="featured-3" data-category="announcements">
                                     <div class="featured-image">
                                         <img src="https://images.unsplash.com/photo-1590955559144-a82332cf2c08?q=80&w=400&auto=format&fit=crop" alt="Spy x Family Movie">
                                     </div>
@@ -247,7 +257,7 @@
                                     </div>
                                 </article>
                                 
-                                <article class="featured-card small-featured">
+                                <article class="featured-card small-featured" data-id="featured-4" data-category="industry">
                                     <div class="featured-image">
                                         <img src="https://images.unsplash.com/photo-1626544827763-d516dce335ca?q=80&w=400&auto=format&fit=crop" alt="My Hero Academia">
                                     </div>
@@ -282,8 +292,215 @@
                             </div>
                         </div>
                         
+                        <!-- Latest News Grid - DATA IN HTML -->
                         <div class="latest-news-grid" id="latestNewsGrid">
-                            <!-- News articles will be loaded here dynamically -->
+                            <!-- Article 1 -->
+                            <article class="news-article" data-id="1" data-category="announcements" data-date="2025-03-09" data-views="15200">
+                                <div class="article-thumbnail">
+                                    <img src="https://images.unsplash.com/photo-1618336753974-aae8e04506aa?q=80&w=400&auto=format&fit=crop" alt="Studio MAPPA">
+                                </div>
+                                <div class="article-content">
+                                    <div class="article-header">
+                                        <h3 class="article-title-small">Studio MAPPA Announces New Original Anime Project for 2026</h3>
+                                        <span class="category-tag announcements">Announcements</span>
+                                    </div>
+                                    <p class="article-excerpt-small">The studio behind Jujutsu Kaisen and Chainsaw Man reveals plans for an ambitious new original anime series.</p>
+                                    <div class="article-footer">
+                                        <div class="article-meta-small">
+                                            <span class="article-date">March 9, 2025</span>
+                                            <span class="read-time">
+                                                <i class="fas fa-clock"></i>
+                                                4 min
+                                            </span>
+                                        </div>
+                                        <div class="article-stats-small">
+                                            <span><i class="fas fa-eye"></i> 15.2K</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </article>
+
+                            <!-- Article 2 -->
+                            <article class="news-article" data-id="2" data-category="industry" data-date="2025-03-08" data-views="22800">
+                                <div class="article-thumbnail">
+                                    <img src="https://images.unsplash.com/photo-1612404730960-5c71578fca37?q=80&w=400&auto=format&fit=crop" alt="One Piece">
+                                </div>
+                                <div class="article-content">
+                                    <div class="article-header">
+                                        <h3 class="article-title-small">One Piece Manga Enters Final Saga's Climax, Editor Hints at Surprising Conclusion</h3>
+                                        <span class="category-tag industry">Industry</span>
+                                    </div>
+                                    <p class="article-excerpt-small">The final saga of Eiichiro Oda's epic manga series approaches its climax with unexpected plot developments.</p>
+                                    <div class="article-footer">
+                                        <div class="article-meta-small">
+                                            <span class="article-date">March 8, 2025</span>
+                                            <span class="read-time">
+                                                <i class="fas fa-clock"></i>
+                                                6 min
+                                            </span>
+                                        </div>
+                                        <div class="article-stats-small">
+                                            <span><i class="fas fa-eye"></i> 22.8K</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </article>
+
+                            <!-- Article 3 -->
+                            <article class="news-article" data-id="3" data-category="events" data-date="2025-03-07" data-views="18500">
+                                <div class="article-thumbnail">
+                                    <img src="https://images.unsplash.com/photo-1542751371-adc38448a05e?q=80&w=400&auto=format&fit=crop" alt="Anime Expo">
+                                </div>
+                                <div class="article-content">
+                                    <div class="article-header">
+                                        <h3 class="article-title-small">Anime Expo 2025 Announces Full Schedule and Special Guests</h3>
+                                        <span class="category-tag events">Events</span>
+                                    </div>
+                                    <p class="article-excerpt-small">North America's largest anime convention reveals its complete schedule with appearances from top creators and voice actors.</p>
+                                    <div class="article-footer">
+                                        <div class="article-meta-small">
+                                            <span class="article-date">March 7, 2025</span>
+                                            <span class="read-time">
+                                                <i class="fas fa-clock"></i>
+                                                5 min
+                                            </span>
+                                        </div>
+                                        <div class="article-stats-small">
+                                            <span><i class="fas fa-eye"></i> 18.5K</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </article>
+
+                            <!-- Article 4 -->
+                            <article class="news-article" data-id="4" data-category="reviews" data-date="2025-03-06" data-views="12300">
+                                <div class="article-thumbnail">
+                                    <img src="https://images.unsplash.com/photo-1560972550-aba3456b5564?q=80&w=400&auto=format&fit=crop" alt="Cyberpunk Edgerunners">
+                                </div>
+                                <div class="article-content">
+                                    <div class="article-header">
+                                        <h3 class="article-title-small">Review: 'Cyberpunk: Edgerunners' Season 2 Delivers Even More Style and Substance</h3>
+                                        <span class="category-tag reviews">Reviews</span>
+                                    </div>
+                                    <p class="article-excerpt-small">The highly anticipated second season of the hit Netflix anime expands on the world of Night City with stunning visuals.</p>
+                                    <div class="article-footer">
+                                        <div class="article-meta-small">
+                                            <span class="article-date">March 6, 2025</span>
+                                            <span class="read-time">
+                                                <i class="fas fa-clock"></i>
+                                                7 min
+                                            </span>
+                                        </div>
+                                        <div class="article-stats-small">
+                                            <span><i class="fas fa-eye"></i> 12.3K</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </article>
+
+                            <!-- Article 5 -->
+                            <article class="news-article" data-id="5" data-category="industry" data-date="2025-03-05" data-views="9700">
+                                <div class="article-thumbnail">
+                                    <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=400&auto=format&fit=crop" alt="Voice Actor">
+                                </div>
+                                <div class="article-content">
+                                    <div class="article-header">
+                                        <h3 class="article-title-small">Voice Actor Yuki Kaji Announces Temporary Hiatus for Health Reasons</h3>
+                                        <span class="category-tag industry">Industry</span>
+                                    </div>
+                                    <p class="article-excerpt-small">The voice of Eren Yeager and other iconic characters takes a break from recording to focus on recovery.</p>
+                                    <div class="article-footer">
+                                        <div class="article-meta-small">
+                                            <span class="article-date">March 5, 2025</span>
+                                            <span class="read-time">
+                                                <i class="fas fa-clock"></i>
+                                                3 min
+                                            </span>
+                                        </div>
+                                        <div class="article-stats-small">
+                                            <span><i class="fas fa-eye"></i> 9.7K</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </article>
+
+                            <!-- Article 6 -->
+                            <article class="news-article" data-id="6" data-category="interviews" data-date="2025-03-04" data-views="14600">
+                                <div class="article-thumbnail">
+                                    <img src="https://images.unsplash.com/photo-1511379938547-c1f69419868d?q=80&w=400&auto=format&fit=crop" alt="Composer">
+                                </div>
+                                <div class="article-content">
+                                    <div class="article-header">
+                                        <h3 class="article-title-small">Exclusive Interview: Attack on Titan Composer Hiroyuki Sawano Discusses Final Season's Score</h3>
+                                        <span class="category-tag interviews">Interviews</span>
+                                    </div>
+                                    <p class="article-excerpt-small">The legendary composer shares insights into creating the emotional soundtrack for the series' conclusion.</p>
+                                    <div class="article-footer">
+                                        <div class="article-meta-small">
+                                            <span class="article-date">March 4, 2025</span>
+                                            <span class="read-time">
+                                                <i class="fas fa-clock"></i>
+                                                8 min
+                                            </span>
+                                        </div>
+                                        <div class="article-stats-small">
+                                            <span><i class="fas fa-eye"></i> 14.6K</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </article>
+
+                            <!-- Article 7 -->
+                            <article class="news-article" data-id="7" data-category="industry" data-date="2025-03-03" data-views="11900">
+                                <div class="article-thumbnail">
+                                    <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=400&auto=format&fit=crop" alt="Industry Growth">
+                                </div>
+                                <div class="article-content">
+                                    <div class="article-header">
+                                        <h3 class="article-title-small">New Study Shows Anime Industry Revenue Increased by 28% in 2024</h3>
+                                        <span class="category-tag industry">Industry</span>
+                                    </div>
+                                    <p class="article-excerpt-small">Global anime market continues to grow with streaming services and international licensing driving expansion.</p>
+                                    <div class="article-footer">
+                                        <div class="article-meta-small">
+                                            <span class="article-date">March 3, 2025</span>
+                                            <span class="read-time">
+                                                <i class="fas fa-clock"></i>
+                                                5 min
+                                            </span>
+                                        </div>
+                                        <div class="article-stats-small">
+                                            <span><i class="fas fa-eye"></i> 11.9K</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </article>
+
+                            <!-- Article 8 -->
+                            <article class="news-article" data-id="8" data-category="announcements" data-date="2025-03-02" data-views="25300">
+                                <div class="article-thumbnail">
+                                    <img src="https://images.unsplash.com/photo-1489599809516-9827b6d1cf13?q=80&w=400&auto=format&fit=crop" alt="Makoto Shinkai">
+                                </div>
+                                <div class="article-content">
+                                    <div class="article-header">
+                                        <h3 class="article-title-small">Makoto Shinkai's Next Film Revealed with Stunning First Trailer</h3>
+                                        <span class="category-tag announcements">Announcements</span>
+                                    </div>
+                                    <p class="article-excerpt-small">The director of Your Name and Suzume unveils his next project with breathtaking animation and emotional storytelling.</p>
+                                    <div class="article-footer">
+                                        <div class="article-meta-small">
+                                            <span class="article-date">March 2, 2025</span>
+                                            <span class="read-time">
+                                                <i class="fas fa-clock"></i>
+                                                4 min
+                                            </span>
+                                        </div>
+                                        <div class="article-stats-small">
+                                            <span><i class="fas fa-eye"></i> 25.3K</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </article>
                         </div>
                         
                         <!-- Load More Button -->
@@ -309,7 +526,7 @@
                             <input type="email" placeholder="Your email address" required>
                             <button type="submit" class="btn-primary">
                                 <i class="fas fa-envelope"></i>
-                                Subscribe
+                                <span>Subscribe</span>
                             </button>
                         </form>
                         <p class="privacy-note">By subscribing, you agree to our Privacy Policy</p>
@@ -322,7 +539,60 @@
                             Popular This Week
                         </h3>
                         <div class="popular-list" id="popularNewsList">
-                            <!-- Popular news will be loaded here dynamically -->
+                            <div class="popular-item" data-id="1">
+                                <div class="popular-rank">1</div>
+                                <div class="popular-content">
+                                    <h4 class="popular-title">Studio MAPPA Announces New Original Anime Project for 2026</h4>
+                                    <div class="popular-meta">
+                                        <span>announcements</span>
+                                        <span><i class="fas fa-eye"></i> 15.2K</span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="popular-item" data-id="8">
+                                <div class="popular-rank">2</div>
+                                <div class="popular-content">
+                                    <h4 class="popular-title">Makoto Shinkai's Next Film Revealed with Stunning First Trailer</h4>
+                                    <div class="popular-meta">
+                                        <span>announcements</span>
+                                        <span><i class="fas fa-eye"></i> 25.3K</span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="popular-item" data-id="2">
+                                <div class="popular-rank">3</div>
+                                <div class="popular-content">
+                                    <h4 class="popular-title">One Piece Manga Enters Final Saga's Climax</h4>
+                                    <div class="popular-meta">
+                                        <span>industry</span>
+                                        <span><i class="fas fa-eye"></i> 22.8K</span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="popular-item" data-id="3">
+                                <div class="popular-rank">4</div>
+                                <div class="popular-content">
+                                    <h4 class="popular-title">Anime Expo 2025 Announces Full Schedule</h4>
+                                    <div class="popular-meta">
+                                        <span>events</span>
+                                        <span><i class="fas fa-eye"></i> 18.5K</span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="popular-item" data-id="6">
+                                <div class="popular-rank">5</div>
+                                <div class="popular-content">
+                                    <h4 class="popular-title">Hiroyuki Sawano Discusses Final Season's Score</h4>
+                                    <div class="popular-meta">
+                                        <span>interviews</span>
+                                        <span><i class="fas fa-eye"></i> 14.6K</span>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     
@@ -394,177 +664,6 @@
                     </div>
                 </div>
             </div>
-
-            <!-- Exclusive Interviews Section -->
-            <section class="interviews-section">
-                <div class="section-header">
-                    <h2 class="section-title">
-                        <i class="fas fa-microphone-alt"></i>
-                        Exclusive Interviews
-                    </h2>
-                    <a href="#" class="view-all">View All Interviews <i class="fas fa-arrow-right"></i></a>
-                </div>
-                
-                <div class="interviews-slider">
-                    <button class="slider-btn prev-btn" id="prevInterview">
-                        <i class="fas fa-chevron-left"></i>
-                    </button>
-                    
-                    <div class="interviews-container" id="interviewsContainer">
-                        <div class="interview-card">
-                            <div class="interview-image">
-                                <img src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?q=80&w=800&auto=format&fit=crop" alt="Koyoharu Gotouge">
-                                <div class="interview-badge">
-                                    <i class="fas fa-microphone"></i>
-                                    <span>Interview</span>
-                                </div>
-                            </div>
-                            <div class="interview-content">
-                                <h3 class="interview-title">Exclusive: Demon Slayer Creator Talks About the Series' Global Impact</h3>
-                                <p class="interview-excerpt">In an exclusive interview, Koyoharu Gotouge shares insights about the creation of Demon Slayer and its unprecedented worldwide success.</p>
-                                <div class="interview-meta">
-                                    <span class="interviewee">Koyoharu Gotouge</span>
-                                    <span class="interview-date">March 5, 2025</span>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="interview-card">
-                            <div class="interview-image">
-                                <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?q=80&w=800&auto=format&fit=crop" alt="Gege Akutami">
-                                <div class="interview-badge">
-                                    <i class="fas fa-microphone"></i>
-                                    <span>Interview</span>
-                                </div>
-                            </div>
-                            <div class="interview-content">
-                                <h3 class="interview-title">Gege Akutami Reveals Plans for Jujutsu Kaisen's Final Arc</h3>
-                                <p class="interview-excerpt">The creator of Jujutsu Kaisen discusses the upcoming final arc of the manga and what fans can expect from the conclusion.</p>
-                                <div class="interview-meta">
-                                    <span class="interviewee">Gege Akutami</span>
-                                    <span class="interview-date">March 1, 2025</span>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="interview-card">
-                            <div class="interview-image">
-                                <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=800&auto=format&fit=crop" alt="Eiichiro Oda">
-                                <div class="interview-badge">
-                                    <i class="fas fa-microphone"></i>
-                                    <span>Interview</span>
-                                </div>
-                            </div>
-                            <div class="interview-content">
-                                <h3 class="interview-title">One Piece Creator Discusses the Final Saga and Legacy</h3>
-                                <p class="interview-excerpt">Eiichiro Oda shares thoughts on the final saga of One Piece and what the series has meant to him over the past 25 years.</p>
-                                <div class="interview-meta">
-                                    <span class="interviewee">Eiichiro Oda</span>
-                                    <span class="interview-date">February 25, 2025</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <button class="slider-btn next-btn" id="nextInterview">
-                        <i class="fas fa-chevron-right"></i>
-                    </button>
-                </div>
-            </section>
-
-            <!-- Anime Awards Section -->
-            <section class="awards-section">
-                <div class="section-header">
-                    <h2 class="section-title">
-                        <i class="fas fa-trophy"></i>
-                        2025 Anime Awards Results
-                    </h2>
-                    <a href="#" class="view-all">Full Results <i class="fas fa-arrow-right"></i></a>
-                </div>
-                
-                <div class="awards-grid">
-                    <div class="award-category">
-                        <div class="category-header">
-                            <h3 class="category-title">Anime of the Year</h3>
-                            <i class="fas fa-crown"></i>
-                        </div>
-                        <div class="winner-card">
-                            <div class="winner-image">
-                                <img src="https://images.unsplash.com/photo-1541562232579-512a21360020?q=80&w=400&auto=format&fit=crop" alt="Demon Slayer">
-                            </div>
-                            <div class="winner-info">
-                                <h4 class="winner-title">Demon Slayer: Hashira Training Arc</h4>
-                                <div class="winner-stats">
-                                    <span class="votes">1.2M Votes</span>
-                                    <span class="percentage">42%</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="runner-up">
-                            <span>2nd: Jujutsu Kaisen Season 2</span>
-                            <span class="runner-votes">850K Votes</span>
-                        </div>
-                        <div class="runner-up">
-                            <span>3rd: Attack on Titan Final Season</span>
-                            <span class="runner-votes">720K Votes</span>
-                        </div>
-                    </div>
-                    
-                    <div class="award-category">
-                        <div class="category-header">
-                            <h3 class="category-title">Best Protagonist</h3>
-                            <i class="fas fa-user"></i>
-                        </div>
-                        <div class="winner-card">
-                            <div class="winner-image">
-                                <img src="https://images.unsplash.com/photo-1578632749014-ca77efd052eb?q=80&w=400&auto=format&fit=crop" alt="Tanjiro Kamado">
-                            </div>
-                            <div class="winner-info">
-                                <h4 class="winner-title">Tanjiro Kamado</h4>
-                                <div class="winner-stats">
-                                    <span class="votes">980K Votes</span>
-                                    <span class="percentage">38%</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="runner-up">
-                            <span>2nd: Yuji Itadori</span>
-                            <span class="runner-votes">650K Votes</span>
-                        </div>
-                        <div class="runner-up">
-                            <span>3rd: Eren Yeager</span>
-                            <span class="runner-votes">590K Votes</span>
-                        </div>
-                    </div>
-                    
-                    <div class="award-category">
-                        <div class="category-header">
-                            <h3 class="category-title">Best Animation</h3>
-                            <i class="fas fa-film"></i>
-                        </div>
-                        <div class="winner-card">
-                            <div class="winner-image">
-                                <img src="https://images.unsplash.com/photo-1607604276583-eef5d076aa5f?q=80&w=400&auto=format&fit=crop" alt="Jujutsu Kaisen">
-                            </div>
-                            <div class="winner-info">
-                                <h4 class="winner-title">Jujutsu Kaisen Season 2</h4>
-                                <div class="winner-stats">
-                                    <span class="votes">1.1M Votes</span>
-                                    <span class="percentage">45%</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="runner-up">
-                            <span>2nd: Demon Slayer S4</span>
-                            <span class="runner-votes">820K Votes</span>
-                        </div>
-                        <div class="runner-up">
-                            <span>3rd: Cyberpunk: Edgerunners</span>
-                            <span class="runner-votes">510K Votes</span>
-                        </div>
-                    </div>
-                </div>
-            </section>
         </div>
     </div>
 
@@ -596,9 +695,11 @@
                 <div class="footer-col newsletter-col">
                     <h4>Newsletter</h4>
                     <p>Subscribe to get the latest updates.</p>
-                    <form class="newsletter-form">
-                        <input type="email" placeholder="Your Email...">
-                        <button><i class="fas fa-paper-plane"></i></button>
+                    <form class="newsletter-form-footer" id="footerNewsletterForm">
+                        <input type="email" placeholder="Your Email..." required>
+                        <button type="submit">
+                            <i class="fas fa-paper-plane"></i>
+                        </button>
                     </form>
                 </div>
             </div>

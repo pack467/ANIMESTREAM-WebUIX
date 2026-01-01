@@ -12,6 +12,9 @@
     <link rel="stylesheet" href="../styles/search.css">
 </head>
 <body>
+    <!-- Toast Notification -->
+    <div class="toast-container" id="toastContainer"></div>
+
     <header class="header" id="mainHeader">
         <div class="container header-container">
             <div class="logo">
@@ -360,6 +363,16 @@
                     <!-- Active Filters -->
                     <div class="active-filters" id="activeFilters">
                         <!-- Active filters will be populated by JavaScript -->
+                    </div>
+
+                    <!-- No Results State -->
+                    <div class="no-results" id="noResults" style="display: none;">
+                        <div class="no-results-icon">
+                            <i class="fas fa-search"></i>
+                        </div>
+                        <h3>Tidak ada hasil yang ditemukan</h3>
+                        <p>Coba ubah kata kunci pencarian atau filter yang digunakan</p>
+                        <button class="btn-primary" id="resetSearch">Reset Pencarian</button>
                     </div>
 
                     <!-- Results Grid -->
@@ -761,16 +774,6 @@
                         <button class="pagination-btn next">
                             <i class="fas fa-chevron-right"></i>
                         </button>
-                    </div>
-
-                    <!-- No Results State -->
-                    <div class="no-results" id="noResults" style="display: none;">
-                        <div class="no-results-icon">
-                            <i class="fas fa-search"></i>
-                        </div>
-                        <h3>Tidak ada hasil yang ditemukan</h3>
-                        <p>Coba ubah kata kunci pencarian atau filter yang digunakan</p>
-                        <button class="btn-primary" id="resetSearch">Reset Pencarian</button>
                     </div>
                 </main>
             </div>

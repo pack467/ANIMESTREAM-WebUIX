@@ -128,9 +128,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
         updateBackground() {
             const currentSlide = this.slides[this.currentIndex];
-            const bgUrl = currentSlide.getAttribute('data-bg');
-            if(bgUrl) {
-                this.bgContainer.style.backgroundImage = `url(${bgUrl})`;
+            const bgFile = currentSlide.getAttribute('data-bg');
+            if(bgFile) {
+                // Load image from local folder
+                this.bgContainer.style.backgroundImage = `url('${bgFile}')`;
             }
         },
 
@@ -276,7 +277,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
     // ==================================================
-    // 6. ANIME CARD INTERACTIONS
+    // 6. ANIME CARD INTERACTIONS WITH + ICON
     // ==================================================
     const animeCards = document.querySelectorAll('.anime-card');
     
@@ -306,9 +307,17 @@ document.addEventListener('DOMContentLoaded', () => {
                 this.classList.toggle('active');
                 
                 const animeTitle = card.querySelector('.anime-title').textContent;
+                const icon = this.querySelector('i');
+                
                 if (this.classList.contains('active')) {
+                    // Change to check icon when added
+                    icon.classList.remove('fa-plus');
+                    icon.classList.add('fa-check');
                     showNotification(`"${animeTitle}" has been added to your list`);
                 } else {
+                    // Change back to plus icon when removed
+                    icon.classList.remove('fa-check');
+                    icon.classList.add('fa-plus');
                     showNotification(`"${animeTitle}" has been removed from your list`);
                 }
             });
@@ -614,35 +623,6 @@ document.addEventListener('DOMContentLoaded', () => {
             setTimeout(() => notification.remove(), 300);
         }, 3000);
     }
-    
-    // Add notification animations
-    if (!document.querySelector('#notification-styles')) {
-        const style = document.createElement('style');
-        style.id = 'notification-styles';
-        style.textContent = `
-            @keyframes slideIn {
-                from {
-                    transform: translateX(400px);
-                    opacity: 0;
-                }
-                to {
-                    transform: translateX(0);
-                    opacity: 1;
-                }
-            }
-            @keyframes slideOut {
-                from {
-                    transform: translateX(0);
-                    opacity: 1;
-                }
-                to {
-                    transform: translateX(400px);
-                    opacity: 0;
-                }
-            }
-        `;
-        document.head.appendChild(style);
-    }
 
 
     // ==================================================
@@ -708,5 +688,5 @@ document.addEventListener('DOMContentLoaded', () => {
 
     console.log('AnimeStream initialized successfully!');
     console.log('User:', userData.username);
-    console.log('Features: Carousel Add to List, Top Views Transitions, Today Time Display');
+    console.log('Features: Plus Icon Buttons, Green Active State, Local Background Images');
 });
